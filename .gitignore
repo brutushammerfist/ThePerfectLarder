@@ -1,0 +1,9 @@
+# Python Rules
+**.pyc
+
+# Java Rules
+**.class
+
+# Vim Rules
+**.swp
+**.tmp
