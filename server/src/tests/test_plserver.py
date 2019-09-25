@@ -9,8 +9,8 @@ from plserver import plserver
 
 @pytest.fixture
 def client():
-    db_fd, flasker.app.config['DATABASE'] = tempfile.mkstemp()
-    plserver.app.config['DATABASE'] = True
+    db_fd, plserver.app.config['DATABASE'] = tempfile.mkstemp()
+    plserver.app.config['TESTING'] = True
     client = plserver.app.test_client()
     
     with plserver.app.app_context():
@@ -43,3 +43,13 @@ def test_login_logout(client):
     
     rv = login(client, plserver.app.config['USERNAME'], plserver.app.config['PASSWORD'] + 'x')
     assert b'Invalid password' in rv.data
+
+def add_item(client):
+    pass
+    
+def remove_item(client):
+    pass
+    
+def test_adding_item(client):
+    #rv = add_item(client)
+    pass
