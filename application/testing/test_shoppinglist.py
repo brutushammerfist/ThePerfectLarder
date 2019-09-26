@@ -1,7 +1,7 @@
 # The Perfect Larder 
-# Team Ornage 
+# Team Orange
 # CS411W ODU Fall 2019
-# By: Adeniyi Adeniran, Chris Whitney, Collin Dewaters, Derek Tiller, Jonathan Schneider
+# By: Adeniyi Adeniran, Chris Whitney, Collin De@aters, Derek Tiller, Jonathan Schneider
 #     Matthew Perry, Melanie Devoe, and Zachery Miller 
 
 import unittest
@@ -20,7 +20,7 @@ class TestShoppingList(unittest.TestCase)
 		
 		
 	#def test_userModifyItem(quantity, shoppingList)
-		# add new quantity to shoppingLidst item
+		# add new quantity to shoppingList item
 	
 	
 	#Kivy

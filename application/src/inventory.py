@@ -1,7 +1,7 @@
 # The Perfect Larder 
-# Team Ornage 
+# Team Orange
 # CS411W ODU Fall 2019
-# By: Adeniyi Adeniran, Chris Whitney, Collin Dewaters, Derek Tiller, Jonathan Schneider
+# By: Adeniyi Adeniran, Chris Whitney, Collin DeWaters, Derek Tiller, Jonathan Schneider
 #     Matthew Perry, Melanie Devoe, and Zachery Miller 
 
 
@@ -9,19 +9,19 @@
 
 class Inventory:
 
-	#def addItems (item, quantity, userInvetory, storageLocation, expiration date)
+	#def addItems (item, quantity, userInventory, storageLocation, expiration date)
 		#update the users inventory with the item (attributes)
 		#if item is already in the inventory update the quantity
 	
 	
-	#def deleteItems(item, quantity, userInvetory, storageLocation)
+	#def deleteItems(item, quantity, userInventory, storageLocation)
 		# update the users inventory with the item
 		# if the items quantity to be deleted is less than the quantity in the 
 		# inventory update the quantity 
 	
 	
-	#def viewInventory(userInvetory)
-		#display the inventory to the userInvetory
+	#def viewInventory(userInventory)
+		#display the inventory to the userInventory
 		
 		
 	#def searchForItem(item, usersInventory)
