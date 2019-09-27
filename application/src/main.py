@@ -250,6 +250,10 @@ Builder.load_string("""
             on_press: root.manager.current = 'searchitem'
 			
 		Button:
+            text: 'Your Perfect Larder'
+            on_press: root.manager.current = 'theperfectlarder'
+			
+		Button:
             text: 'Back To Home'
             on_press: root.manager.current = 'homescreen'
 
@@ -373,6 +377,15 @@ Builder.load_string("""
 			text:"Back"
 			on_press: root.manager.current = 'inventory'
 
+<ThePerfectLarder>
+	BoxLayout:
+        orientation: 'vertical'
+	
+		Button:
+			text:"Back"
+			on_press: root.manager.current = 'inventory'
+
+
 <Trends>:
 	GridLayout:
 		cols:1
@@ -484,7 +497,8 @@ class ViewInventory(Screen):      #part of inventory
 class SearchItem(Screen):         #part of inventory
     pass
 
-	
+class ThePerfectLarder(Screen):   #part of inventory
+	pass	
 	
 screenManager = ScreenManager()
 screenManager.add_widget(UserLogin(name="userlogin"))
@@ -507,6 +521,7 @@ screenManager.add_widget(AddItem(name="additem"))
 screenManager.add_widget(DeleteItem(name="deleteitem"))
 screenManager.add_widget(ViewInventory(name="viewinventory"))
 screenManager.add_widget(SearchItem(name="searchitem"))
+screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
 class testApp (App):
