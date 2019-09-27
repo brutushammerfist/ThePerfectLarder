@@ -17,6 +17,8 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder 
 
+from kivy.uix.spinner import Spinner
+
 #class Main:
 class UserLogin (Screen):
     pass #like return 0
@@ -344,6 +346,10 @@ Builder.load_string("""
 <ViewInventory>
 	#function call to get inventory
 	#back button
+	
+	Button:
+		text:"Back"
+		on_press: root.manager.current = 'inventory'
 
 <SearchItem>
 	itemName:itemName                #for python code : for kivy code
@@ -368,74 +374,22 @@ Builder.load_string("""
 			on_press: root.manager.current = 'inventory'
 
 <Trends>:
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		
+			
+		Spinner:
+			size_hint: None, None
+			size: 100, 44
+			pos_hint: {'center': (.5, .5)}
+			text: 'January'
+			values: 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
 
-	#january:january                #for python code : for kivy code
-	#february:february        		 #for python code : for kivy code
-	#march:march  				#for python code : for kivy code
-	#april:april                #for python code : for kivy code
-	#may:may        		 #for python code : for kivy code
-	#june:june  				#for python code : for kivy code
-	#july:july                #for python code : for kivy code
-	#august:august        		 #for python code : for kivy code
-	#september:september  	#for python code : for kivy code
-	#october:october                #for python code : for kivy code
-	#november:november        		 #for python code : for kivy code
-	#december:december  		#for python code : for kivy code
+		Button:
+			text: 'Back To Home'
+			on_press: root.manager.current = 'homescreen'
 	
-	BoxLayout:
-        orientation: 'vertical'
-		
-		Button:
-            text: 'January'
-            #on_press: function call(january)
-			
-		Button:
-            text: 'February'
-             #on_press: function call(february)
-			
-		Button:
-            text: 'March'
-            #on_press: function call(march)
-			
-		Button:
-            text: 'April'
-            #on_press: function call(april)
-			
-		Button:
-            text: 'May'
-            #on_press: function call(may)
-		
-		Button:
-            text: 'June'
-            #on_press: function call(june)
-			
-		Button:
-            text: 'July'
-            #on_press: function call(july)
-			
-		Button:
-            text: 'August'
-            #on_press: function call(august)
-			
-		Button:
-            text: 'September'
-            #on_press: function call(september)
-			
-		Button:
-            text: 'October'
-            #on_press: function call(october)
-	
-		Button:
-            text: 'November'
-            #on_press: function call(november)
-			
-		Button:
-            text: 'December'
-            #on_press: function call(december)
-			
-		Button:
-            text: 'Back To Home'
-            on_press: root.manager.current = 'homescreen'
 		
 <ShoppingList>:
 	BoxLayout:
