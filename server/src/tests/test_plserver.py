@@ -1,55 +1,39 @@
-# Skeleton testing file provided by tutorial located at https://flask.palletsprojects.com/en/1.0.x/testing/
+from flask import Flask
+from flask_testing import TestCase
 
-import os
-import tempfile
-
-import pytest
-
-from plserver import plserver
-
-@pytest.fixture
-def client():
-    db_fd, plserver.app.config['DATABASE'] = tempfile.mkstemp()
-    plserver.app.config['TESTING'] = True
-    client = plserver.app.test_client()
+class test_plserver(TestCase):
     
-    with plserver.app.app_context():
-        plserver.init_db()
+    def create_app(self):
+        app = Flask(__name__)
+        app.config['TESTING'] = True
+        return app
+    
+    def test_login_logout(self):
+        response = self.client.post("/login", data=dict(username='username', password='password'))
         
-    yield client
+        self.assertEqual(response.code, 200)
+        self.assertEqual("Successful login.", response.data)
+        
+        response = self.client.post("/logout", data=dict(username='username'))
+        
+        self.assertEqual(response.code, 200)
+        self.assertEqual("Successful logout.", response.data)
+        
+        response = self.client.post("/login", data=dict(username='abc', password='password'))
+        
+        self.assertEqual(response.code, 401)
+        self.assertEqual("Invalid username.", response.data)
+        
+        response = self.client.post("/login", data=dict(username='username', password='abc'))
+        
+        self.assertEqual(response.code, 401)
+        self.assertEqual("Incorrect password.", response.data)
+        
+    def test_addItem(self):
+        pass
     
-    os.close(db_fd)
-    on.unlink(plserver.app.config['DATABASE'])
+    def test_delItem(self):
+        pass
     
-def test_empty_db(client):
-    rv = client.get('/')
-    assert b'No entries here so far' in rv.data
-    
-def login(client, username, password):
-    return client.post('/login', data = dict(username=username, password=password), follow_redirects=True)
-
-def logout(client):
-    return client.get('/logout', follow_redirects=True)
-    
-def test_login_logout(client):
-    rv = login(client, plserver.app.config['USERNAME'], plserver.app.config['PASSWORD'])
-    assert b'You were logged in' in rv.data
-    
-    rv = logout(client)
-    assert b'You were logged out' in rv.data
-    
-    rv = login(client, plserver.app.config['USERNAME'] + 'x', plserver.app.config['PASSWORD'])
-    assert b'Invalid username' in rv.data
-    
-    rv = login(client, plserver.app.config['USERNAME'], plserver.app.config['PASSWORD'] + 'x')
-    assert b'Invalid password' in rv.data
-
-def add_item(client):
-    pass
-    
-def remove_item(client):
-    pass
-    
-def test_adding_item(client):
-    #rv = add_item(client)
-    pass
+    def test_getInventory(self):
+        pass
