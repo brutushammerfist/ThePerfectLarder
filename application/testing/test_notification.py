@@ -8,13 +8,13 @@
 import unittest
 import Notification
 
-class TestNotification(unittest.TestCase)
+class TestNotification(unittest.TestCase):
 
-	#def test_sharingItems(item, group/individual)
+	#def test_sharingItems(self):
 		#send notification to group/individual with item
 	
 	
-	#def test_expiringItems(item)
+	#def test_expiringItems(self):
 		#display notification to user of the item that is about to expire
 		
 #need below to run tests

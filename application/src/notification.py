@@ -14,9 +14,9 @@ from kivy.uix.screenmanager import Screen
 class Notification(Screen):
 	pass
 
-	#def sharingItems(item, group/individual)
+	#def sharingItems(self):
 		#send notification to group/individual with item
 	
 	
-	#def expiringItems(item)
+	#def expiringItems(self):
 		#display notification to user of the item that is about to expire
