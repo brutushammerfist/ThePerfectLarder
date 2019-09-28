@@ -10,9 +10,18 @@
 import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
+from kivy.properties import ObjectProperty
 
 class ItemShare(Screen):
 	pass
-
-	#def shareItems(items, group/individual)
-		# send item to the notification system (sharingItems)
+	
+	#itemName = ObjectProperty(None)
+	#shareWith = ObjectProperty(None)
+	
+	#def shareItems(self):
+		#Send (self.itemName.text, self.shareWith.text) to database
+		#Do popup to show sent
+		
+		#clearing data field
+		#self.itemName.text = ""
+		#self.shareWith.text = ""

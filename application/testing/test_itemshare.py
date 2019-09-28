@@ -9,7 +9,7 @@ import ItemShare
 
 class testItemShare(unittest.TestCase)
 
-	#def test_shareItems(items, group/individual)
+	#def test_shareItems(self):
 		# send item to the notification system (sharingItems)
 		
 #need below to run tests
