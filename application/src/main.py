@@ -68,7 +68,7 @@ screenManager.add_widget(SearchItem(name="searchitem"))
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
-class testApp (App):
+class testApp(App):
     def on_start(self):
         pass
     
