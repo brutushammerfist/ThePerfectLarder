@@ -1,0 +1,61 @@
+<Recipes>:
+	BoxLayout:
+        orientation: 'vertical'
+		
+		Button:
+            text: 'Add Recipes'
+            on_press: root.manager.current = 'addrecipe'
+		
+		Button:
+            text: 'Get Recipes'
+            on_press: root.manager.current = 'getrecipes'
+		
+		Button:
+            text: 'Back To Home'
+            on_press: root.manager.current = 'homescreen'		
+
+<AddRecipe>:
+
+	recipeName:recipeName                #for python code : for kivy code
+	ingredients:ingredients        		 #for python code : for kivy code
+	cookDirections:cookDirections        #for python code : for kivy code
+	
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		GridLayout:
+			cols:2
+			
+			Label:
+				text: "Name: "
+					
+			TextInput:
+				id: recipeName
+				multiline: False
+					
+			Label:
+				text: "Ingredients: "
+					
+			TextInput:
+				id: ingredients
+				multiline: True
+					
+			Label:
+				text: "Cooking Directions: "
+					
+			TextInput:
+				id: cookDirections
+				multiline: True
+					
+		Button:
+			text:"Enter"
+			#on_press: root.manager.current = 'homescreen' 
+			#on_press: root.userLogin()    send data to a function
+			
+		Button:
+            text: 'Back To Home'
+            on_press: root.manager.current = 'recipes'
+		
+
+<GetRecipe>:
+		# go to to function and pull recipes

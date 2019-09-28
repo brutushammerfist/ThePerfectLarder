@@ -8,7 +8,12 @@
 
 #setup GUI(kivy)
 
-class Trends:
+import kivy
+kivy.require('1.11.1')
+from kivy.uix.screenmanager import Screen
+
+class Trends(Screen):
+	pass
 
 	#def selectMonth(month, trendData)
 		#display the the food use and waste data for the month

@@ -5,11 +5,14 @@
 #     Matthew Perry, Melanie Devoe, and Zachery Miller 
 
 
-
 # setup GUI (kivy)
 
+import kivy
+kivy.require('1.11.1')
+from kivy.uix.screenmanager import Screen
 
-class ShoppingList:
+class ShoppingList(Screen):
+	pass
 
 	#def userAddItem(item, shoppinglist)
 		# append item to the list

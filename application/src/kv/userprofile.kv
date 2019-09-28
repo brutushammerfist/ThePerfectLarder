@@ -1,0 +1,62 @@
+<Profile>:
+	BoxLayout:
+        orientation: 'vertical'
+		Button:
+            text: 'Manage Perfect Larder'
+            on_press: root.manager.current = 'managepl'
+		Button:
+            text: 'Edit/Create Profile'
+            on_press: root.manager.current = 'editcreateprofile'
+		Button:
+            text: 'Setup/Edit Notifications'
+            on_press: root.manager.current = 'setupeditnotification'
+		Button:
+            text: 'Back To Home'
+            on_press: root.manager.current = 'homescreen'
+            
+<EditCreateProfile>:
+
+	name:userName                #for python code : for kivy code
+	password:userPassword        #for python code : for kivy code
+	email:userEmail              #for python code : for kivy code
+	
+	BoxLayout:
+        orientation: 'vertical'
+		GridLayout:
+			cols:2
+		
+			Label:
+				text: "Name: "
+				
+			TextInput:
+				id: userName
+				multiline: False
+				
+			Label:
+				text: "Password: "
+				
+			TextInput:
+				id: userPassword
+				multiline: False
+				
+			Label:
+				text: "Email: "
+				
+			TextInput:
+				id: userEmail
+				multiline: False
+		Button:
+            text: 'Submit'
+            #on_press:       send to function
+		
+		Button:
+            text: 'Back'
+            on_press: root.manager.current = 'profile'
+           
+<ManagePL>:                                                            
+	BoxLayout:
+        orientation: 'vertical'
+		
+		Button:
+            text: 'Back'
+            on_press: root.manager.current = 'profile'

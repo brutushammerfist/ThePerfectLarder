@@ -1,0 +1,143 @@
+<Inventory>:
+	BoxLayout:
+        orientation: 'vertical'
+		
+		Button:
+            text: 'Add Item'
+            on_press: root.manager.current = 'additem'
+			
+		Button:
+            text: 'Delete Item'
+            on_press: root.manager.current = 'deleteitem'
+			
+		Button:
+            text: 'View Inventory'
+            on_press: root.manager.current = 'viewinventory'
+			
+		Button:
+            text: 'Search'
+            on_press: root.manager.current = 'searchitem'
+			
+		Button:
+            text: 'Back To Home'
+            on_press: root.manager.current = 'homescreen'
+
+<AddItem>:
+
+	itemName:itemName                #for python code : for kivy code
+	quantity:quantity        		 #for python code : for kivy code
+	expirationDate:expirationDate    #for python code : for kivy code
+	storageLocation:storageLocation  #for python code : for kivy code
+	
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		GridLayout:
+			cols:2
+			
+			Label:
+				text: "Item Name: "
+					
+			TextInput:
+				id: itemName
+				multiline: False
+					
+			Label:
+				text: "Quantity: "
+					
+			TextInput:
+				id: quantity
+				multiline: False
+					
+			Label:
+				text: "Expiration Date: "
+					
+			TextInput:
+				id: expirationDate
+				multiline: False
+			
+			Label:
+				text: "Storage Location: "
+					
+			TextInput:
+				id: storageLocation
+				multiline: False
+
+		Button:
+			text:"Submit"
+			#on_press: root.function call()
+		Button:
+			text:"Back"
+			on_press: root.manager.current = 'inventory' 
+	
+	
+<DeleteItem>:
+	
+	itemName:itemName                #for python code : for kivy code
+	quantity:quantity        		 #for python code : for kivy code
+	storageLocation:storageLocation  #for python code : for kivy code
+
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		GridLayout:
+			cols:2
+			
+			Label:
+				text: "Item Name: "
+					
+			TextInput:
+				id: itemName
+				multiline: False
+					
+			Label:
+				text: "Quantity: "
+					
+			TextInput:
+				id: quantity
+				multiline: False
+			
+			Label:
+				text: "Storage Location: "
+					
+			TextInput:
+				id: storageLocation
+				multiline: False
+				
+		Button:
+			text:"Submit"
+			#on_press: root.function call()
+		Button:
+			text:"Back"
+			on_press: root.manager.current = 'inventory' 			
+				
+				
+<ViewInventory>:
+	#function call to get inventory
+	#back button
+	
+	Button:
+		text:"Back"
+		on_press: root.manager.current = 'inventory'
+
+<SearchItem>:
+	itemName:itemName                #for python code : for kivy code
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		GridLayout:
+			cols:2
+			
+			Label:
+				text: "Item Name: "
+					
+			TextInput:
+				id: itemName
+				multiline: False
+
+		Button:
+			text:"Submit"
+			#on_press: root.function call()
+		Button:
+			text:"Back"
+			on_press: root.manager.current = 'inventory'

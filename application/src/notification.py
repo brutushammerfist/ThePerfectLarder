@@ -7,8 +7,12 @@
 
 #setup GUI(kivy)
 
+import kivy
+kivy.require('1.11.1')
+from kivy.uix.screenmanager import Screen
 
-class Notification:
+class Notification(Screen):
+	pass
 
 	#def sharingItems(item, group/individual)
 		#send notification to group/individual with item

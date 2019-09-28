@@ -6,8 +6,12 @@
 
 #setup GUI (kivy)
 
+import kivy
+kivy.require('1.11.1')
+from kivy.uix.screenmanager import Screen
 
-class Login:
+class Login(Screen):
+	pass
 
 	#def userLogin(name, password, email)
 		#check in the database for matching info

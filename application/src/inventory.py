@@ -7,7 +7,12 @@
 
 #setup GUI(kivy)
 
-class Inventory:
+import kivy
+kivy.require('1.11.1')
+from kivy.uix.screenmanager import Screen
+
+class Inventory(Screen):
+	pass
 
 	#def addItems (item, quantity, userInventory, storageLocation, expiration date)
 		#update the users inventory with the item (attributes)
@@ -37,3 +42,16 @@ class Inventory:
 	#def checkItemExpiration(date, usersInventory)
 	 #check item expiration dates
 	 # if within (#) days send item to notifications (expiringItems)
+	 
+	
+class AddItem(Screen):            #part of inventory
+    pass
+	
+class DeleteItem(Screen):        #part of inventory
+    pass
+
+class ViewInventory(Screen):      #part of inventory
+    pass
+
+class SearchItem(Screen):         #part of inventory
+    pass

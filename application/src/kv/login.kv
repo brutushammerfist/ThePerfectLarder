@@ -1,0 +1,35 @@
+<UserLogin>
+	name:userName                #for python code : for kivy code
+	password:userPassword        #for python code : for kivy code
+	email:userEmail              #for python code : for kivy code
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		GridLayout:
+			cols:2
+		
+			Label:
+				text: "Name: "
+				
+			TextInput:
+				id: userName
+				multiline: False
+				
+			Label:
+				text: "Password: "
+				
+			TextInput:
+				id: userPassword
+				multiline: False
+				
+			Label:
+				text: "Email: "
+				
+			TextInput:
+				id: userEmail
+				multiline: False
+			
+		Button:
+			text:"Login"
+			on_press: root.manager.current = 'homescreen' 
+			#on_press: root.userLogin()    to check the login credentials

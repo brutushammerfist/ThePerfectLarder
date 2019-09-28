@@ -8,9 +8,12 @@
 
 # setup GUI (kivy)
 
+import kivy
+kivy.require('1.11.1')
+from kivy.uix.screenmanager import Screen
 
-
-class Recipes:
+class Recipes(Screen):
+	pass
 
 	# Will likely be done on the server side
 	# def recommendRecipes(usersInventory)
@@ -25,3 +28,8 @@ class Recipes:
 	#def verifyRecipeWasUsed(recipe, items, verification, usersInventory)
 		# remove the items that were used in the recipe from the inventory
 		
+class AddRecipe(Screen):         #part of recipes
+    pass
+	
+class GetRecipe(Screen):          #part of recipes
+    pass
