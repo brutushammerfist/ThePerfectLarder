@@ -9,10 +9,25 @@
 import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
+from kivy.properties import ObjectProperty
 
 class Login(Screen):
 	pass
-
-	#def userLogin(name, password, email)
-		#check in the database for matching info
+	
+	#userName = ObjectPtoperty(None)
+	#userPassword = ObjectPtoperty(None)
+	#userEmail = ObjectPtoperty(None)
+	
+	#def userLogin(self):
+		#Send (self.userName.text, self.userPassword.text, self.userEmail.text) to database
+		
+		#if correct
+		#self.userName.text = ""
+		#self.userPassword.text = ""
+		#self.userEmail.text = ""
 		#move GUI from login page to home page
+		
+		#else popup incorrect login
+		#self.userName.text = ""
+		#self.userPassword.text = ""
+		#self.userEmail.text = ""

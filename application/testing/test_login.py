@@ -7,11 +7,12 @@
 import unittest
 import Login
 
-class testLogin(unittest.TestCase)
+class TestLogin(unittest.TestCase):
 
-	#def test_userLogin(name, password, email)
-		#check in the database for matching info
+	#def test_userLogin(self):
+		#if in the database for matching info
 		#move GUI from login page to home page
+		#else give a popup to try again
 		
 #need below to run tests
 #if __name__ == '__main__':
