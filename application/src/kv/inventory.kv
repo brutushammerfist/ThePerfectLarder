@@ -65,7 +65,7 @@
 
 		Button:
 			text:"Submit"
-			#on_press: root.function call()
+			#on_press: root.addItems() 
 		Button:
 			text:"Back"
 			on_press: root.manager.current = 'inventory' 
@@ -106,7 +106,7 @@
 				
 		Button:
 			text:"Submit"
-			#on_press: root.function call()
+			#on_press: root.deleteItems()
 		Button:
 			text:"Back"
 			on_press: root.manager.current = 'inventory' 			
@@ -137,7 +137,7 @@
 
 		Button:
 			text:"Submit"
-			#on_press: root.function call()
+			#on_press: root.searchForItem()
 		Button:
 			text:"Back"
 			on_press: root.manager.current = 'inventory'

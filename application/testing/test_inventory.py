@@ -7,33 +7,34 @@
 import unittest
 import Inventory
 
-class testInventory(unittest.TestCase)
-	#def test_addItems (item, quantity, userInventory, storageLocation, expiration date)
+class TestInventory(unittest.TestCase)
+	
+	#def test_addItems (self):
 		#update the users inventory with the item (attributes)
 		#if item is already in the inventory update the quantity
 	
 	
-	#def test_deleteItems(item, quantity, userInventory, storageLocation)
+	#def test_deleteItems(self):
 		# update the users inventory with the item
 		# if the items quantity to be deleted is less than the quantity in the 
 		# inventory update the quantity 
 	
 	
-	#def test_viewInventory(userInventory)
+	#def test_viewInventory(self):
 		#display the inventory to the userInventory
 		
 		
-	#def test_searchForItem(item, usersInventory)
+	#def test_searchForItem(self):
 		#serch the userInventory for the item
 		#display to user
 
 
-	#def test_thePerfectLarder(foodUseTrends)
+	#def test_thePerfectLarder(self):
 		#display to user what items, based on trends that 
 		#they should keep on hand at all times
 		
 	#server side	
-	#def test_checkItemExpiration(date, usersInventory)
+	#def test_checkItemExpiration(self):
 	 #check item expiration dates
 	 # if within (#) days send item to notifications (expiringItems)
 	 

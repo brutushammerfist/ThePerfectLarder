@@ -10,36 +10,52 @@
 import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
+from kivy.properties import ObjectProperty
 
 class Inventory(Screen):
 	pass
-
-	#def addItems (item, quantity, userInventory, storageLocation, expiration date)
-		#update the users inventory with the item (attributes)
+	
+	#itemName = ObjectProperty(None)
+	#quantity = ObjectProperty(None)
+	#expirationDate = ObjectProperty(None)
+	#storageLocation = ObjectProperty(None)
+	
+	#def addItems (self):
+		#Send(self.itemName.text, self.quantity.text, self.expirationDate.text,
+		#     self.storageLocation.text) to database
 		#if item is already in the inventory update the quantity
+		
+		#clearing input text feild
+		#self.itemName.text = ""
+		#self.quantity.text = ""
+		#self.expirationDate.text = ""
+		#self.storageLocation.text = ""
 	
 	
-	#def deleteItems(item, quantity, userInventory, storageLocation)
-		# update the users inventory with the item
-		# if the items quantity to be deleted is less than the quantity in the 
-		# inventory update the quantity 
+	#def deleteItems(self):
+		#Send(self.itemName.text, self.quantity.text, self.storageLocation.text) to database
+		
+		#clearing input text feild
+		#self.itemName.text = ""
+		#self.quantity.text = ""
+		#self.storageLocation.text = ""
 	
 	
-	#def viewInventory(userInventory)
+	#def viewInventory(self):
 		#display the inventory to the userInventory
 		
 		
-	#def searchForItem(item, usersInventory)
-		#serch the userInventory for the item
-		#display to user
+	#def searchForItem(self):
+		#Send(self.itemName.text) to database
+		#display item attributes
+		#self.itemName.text = ""
 
-
-	#def thePerfectLarder(foodUseTrends)
+	#def thePerfectLarder(self):
 		#display to user what items, based on trends that 
 		#they should keep on hand at all times
 		
 	#server side	
-	#def checkItemExpiration(date, usersInventory)
+	#def checkItemExpiration(self):
 	 #check item expiration dates
 	 # if within (#) days send item to notifications (expiringItems)
 	 
