@@ -8,9 +8,9 @@ import unittest
 import Feedback
 
 
-class testFeedback(unittest.TestCase):
+class TestFeedback(unittest.TestCase):
 
-	#def test_userFeedback(username, comments, rating)
+	#def test_userFeedback(self):
 		#send comments and rating to database
 
 #need below to run tests

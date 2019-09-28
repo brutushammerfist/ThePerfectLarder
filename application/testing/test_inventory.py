@@ -7,7 +7,7 @@
 import unittest
 import Inventory
 
-class TestInventory(unittest.TestCase)
+class TestInventory(unittest.TestCase):
 	
 	#def test_addItems (self):
 		#update the users inventory with the item (attributes)

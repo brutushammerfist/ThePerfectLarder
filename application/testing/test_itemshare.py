@@ -7,7 +7,7 @@
 import unittest
 import ItemShare
 
-class testItemShare(unittest.TestCase)
+class TestItemShare(unittest.TestCase):
 
 	#def test_shareItems(self):
 		# send item to the notification system (sharingItems)
