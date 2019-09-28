@@ -16,9 +16,9 @@
             
 <EditCreateProfile>:
 
-	name:userName                #for python code : for kivy code
-	password:userPassword        #for python code : for kivy code
-	email:userEmail              #for python code : for kivy code
+	userName:userName                #for python code : for kivy code
+	userPassword:userPassword        #for python code : for kivy code
+	userEmail:userEmail              #for python code : for kivy code
 	
 	BoxLayout:
         orientation: 'vertical'
@@ -47,7 +47,7 @@
 				multiline: False
 		Button:
             text: 'Submit'
-            #on_press:       send to function
+            #on_press: root.Profile()      send to function
 		
 		Button:
             text: 'Back'

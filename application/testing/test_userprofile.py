@@ -9,16 +9,16 @@ import UserProfile
 
 class TestUserProfile(unittest.TestCase)
 
-	#def test_createUserProfile(name, password, email)
+	#def test_createUserProfile(self):
 		# add name, password, and email to database
 		
 		
 	
-	#def test_editUserProfile(name, password, email)
+	#def test_editUserProfile(self):
 		#update name, password, or email
 		
 		
-	#def test_deleteUserProfile(name, password, email)
+	#def test_deleteUserProfile(self):
 		#remove data form database
 		
 #need below to run tests

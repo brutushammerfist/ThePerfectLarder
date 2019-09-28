@@ -11,21 +11,34 @@
 import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
+from kivy.properties import ObjectProperty
 
 class Profile(Screen):
 	pass
 
-	#def createUserProfile(name, password, email)
-		# add name, password, and email to database
+	#userName = ObjectProperty(None) 
+	#userPassword = ObjectProperty(None)
+	#userEmail = ObjectProperty(None)
+
+
+	#def createUserProfile(self):
+		#send (self.userName.text, self.userPassword.text, self.userEmail.text) to database
+		#self.userName.text = ""
+		#self.userPassword.text = ""
+		#self.userEmail.text = ""
 		
 	
-	#def editUserProfile(name, password, email)
-		#update name, password, or email
+	#def editUserProfile(self):
+		#send (self.userName.text, self.userPassword.text, self.userEmail.text) to database
+		#self.userName.text = ""
+		#self.userPassword.text = ""
+		#self.userEmail.text = ""
 		
-		
-	#def deleteUserProfile(name, password, email)
-		#remove data form database
-
+	#def deleteUserProfile(self):
+		#send (self.userName.text, self.userPassword.text, self.userEmail.text) to database
+		#self.userName.text = ""
+		#self.userPassword.text = ""
+		#self.userEmail.text = ""
 
 class ManagePL(Screen):     #part of the user profile
     pass
