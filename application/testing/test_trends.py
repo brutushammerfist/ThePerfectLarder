@@ -9,15 +9,15 @@ import Trends
 
 class TestTrends(unittest.TestCase)
 	
-	#def test_selectMonth(month, trendData)
+	#def test_selectMonth(self):
 		#display the the food use and waste data for the month
 		
 	
-	#def test_userTrendData(month, trendData)
+	#def test_userTrendData(self):
 		#store the users trend data in the database
 		
 		
-	# def test_trendCharts (month, trendData)
+	# def test_trendCharts (self):
 		#display month and trend data to user
 		
 #need below to run tests

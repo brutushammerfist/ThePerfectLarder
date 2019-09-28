@@ -15,13 +15,13 @@ from kivy.uix.screenmanager import Screen
 class Trends(Screen):
 	pass
 
-	#def selectMonth(month, trendData)
+	#def selectMonth(self):
 		#display the the food use and waste data for the month
 		
 	
-	#def userTrendData(month, trendData)
+	#def userTrendData(self):
 		#store the users trend data in the database
 		
 		
-	# def trendCharts (month, trendData)
+	# def trendCharts (self):
 		#display month and trend data to user
