@@ -28,17 +28,17 @@ from shoppinglist import ShoppingList
 from trends import Trends
 from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification
 
-#Builder.load_file('kv/feedback.kv')
-#Builder.load_file('kv/inventory.kv')
-#Builder.load_file('kv/itemshare.kv')
+Builder.load_file('kv/feedback.kv')
+Builder.load_file('kv/inventory.kv')
+Builder.load_file('kv/itemshare.kv')
 Builder.load_file('kv/login.kv')
-#Builder.load_file('kv/main.kv')
-#Builder.load_file('kv/notification.kv')
-#Builder.load_file('kv/recipes.kv')
-#Builder.load_file('kv/settings.kv')
-#Builder.load_file('kv/shoppinglist.kv')
-#Builder.load_file('kv/trends.kv')
-#Builder.load_file('kv/userprofile.kv')
+Builder.load_file('kv/main.kv')
+Builder.load_file('kv/notification.kv')
+Builder.load_file('kv/recipes.kv')
+Builder.load_file('kv/settings.kv')
+Builder.load_file('kv/shoppinglist.kv')
+Builder.load_file('kv/trends.kv')
+Builder.load_file('kv/userprofile.kv')
 
 class HomeScreen(Screen):    # Main screen after login
     pass
