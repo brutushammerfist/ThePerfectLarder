@@ -9,7 +9,7 @@ class test_plserver(TestCase):
         return app
     
     def test_login_logout(self):
-        response = self.client.post("/login", data=dict(username='username', password='password'))
+        response = self.client.post("/login", data=dict(username='username', password=hash('password')))
         
         self.assertEqual(response.code, 200)
         self.assertEqual("Successful login.", response.data)

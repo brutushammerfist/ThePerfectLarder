@@ -10,7 +10,9 @@ def index():
 
 @app.route('/login', methods = ['POST'])
 def login():
-    pass
+    content = request.json
+    credentialCheck = db.login(content['username'], content['password'])
+    return credentialCheck
 
 @app.route('/logout')
 def logout():
