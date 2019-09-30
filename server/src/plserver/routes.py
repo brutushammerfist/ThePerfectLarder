@@ -1,6 +1,8 @@
 from plserver import app
 from .database import Database
 
+from flask import request
+
 db = Database()
 
 @app.route('/')

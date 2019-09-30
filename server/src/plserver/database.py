@@ -14,10 +14,10 @@ class Database():
         self.cursor = self.connector.cursor()
         
     def login(self, username, password):
-        self.cursor.execute("SELECT username, password FROM Users WHERE username = %s", username)
-        result = self.cursor.fetchone()
+        self.cursor.execute("SELECT username, password FROM Users WHERE username = %s", (username, ))
+        result = self.cursor.fetchall()
         
-        if self.cursor.rowcount == 0:
+        if len(result) == 0:
             payload = {
                 'data' : 'Invalid username.'
             }
