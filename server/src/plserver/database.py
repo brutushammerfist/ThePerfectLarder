@@ -6,15 +6,15 @@ from plserver import app
 class Database():
     def __init__(self):
         self.connector = mysql.connector.connect(
-            host = "411orangef19-mgmt.cs.odu.edu",
+            host = "localhost",
             user = "test",
             passwd = "test",
-            database = "testing"
+            database = "perfectlarder"
         )
         self.cursor = self.connector.cursor()
         
     def login(self, username, password):
-        self.cursor.execute(f'SELECT username, password FROM Users WHERE username = %s', username)
+        self.cursor.execute("SELECT username, password FROM Users WHERE username = %s", username)
         result = self.cursor.fetchone()
         
         if self.cursor.rowcount == 0:
