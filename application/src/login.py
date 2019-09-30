@@ -49,9 +49,9 @@ class Login(Screen):
             'password' : hash(self.ids.userPassword.text)
         }
         
-        #response = requests.post('411orangef19-mgmt.cs.odu.edu:8000/login', headers=headers, data=json.dumps(payload)).json()
+        response = requests.post('411orangef19-mgmt.cs.odu.edu:8000/login', headers=headers, data=json.dumps(payload)).json()
         
-        response = {'data' : 'Incorrect password.'}
+        #response = {'data' : 'Incorrect password.'}
         
         # if incorrect, clear password and have them try again
         if response['data'] == 'Successful login.':
