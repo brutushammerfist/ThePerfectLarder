@@ -14,7 +14,7 @@ class Database():
         self.cursor = self.connector.cursor()
         
     def login(self, username, password):
-        self.cursor.execute(f'SELECT username, password FROM Users WHERE username ='{username}'')
+        self.cursor.execute(f'SELECT username, password FROM Users WHERE username = %s', username)
         result = self.cursor.fetchone()
         
         if self.cursor.rowcount == 0:
