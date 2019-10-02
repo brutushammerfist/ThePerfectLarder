@@ -5,6 +5,6 @@ test:
  stage: test
  script:
   - cd ./server/src/tests
-  - export FLASK_APP=plserver.py
+  - export FLASK_APP=../plserver.py
   - export DATABASE_NAME=testing
   - python3 test_plserver.py
