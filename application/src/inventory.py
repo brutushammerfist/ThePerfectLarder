@@ -102,10 +102,37 @@ class Inventory(Screen):
 		#display the inventory to the userInventory
 		
 		
-	#def searchForItem(self):
-		#Send(self.itemName.text) to database
-		#display item attributes
-		#self.itemName.text = ""
+	def searchForItem(self):
+	
+		#popup to confirm item was found
+		nameContent = GridLayout(cols=1)
+		nameContent.add_widget(Label(text= self.itemName.text)) #need to display attributes
+		nameButton = Button(text='OK')
+		nameContent.add_widget(nameButton)
+		searchItemPopup = Popup(title='Search Item', content=nameContent, auto_dismiss=False)
+		nameButton.bind(on_press=searchItemPopup.dismiss)
+		
+		#popup to let the user know the item was not found 
+		nameContent = GridLayout(cols=1)
+		nameContent.add_widget(Label(text= self.itemName.text + ' is not in your inventory'))
+		nameButton = Button(text='OK')
+		nameContent.add_widget(nameButton)
+		itemNotFoundPopup = Popup(title='Item Not Found', content=nameContent, auto_dismiss=False)
+		nameButton.bind(on_press=itemNotFoundPopup.dismiss)
+		
+		headers = {'Content-Type' : 'application/json'}
+        
+		payload = {
+			'itemName' : self.ids.itemName.text
+		}
+		
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/searchItem', headers=headers, data=json.dumps(payload)).json()
+		
+		if response['data'] == 'Item found.':
+			self.searchItemPopup.open()
+			#display attributes to kivy 
+		else:
+			self.itemNotFoundPopup.open()
 
 	#def thePerfectLarder(self):
 		#display to user what items, based on trends that 
