@@ -1,13 +1,19 @@
 from flask import Flask
 from flask_testing import TestCase
 
+import sys
+sys.path.insert(0, '..')
+
+import plserver
+
 import unittest
 
 class test_plserver(TestCase):
     
     def create_app(self):
-        app = Flask(__name__)
-        app.config['TESTING'] = True
+        #app = Flask(__name__)
+        #app.config['TESTING'] = True
+        app = plserver.app
         return app
     
     def test_login_logout(self):
