@@ -15,30 +15,47 @@ from kivy.properties import ObjectProperty
 class Inventory(Screen):
 	pass
 	
-	#itemName = ObjectProperty(None)
-	#quantity = ObjectProperty(None)
-	#expirationDate = ObjectProperty(None)
-	#storageLocation = ObjectProperty(None)
+	itemName = ObjectProperty(None)
+	quantity = ObjectProperty(None)
+	expirationDate = ObjectProperty(None)
+	storageLocation = ObjectProperty(None)
 	
-	#def addItems (self):
-		#Send(self.itemName.text, self.quantity.text, self.expirationDate.text,
-		#     self.storageLocation.text) to database
-		#if item is already in the inventory update the quantity
+	def addItems (self):
+	
+		headers = {'Content-Type' : 'application/json'}
+        
+		payload = {
+            'itemName' : self.ids.itemName.text,
+            'quantity' : self.ids.quantity.text,
+			'expiration' : self.ids.expirationDate.text,
+            'storage' : self.ids.storageLocation.text
+        }
+        
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addItem', headers=headers, data=json.dumps(payload)).json()
+        
+		#clearing input text feild
+		self.itemName.text = ""
+		self.quantity.text = ""
+		self.expirationDate.text = ""
+		self.storageLocation.text = ""
+	
+	
+	def deleteItems(self):
+		
+		headers = {'Content-Type' : 'application/json'}
+        
+		payload = {
+            'itemName' : self.ids.itemName.text,
+            'quantity' : self.ids.quantity.text,
+            'storage' : self.ids.storageLocation.text
+        }
+		
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delItem', headers=headers, data=json.dumps(payload)).json()
 		
 		#clearing input text feild
-		#self.itemName.text = ""
-		#self.quantity.text = ""
-		#self.expirationDate.text = ""
-		#self.storageLocation.text = ""
-	
-	
-	#def deleteItems(self):
-		#Send(self.itemName.text, self.quantity.text, self.storageLocation.text) to database
-		
-		#clearing input text feild
-		#self.itemName.text = ""
-		#self.quantity.text = ""
-		#self.storageLocation.text = ""
+		self.itemName.text = ""
+		self.quantity.text = ""
+		self.storageLocation.text = ""
 	
 	
 	#def viewInventory(self):
