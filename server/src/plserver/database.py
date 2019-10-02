@@ -1,5 +1,6 @@
 import mysql.connector
 import json
+import os
 
 from plserver import app
 
@@ -9,7 +10,7 @@ class Database():
             host = "localhost",
             user = "test",
             passwd = "test",
-            database = "perfectlarder"
+            database = os.environ['DATABASE_NAME']
         )
         self.cursor = self.connector.cursor()
         
