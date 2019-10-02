@@ -22,6 +22,7 @@ class Inventory(Screen):
 	quantity = ObjectProperty(None)
 	expirationDate = ObjectProperty(None)
 	storageLocation = ObjectProperty(None)
+	#userID = ObjectProperty(None)
 	
 	def addItems (self):
 	
@@ -98,9 +99,38 @@ class Inventory(Screen):
 		else:
 			self.itemNotdelPopup.open()
 	
-	#def viewInventory(self):
-		#display the inventory to the userInventory
+	def viewInventory(self):   #need to pass in the user id after login
+	
+		"""
+		#user inventory popup to show inventory (needs to be scrollable)
+		nameContent = GridLayout(cols=1)
+		nameContent.add_widget(Label(text= 'Display the user inventory'))
+		nameButton = Button(text='OK')
+		nameContent.add_widget(nameButton)
+		inventoryPopup = Popup(title='Inventory', content=nameContent, auto_dismiss=False)
+		nameButton.bind(on_press=inventoryPopup.dismiss)
 		
+		#user inventory popup to show inventory (needs to be scrollable)
+		nameContent = GridLayout(cols=1)
+		nameContent.add_widget(Label(text= 'Inventory Empty'))
+		nameButton = Button(text='OK')
+		nameContent.add_widget(nameButton)
+		errorPopup = Popup(title='Inventory Empty', content=nameContent, auto_dismiss=False)
+		nameButton.bind(on_press=errorPopup.dismiss)
+		
+		headers = {'Content-Type' : 'application/json'}
+        
+		payload = {
+            'userid' : userID
+        }
+		
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getInventory', headers=headers, data=json.dumps(payload)).json()
+		
+		if response['data'] == 'Found inventory.':
+			self.inventoryPopup.open()
+		elif response['data'] == 'Inventory Empty.':
+			self.error.popup.open()  #if inventory is empty
+		"""	
 		
 	def searchForItem(self):
 	
