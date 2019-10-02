@@ -7,35 +7,40 @@ sys.path.insert(0, '..')
 import plserver
 
 import unittest
+import requests
+import json
 
 class test_plserver(TestCase):
     
-    def create_app(self):
-        #app = Flask(__name__)
-        #app.config['TESTING'] = True
+    def create_app(self):    
         app = plserver.app
         return app
     
     def test_login_logout(self):
-        response = self.client.post("/login", data=dict(username='username', password=hash('password')))
-        
+        response = self.client.post('/login', headers={'Content-Type':'application/json'}, data=json.dumps(dict(username='Brutus', password='Hammerfist')))
+        data = json.loads(response.data)
+
         self.assert200(response, 'Successful login failed.')
-        self.assertEqual("Successful login.", response.data)
+        self.assertEqual("Successful login.", data['data'])
         
-        response = self.client.post("/logout", data=dict(username='username'))
+        #Logout not really necessary in application.
+        #response = self.client.post("/logout", headers={'Content-Type':'application/json'}, data=dict(username='username'))
+        #data = json.loads(response.data)
+
+        #self.assert200(response, 'Succesful logout failed.')
+        #self.assertEqual("Successful logout.", data['data'])
         
-        self.assert200(response, 'Succesful logout failed.')
-        self.assertEqual("Successful logout.", response.data)
-        
-        response = self.client.post("/login", data=dict(username='abc', password='password'))
-        
+        response = self.client.post('/login', headers={'Content-Type':'application/json'}, data=json.dumps(dict(username='abc', password='Hammerfist')))
+        data = json.loads(response.data)
+
         self.assert401(response, 'Invalid username failed.')
-        self.assertEqual("Invalid username.", response.data)
+        self.assertEqual("Invalid username.", data['data'])
         
-        response = self.client.post("/login", data=dict(username='username', password='abc'))
-        
+        response = self.client.post('/login', headers={'Content-Type':'application/json'}, data=json.dumps(dict(username='Brutus', password='abc')))
+        data = json.loads(response.data)
+
         self.assert401(response, 'Incorrect password failed.')
-        self.assertEqual("Incorrect password.", response.data)
+        self.assertEqual("Incorrect password.", data['data'])
         
     def test_addItem(self):
         pass

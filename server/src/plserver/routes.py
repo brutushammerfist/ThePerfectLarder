@@ -3,6 +3,8 @@ from .database import Database
 
 from flask import request
 
+import json
+
 db = Database()
 
 @app.route('/')
@@ -12,7 +14,7 @@ def index():
 
 @app.route('/login', methods = ['POST'])
 def login():
-    content = request.json
+    content = request.get_json()
     credentialCheck = db.login(content['username'], content['password'])
     return credentialCheck
 

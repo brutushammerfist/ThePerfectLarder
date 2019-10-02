@@ -15,7 +15,9 @@ class Database():
         self.cursor = self.connector.cursor()
 
     def login(self, username, password):
-        self.cursor.execute("SELECT username, password FROM Users WHERE username = %s", (username, ))
+        sql = "SELECT username, password FROM Users WHERE username = %s"
+        usr = (str(username), )
+        self.cursor.execute(sql, usr)
         result = self.cursor.fetchall()
 
         if len(result) == 0:
@@ -24,7 +26,8 @@ class Database():
             }
             return (json.dumps(payload), 401)
         else:
-            if password == result['password']:
+            data = result[0]
+            if password == data[1]:
                 payload = {
                     'data' : 'Successful login.'
                 }
