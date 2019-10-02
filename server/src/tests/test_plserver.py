@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_testing import TestCase
 
+import unittest
+
 class test_plserver(TestCase):
     
     def create_app(self):
@@ -37,3 +39,6 @@ class test_plserver(TestCase):
     
     def test_getInventory(self):
         pass
+
+if __name__ == '__main__':
+	unittest.main()
