@@ -126,7 +126,7 @@ class test_plserver(TestCase):
         self.assertEqual('fridge', data['data'][1]['location'])
         self.assertEqual('2020-03-03', data['data'][1]['expDate'])
 
-        response = self.client.post('/searchItem', headers{'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name="Strawberry")))
+        response = self.client.post('/searchItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name="Strawberry")))
         data = json.loads(response.data)
 
         self.assert401(response, "Item found that shouldn't be.")
