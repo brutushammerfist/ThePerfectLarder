@@ -95,9 +95,42 @@ class test_plserver(TestCase):
         self.assertEqual('lbs', data['data'][2]['measurement'])
         self.assertEqual('fridge', data['data'][2]['location'])
         self.assertEqual('2020-03-03', data['data'][2]['expDate'])
+
+        response = self.client.post('/delItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(name='Strawberry')))
+        response = self.client.post('/delItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(name='Ground Beef')))
+        response = self.client.post('/delItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(name='Milk')))
+
+        response = self.client.post('/getInventory', headers={'Content-Type':'application/json'}, data=json.dumps(dict(userID=1)))
+        data = json.loads(response.data)
+
+        self.assert401(response, "Found items when should be empty.")
+        self.assertEquals("Inventory is currently empty.", data['data'])
+
+    def test_searchItem(self):
+        response = self.client.post('/addItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name='Buttermilk', quantity='0.5', measurement='gallon', location='fridge', expDate='2020-01-01')))
+        response = self.client.post('/addItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name='Ground Beef', quantity='3', measurement='lbs', location='fridge', expDate='2020-02-02')))
+        response = self.client.post('/addItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name='Milk', quantity='1', measurement='gallon', location='fridge', expDate='2020-03-03')))
         
-    def test_perfectLarder(self):
-        pass
+        response = self.client.post('/searchItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name="Milk")))
+        data = json.loads(response.data)
+
+        self.assert200(response, "Could not find item.")
+        self.assertEqual('Buttermilk', data['data'][0]['name'])
+        self.assertEqual('0.5', data['data'][0]['quantity'])
+        self.assertEqual('gallon', data['data'][0]['measurement'])
+        self.assertEqual('fridge', data['data'][0]['location'])
+        self.assertEqual('2020-01-01', data['data'][0]['expDate'])
+        self.assertEqual('Milk', data['data'][1]['name'])
+        self.assertEqual('1', data['data'][1]['quantity'])
+        self.assertEqual('gallon', data['data'][1]['measurement'])
+        self.assertEqual('fridge', data['data'][1]['location'])
+        self.assertEqual('2020-03-03', data['data'][1]['expDate'])
+
+        response = self.client.post('/searchItem', headers{'Content-Type':'application/json'}, data=json.dumps(dict(userID=1, name="Strawberry")))
+        data = json.loads(response.data)
+
+        self.assert401(response, "Item found that shouldn't be.")
+        self.assertEqual('Item not found in inventory.', data['data'])
 
 if __name__ == '__main__':
 	unittest.main()
