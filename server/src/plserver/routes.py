@@ -26,7 +26,9 @@ def addItem():
 
 @app.route('/getItem')
 def getItem():
-    pass
+    content = request.get_json()
+    getCheck = db.getItem(content)
+    return getCheck
     
 @app.route('/delItem')
 def delItem():
