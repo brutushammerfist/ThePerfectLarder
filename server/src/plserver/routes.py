@@ -20,7 +20,9 @@ def login():
 
 @app.route('/addItem')
 def addItem():
-    pass
+    content = request.get_json()
+    addCheck = db.addItem(content)
+    return addCheck
 
 @app.route('/getItem')
 def getItem():

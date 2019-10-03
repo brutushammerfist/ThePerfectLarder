@@ -2,8 +2,6 @@ import mysql.connector
 import json
 import os
 
-from plserver import app
-
 class Database():
     def __init__(self):
         self.connector = mysql.connector.connect(
@@ -41,8 +39,22 @@ class Database():
                 }
                 return (json.dumps(payload), 401)
 
-    def addItem(self):
-        pass
+    def addItem(self, content):
+        sql = "SELECT (inventoryID) FROM Users WHERE userID = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        inventoryID = result[0][0]
+
+        sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location) VALUES (%s, %s, %s, %s, %s, %s)"
+        val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'])
+        self.cursor.execute(sql, val)
+        result = self.commit()
+
+        print(self.cursor.rowcount, "records inserted.")
+
+        return (json.dumps(dict('data':'Item added.')), 200)
         
     def getItem(self):
         pass
@@ -54,7 +66,4 @@ class Database():
         pass
 
     def searchItem(self):
-        pass
-    
-    def perfectLarder(self):
         pass
