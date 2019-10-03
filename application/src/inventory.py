@@ -106,7 +106,7 @@ class ViewInventory(Screen):      #part of inventory
     
 		def viewInventory(self):   #need to pass in the user id after login
 	
-			"""
+			
 			#user inventory popup to show inventory (needs to be scrollable)
 			nameContent = GridLayout(cols=1)
 			nameContent.add_widget(Label(text= 'Display the user inventory'))
@@ -135,7 +135,7 @@ class ViewInventory(Screen):      #part of inventory
 				self.inventoryPopup.open()
 			elif response['data'] == 'Inventory Empty.':
 				self.error.popup.open()  #if inventory is empty
-			"""	
+			
 
 class SearchItem(Screen):         #part of inventory
     
@@ -175,7 +175,7 @@ class PerfectLarder(Screen):
 
 		def thePerfectLarder(self):
 		
-			"""
+			
 			#users perfect larder popup to show items to keep on hand (needs to be scrollable)
 			nameContent = GridLayout(cols=1)
 			nameContent.add_widget(Label(text= 'Display the user perfect larder inventory'))
@@ -204,4 +204,4 @@ class PerfectLarder(Screen):
 				self.plPopup.open()
 			elif response['data'] == 'PL Empty.':
 				self.error.popup.open()  #if inventory is empty
-			"""	
+			
