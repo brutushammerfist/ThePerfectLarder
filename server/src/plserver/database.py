@@ -54,7 +54,7 @@ class Database():
 
         print(self.cursor.rowcount, "records inserted.")
 
-        return (json.dumps(dict('data':'Item added.')), 200)
+        return (json.dumps(dict(data='Item added.')), 200)
         
     def getItem(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE userID = %s"
@@ -88,7 +88,7 @@ class Database():
             sql = "UPDATE Items SET quantity = %s WHERE itemID = %s"
             val = (newQuantity, content['itemID'])
         
-        return (json.dumps(dict('data':'Item deleted.')), 200)
+        return (json.dumps(dict(data='Item deleted.')), 200)
 
     def getInventory(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE userID = %s"
@@ -129,4 +129,9 @@ class Database():
         temp = []
         for i in result:
             temp.append(dict(itemID=result[i][0], useID=result[i][1], itemname=result[i][2], expDate=result[i][3], quantity=result[i][4], measurement=result[i][5], location=result[i][6]))
-            
+        
+        payload = {
+            'data' : temp
+        }
+        
+        return (json.dumps(payload), 200)
