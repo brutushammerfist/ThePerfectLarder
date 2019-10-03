@@ -1,7 +1,7 @@
 <Login>
 	userName:userName                #for python code : for kivy code
 	userPassword:userPassword        #for python code : for kivy code
-	userEmail:userEmail              #for python code : for kivy code
+
 	GridLayout:
 		cols:1
 		size: root.width, root.height
@@ -11,7 +11,7 @@
 			padding: [20, 30, 40, 50]
 		
 			Label:
-				text: "Name: "
+				text: "Username: "
 				pos_hint: {"x":0.1, "top":0.9}
 				size_hint: 0.35, 0.15
 				
@@ -30,17 +30,6 @@
 				id: userPassword
 				multiline: False
 				password: True
-				pos_hint: {"x": 0.45 , "top":0.9}
-				size_hint: 0.4, 0.15
-				
-			Label:
-				text: "Email: "
-				pos_hint: {"x":0.1, "top":0.9}
-				size_hint: 0.35, 0.15
-				
-			TextInput:
-				id: userEmail
-				multiline: False
 				pos_hint: {"x": 0.45 , "top":0.9}
 				size_hint: 0.4, 0.15
 			
