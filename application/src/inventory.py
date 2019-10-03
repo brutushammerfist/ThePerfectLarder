@@ -87,9 +87,10 @@ class DeleteItem(Screen):        #part of inventory
 			headers = {'Content-Type' : 'application/json'}
 			
 			payload = {
-				'itemName' : self.ids.itemName.text,
+				'itemname' : self.ids.itemName.text,
 				'quantity' : self.ids.quantity.text,
-				'storage' : self.ids.storageLocation.text
+                'measurement' : self.ids.measurement.text,
+				'location' : self.ids.storageLocation.text
 			}
 			
 			response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delItem', headers=headers, data=json.dumps(payload)).json()

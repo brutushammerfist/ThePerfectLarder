@@ -73,10 +73,24 @@ class Database():
             if result[i][0] == content['name']:
                 return (json.dumps(dict(itemname=result[i][0], expDate=result[i][1], quantity=result[i][2], measurement=result[i][3], location=result[i][4])), 200)
 
-    def delItem(self):
-        pass
+    def delItem(self, content):
+        sql = "SELECT (itemID, itemname, quantity, measurement, location) FROM Items WHERE itemID = %s"
+        val = (content['itemID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        newQuantity = result[0][2] - content['quantity']
+        
+        if newQuantity <= 0:
+            sql = "DELETE FROM Items WHERE itemID = %s"
+            val = (content['itemID'])
+        else:
+            sql = "UPDATE Items SET quantity = %s WHERE itemID = %s"
+            val = (newQuantity, content['itemID'])
+        
+        return (json.dumps(dict('data':'Item deleted.')), 200)
 
-    def getInventory(self):
+    def getInventory(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE userID = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -84,14 +98,14 @@ class Database():
 
         inventoryID = result[0][0]
 
-        sql = "SELECT (useID, itemname, expiration, quantity, measurement, location) FROM Items WHERE inventoryID = %s"
+        sql = "SELECT (itemID, useID, itemname, expiration, quantity, measurement, location) FROM Items WHERE inventoryID = %s ORDER BY itemname"
         val = (inventoryID, )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
 
         temp = []
         for i in result:
-            temp.append(dict(useID=result[i][0], itemname=result[i][1], expDate=result[i][2], quantity=result[i][3], measurement=result[i][4], location=result[i][5]))
+            temp.append(dict(itemID=result[i][0], useID=result[i][1], itemname=result[i][2], expDate=result[i][3], quantity=result[i][4], measurement=result[i][5], location=result[i][6]))
 
         payload = {
             'data' : temp
@@ -99,5 +113,20 @@ class Database():
 
         return (json.dumps(payload), 200)
 
-    def searchItem(self):
-        pass
+    def searchItem(self, content):
+        sql = "SELECT (inventoryID) FROM Users WHERE userID = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+
+        inventoryID = result[0][0]
+        
+        sql = "SELECT (itemID, useID, itemname, expiration, quantity, measurement, location) FROM Items WHERE inventoryID = %s AND itemname LIKE %s"
+        val = (inventoryID, '%' + content['data'] + '%')
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        temp = []
+        for i in result:
+            temp.append(dict(itemID=result[i][0], useID=result[i][1], itemname=result[i][2], expDate=result[i][3], quantity=result[i][4], measurement=result[i][5], location=result[i][6]))
+            

@@ -27,21 +27,23 @@ def addItem():
 @app.route('/getItem')
 def getItem():
     content = request.get_json()
-    getCheck = db.getItem(content)
-    return getCheck
+    getItemCheck = db.getItem(content)
+    return getItemCheck
     
 @app.route('/delItem')
 def delItem():
-    pass
+    content = request.get_json()
+    delCheck = db.delItem(content)
+    return delCheck
 
 @app.route('/getInventory')
 def getInventory():
-    pass
+    content = request.get_json()
+    getInvCheck = db.getInventory(content)
+    return getInvCheck
     
 @app.route('/searchItem')
 def searchItem():
-    pass
-    
-@app.route('/perfectLarder')
-def perfectLarder():
-    pass
+    content = request.get_json()
+    searchCheck = db.searchItem(content)
+    return searchCheck
