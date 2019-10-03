@@ -18,6 +18,26 @@ def login():
     credentialCheck = db.login(content['username'], content['password'])
     return credentialCheck
 
-@app.route('/logout')
-def logout():
+@app.route('/addItem')
+def addItem():
+    pass
+
+@app.route('/getItem')
+def getItem():
+    pass
+    
+@app.route('/delItem')
+def delItem():
+    pass
+
+@app.route('/getInventory')
+def getInventory():
+    pass
+    
+@app.route('/searchItem')
+def searchItem():
+    pass
+    
+@app.route('/perfectLarder')
+def perfectLarder():
     pass

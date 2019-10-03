@@ -13,6 +13,9 @@ class Database():
             database = os.environ['DATABASE_NAME']
         )
         self.cursor = self.connector.cursor()
+        
+    def createAccount(self):
+        pass
 
     def login(self, username, password):
         sql = "SELECT username, password FROM Users WHERE username = %s"
@@ -40,9 +43,18 @@ class Database():
 
     def addItem(self):
         pass
+        
+    def getItem(self):
+        pass
 
     def delItem(self):
         pass
 
     def getInventory(self):
+        pass
+
+    def searchItem(self):
+        pass
+    
+    def perfectLarder(self):
         pass

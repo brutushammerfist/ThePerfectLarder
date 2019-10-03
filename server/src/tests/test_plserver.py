@@ -16,19 +16,12 @@ class test_plserver(TestCase):
         app = plserver.app
         return app
     
-    def test_login_logout(self):
+    def test_login(self):
         response = self.client.post('/login', headers={'Content-Type':'application/json'}, data=json.dumps(dict(username='Brutus', password='Hammerfist')))
         data = json.loads(response.data)
 
         self.assert200(response, 'Successful login failed.')
         self.assertEqual("Successful login.", data['data'])
-        
-        #Logout not really necessary in application.
-        #response = self.client.post("/logout", headers={'Content-Type':'application/json'}, data=dict(username='username'))
-        #data = json.loads(response.data)
-
-        #self.assert200(response, 'Succesful logout failed.')
-        #self.assertEqual("Successful logout.", data['data'])
         
         response = self.client.post('/login', headers={'Content-Type':'application/json'}, data=json.dumps(dict(username='abc', password='Hammerfist')))
         data = json.loads(response.data)
@@ -42,9 +35,22 @@ class test_plserver(TestCase):
         self.assert401(response, 'Incorrect password failed.')
         self.assertEqual("Incorrect password.", data['data'])
         
-    def test_addItem(self):
-        pass
-    
+    def test_addItem_getItem(self):
+        response = self.client.post('/addItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(name='Strawberry', quantity='1', measurement='lbs', location='fridge')))
+        data = json.loads(response.data)
+        
+        self.assert200(response, 'Adding item failed.')
+        self.assertEqual("Successfully added item to inventory.", data['data'])
+        
+        response = self.client.post('/getItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(name='Strawberry')))
+        
+        self.assert200(response, 'Getting item failed.')
+        self.assertEqual("Successfully pulled item from inventory.", data['data'])
+        
+        self.assertEqual("1", data['item']['quantity'])
+        self.assertEqual("lbs", data['item']['measurement'])
+        self.assertEqual("fridge", data['item']['location'])
+        
     def test_delItem(self):
         pass
     
