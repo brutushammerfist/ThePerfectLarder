@@ -80,24 +80,27 @@ class Database():
         return (json.dumps(dict(data="Could not pull item.")), 401)
 
     def delItem(self, content):
-        sql = "SELECT itemID, itemname, quantity, measurement, location FROM Items WHERE itemID = %s"
+        sql = "SELECT id, itemname, quantity, measurement, location FROM Items WHERE id = %s"
         val = (content['itemID'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
         
-        newQuantity = result[0][2] - content['quantity']
+        if len(result) is not 0:
+            newQuantity = result[0][2] - content['quantity']
         
-        if newQuantity <= 0:
-            sql = "DELETE FROM Items WHERE itemID = %s"
-            val = (content['itemID'])
+            if newQuantity <= 0:
+                sql = "DELETE FROM Items WHERE id = %s"
+                val = (content['itemID'], )
+            else:
+                sql = "UPDATE Items SET quantity = %s WHERE id = %s"
+                val = (newQuantity, content['itemID'], )
+        
+            self.cursor.execute(sql, val)
+            self.connector.commit()
+        
+            return (json.dumps(dict(data='Item deleted.')), 200)
         else:
-            sql = "UPDATE Items SET quantity = %s WHERE itemID = %s"
-            val = (newQuantity, content['itemID'])
-
-        self.cursor.execute(sql, val)
-        self.connector.commit()
-        
-        return (json.dumps(dict(data='Item deleted.')), 200)
+            return (json.dumps(dict(data='Item does not exist')), 401)
 
     def getInventory(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
@@ -119,8 +122,11 @@ class Database():
         payload = {
             'data' : temp
         }
-
-        return (json.dumps(payload, default=str), 200)
+        
+        if len(temp) == 0:
+            return (json.dumps(dict(data='Inventory is currently empty.'), default=str), 401)
+        else:
+            return (json.dumps(payload, default=str), 200)
 
     def searchItem(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
@@ -143,4 +149,7 @@ class Database():
             'data' : temp
         }
         
-        return (json.dumps(payload, default=str), 200)
+        if len(temp) == 0:
+            return (json.dumps(dict(data='Item not found in inventory.'), default=str), 401)
+        else:
+            return (json.dumps(payload, default=str), 200)
