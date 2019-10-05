@@ -16,6 +16,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.app import App
 from kivy.uix.button import Button
+import requests
+import json
 
 class Inventory(Screen):
 	pass
@@ -27,10 +29,16 @@ class Inventory(Screen):
 	#userID = ObjectProperty(None) 
 	
 	def on_pre_enter(self):
-		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getInventory', headers=headers, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
 		
-		button = Button(text = App.get_running_app().userID)
-		self.ids.items.add_widget(button)
+		self.ids.inventoryID.clear_widgets()
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getInventory', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
+		
+		if response['data'] != 'Inventory is currently empty.':
+			for n in response['data']:
+				button = Button(text = n['itemname'])
+				self.ids.inventoryID.add_widget(button)
+		else:
+			self.ids.inventoryID.add_widget(Button(text = 'Inventory currently empty.'))
 	
 	def SearchItem(self):
 		pass
