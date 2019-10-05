@@ -90,7 +90,7 @@ class Database():
         result = self.cursor.fetchall()
         
         if len(result) is not 0:
-            newQuantity = result[0][2] - content['quantity']
+            newQuantity = result[0][2] - float(content['quantity'])
         
             if newQuantity <= 0:
                 sql = "DELETE FROM Items WHERE id = %s"
