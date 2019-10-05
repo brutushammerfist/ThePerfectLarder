@@ -97,40 +97,36 @@
 	
 	
 <DeleteItem>:
-	
-	itemName:itemName                #for python code : for kivy code
-	quantity:quantity        		 #for python code : for kivy code
-	storageLocation:storageLocation  #for python code : for kivy code
 
 	GridLayout:
+		id: del
 		cols:1
 		size: root.width, root.height
+		
+		Label:
+			id: name
+			
+		Label:
+			id: exp
+			
+		Label:
+			id: quantity
+			
+		Label:
+			id: loc
+			
 		GridLayout:
 			cols:2
 			
 			Label:
-				text: "Item Name: "
-					
+				text: "Quantity Used"
+				
 			TextInput:
-				id: itemName
-				multiline: False
-					
-			Label:
-				text: "Quantity: "
-					
-			TextInput:
-				id: quantity
-				multiline: False
-			
-			Label:
-				text: "Storage Location: "
-					
-			TextInput:
-				id: storageLocation
+				id: used
 				multiline: False
 				
 		Button:
-			text:"Submit"
+			text: "Submit"
 			on_press: root.deleteItems()
 			
 		Button:

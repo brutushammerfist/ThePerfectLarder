@@ -22,7 +22,7 @@ from kivy.uix.spinner import Spinner
 # This stops the kivy virtual keyboard not showing erorr
 Config.set('kivy', 'keyboard_mode','systemandmulti')
 from feedback import Feedback
-from inventory import Inventory, AddItem, DeleteItem, ViewInventory, SearchItem
+from inventory import Inventory, AddItem, DeleteItem #, ViewInventory, SearchItem
 from itemshare import ItemShare
 from login import Login
 from notification import Notification
@@ -66,8 +66,8 @@ screenManager.add_widget(GetRecipe(name="getrecipe"))
 
 screenManager.add_widget(AddItem(name="additem"))
 screenManager.add_widget(DeleteItem(name="deleteitem"))
-screenManager.add_widget(ViewInventory(name="viewinventory"))
-screenManager.add_widget(SearchItem(name="searchitem"))
+#screenManager.add_widget(ViewInventory(name="viewinventory"))
+#screenManager.add_widget(SearchItem(name="searchitem"))
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
