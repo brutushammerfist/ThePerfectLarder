@@ -18,31 +18,31 @@ def login():
     credentialCheck = db.login(content['username'], content['password'])
     return credentialCheck
 
-@app.route('/addItem')
+@app.route('/addItem', methods = ['POST'])
 def addItem():
     content = request.get_json()
     addCheck = db.addItem(content)
     return addCheck
 
-@app.route('/getItem')
+@app.route('/getItem', methods = ['POST'])
 def getItem():
     content = request.get_json()
     getItemCheck = db.getItem(content)
     return getItemCheck
     
-@app.route('/delItem')
+@app.route('/delItem', methods = ['POST'])
 def delItem():
     content = request.get_json()
     delCheck = db.delItem(content)
     return delCheck
 
-@app.route('/getInventory')
+@app.route('/getInventory', methods = ['POST'])
 def getInventory():
     content = request.get_json()
     getInvCheck = db.getInventory(content)
     return getInvCheck
     
-@app.route('/searchItem')
+@app.route('/searchItem', methods = ['POST'])
 def searchItem():
     content = request.get_json()
     searchCheck = db.searchItem(content)
