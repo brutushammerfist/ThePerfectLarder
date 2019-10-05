@@ -51,7 +51,7 @@ class Inventory(Screen):
         if response['data'] == "Item not found in inventory.":
             button = Button(text="No items matched your search.")
         else:
-            print(response['data'])
+            self.items = response['data']
             self.ids.inventoryID.clear_widgets()
             for n in range(0, len(response['data'])):
                 button = Button(text = response['data'][n]['itemname'] + " - " + str(response['data'][n]['quantity']) + " " + response['data'][n]['measurement'])
