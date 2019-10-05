@@ -72,11 +72,14 @@ screenManager.add_widget(SearchItem(name="searchitem"))
 
 #must have on start and build
 class testApp(App):
-    def on_start(self):
-        pass
+
+	userID = 0
+
+	def on_start(self):
+		pass
     
-    def build(self):
-        return screenManager
+	def build(self):
+		return screenManager
 		
 if __name__ == "__main__":
     testApp().run()

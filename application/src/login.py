@@ -14,6 +14,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
+from kivy.app import App
 
 # Must have to do requests/work with json data
 import json
@@ -55,7 +56,7 @@ class Login(Screen):
         
         # if incorrect, clear password and have them try again
         if response['data'] == 'Successful login.':
-            #Move to next screen
+            App.get_running_app().userID = response['userID']
             self.manager.current = 'homescreen'
         elif response['data'] == 'Invalid username.':
             self.ids.userPassword.text = ""

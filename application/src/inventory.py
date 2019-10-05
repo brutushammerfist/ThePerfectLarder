@@ -14,6 +14,8 @@ from kivy.properties import ObjectProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.app import App
+from kivy.uix.button import Button
 
 class Inventory(Screen):
 	pass
@@ -23,6 +25,15 @@ class Inventory(Screen):
 	expirationDate = ObjectProperty(None)
 	storageLocation = ObjectProperty(None)
 	#userID = ObjectProperty(None) 
+	
+	def on_pre_enter(self):
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getInventory', headers=headers, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
+		
+		button = Button(text = App.get_running_app().userID)
+		self.ids.items.add_widget(button)
+	
+	def SearchItem(self):
+		pass
 	
 class AddItem(Screen):            #part of inventory
 		
