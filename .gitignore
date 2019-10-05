@@ -10,3 +10,4 @@
 
 # Ignore built apk from Buildozer
 **/bin
+**/.buildozer
