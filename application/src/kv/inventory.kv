@@ -37,6 +37,7 @@
 			id: inventoryID
 			cols: 1
 			size_hint_y: None
+            height: self.minimum_height
             row_default_height: 35
 
 <AddItem>:
@@ -65,6 +66,12 @@
 			TextInput:
 				id: quantity
 				multiline: False
+                
+            Label:
+                text: "Measurement: "
+            TextInput:
+                id: measurement
+                multiline: False
 					
 			Label:
 				text: "Expiration Date: "

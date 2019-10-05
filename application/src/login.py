@@ -46,8 +46,8 @@ class Login(Screen):
         headers = {'Content-Type' : 'application/json'}
         
         payload = {
-            'username' : self.ids.userName.text,
-            'password' : self.ids.userPassword.text
+            'username' : 'Brutus',#self.ids.userName.text,
+            'password' : 'Hammerfist'#self.ids.userPassword.text
         }
         
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/login', headers=headers, data=json.dumps(payload)).json()
