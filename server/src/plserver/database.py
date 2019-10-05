@@ -42,17 +42,20 @@ class Database():
                 return (json.dumps(payload), 401)
 
     def addItem(self, content):
+        print("Entering add item.")
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
         
         inventoryID = result[0][0]
+        print("Inventory ID is " + str(inventoryID))
 
         sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location) VALUES (%s, %s, %s, %s, %s, %s)"
         val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'])
         self.cursor.execute(sql, val)
         result = self.connector.commit()
+        print("Item commited to database.")
 
         #print(self.cursor.rowcount, "records inserted.")
 
