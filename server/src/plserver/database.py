@@ -16,7 +16,7 @@ class Database():
         pass
 
     def login(self, username, password):
-        sql = "SELECT username, password FROM Users WHERE username = %s"
+        sql = "SELECT id, username, password FROM Users WHERE username = %s"
         usr = (str(username), )
         self.cursor.execute(sql, usr)
         result = self.cursor.fetchall()
@@ -28,9 +28,10 @@ class Database():
             return (json.dumps(payload), 401)
         else:
             data = result[0]
-            if password == data[1]:
+            if password == data[2]:
                 payload = {
-                    'data' : 'Successful login.'
+                    'data' : 'Successful login.',
+                    'id' : data[0]
                 }
                 return (json.dumps(payload), 200)
             else:

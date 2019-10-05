@@ -47,7 +47,7 @@ class AddItem(Screen):            #part of inventory
 			headers = {'Content-Type' : 'application/json'}
 			
 			payload = {
-				'itemName' : self.ids.itemName.text,
+				'itemname' : self.ids.itemName.text,
 				'quantity' : self.ids.quantity.text,
 				'expiration' : self.ids.expirationDate.text,
 				'storage' : self.ids.storageLocation.text
