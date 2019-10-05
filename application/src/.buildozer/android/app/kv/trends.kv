@@ -1,0 +1,16 @@
+<Trends>:
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		
+			
+		Spinner:
+			size_hint: None, None
+			size: 100, 44
+			pos_hint: {'center': (.5, .5)}
+			text: 'January'
+			values: 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+
+		Button:
+			text: 'Back To Home'
+			on_press: root.manager.current = 'homescreen'

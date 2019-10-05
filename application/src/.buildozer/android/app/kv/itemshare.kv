@@ -1,0 +1,33 @@
+<ItemShare>:
+
+	itemName:itemName                #for python code : for kivy code
+	shareWith:shareWith        		 #for python code : for kivy code
+
+	GridLayout:
+		cols:1
+		size: root.width, root.height
+		GridLayout:
+			cols:2
+			
+			Label:
+				text: "Item Name: "
+					
+			TextInput:
+				id: itemName
+				multiline: False
+					
+			Label:
+				text: "Share With: "
+					
+			TextInput:
+				id: shareWith
+				multiline: False
+		
+		Button:
+            text: 'Send Notification'
+            on_press: root.manager.current = 'homescreen'
+			#on_press: root.shareItems()
+		
+		Button:
+            text: 'Back To Home'
+            on_press: root.manager.current = 'homescreen'

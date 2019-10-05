@@ -7,3 +7,6 @@
 # Vim Rules
 **.swp
 **.tmp
+
+# Ignore built apk from Buildozer
+**/bin
