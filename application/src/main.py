@@ -10,6 +10,7 @@ kivy.require('1.11.1')
 from kivy.config import Config
 
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
@@ -73,13 +74,17 @@ screenManager.add_widget(DeleteItem(name="deleteitem"))
 #must have on start and build
 class testApp(App):
 
-	userID = 0
-
-	def on_start(self):
-		pass
+    userID = 0
     
-	def build(self):
-		return screenManager
-		
+    def update(self, dt):
+        pass
+
+    def on_start(self):
+        pass
+    
+    def build(self):
+        Clock.schedule_interval(self.update, 1)
+        return screenManager
+        
 if __name__ == "__main__":
     testApp().run()
