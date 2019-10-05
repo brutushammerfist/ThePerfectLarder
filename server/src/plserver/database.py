@@ -32,7 +32,7 @@ class Database():
             if password == data[2]:
                 payload = {
                     'data' : 'Successful login.',
-                    'id' : data[0]
+                    'userID' : data[0]
                 }
                 return (json.dumps(payload), 200)
             else:
