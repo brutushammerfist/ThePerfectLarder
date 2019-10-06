@@ -51,7 +51,7 @@ class HomeScreen(Screen):    # Main screen after login
 screenManager = ScreenManager()
 screenManager.add_widget(Login(name="userlogin"))
 screenManager.add_widget(HomeScreen(name="homescreen"))
-screenManager.add_widget(Profile(name="profile"))
+screenManager.add_widget(Profile(username="profile"))
 screenManager.add_widget(Recipes(name="recipes"))
 screenManager.add_widget(Inventory(name="inventory"))
 screenManager.add_widget(Trends(name="trends"))
