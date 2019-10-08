@@ -1,5 +1,22 @@
 <SignUp>:
+	FloatLayout:
 	GridLayout:
 		cols:1
+		size: root.width, root.height * 0.7
+		padding: [30]
+		spacing: [5,5]
+		
 		Label:
 			text: "Welcome to the signup Page"
+			
+		GridLayout:
+		Label:
+			text: "Already have an account?"
+		Button:
+			size_hint: 0.4, 0.31
+			#pos_hint:{"x":0,"y":0.05}
+			text: "SignIn"
+			font_size: 13
+			on_press:
+				root.manager.transition.direction = 'right' 
+				root.manager.current ='userlogin'

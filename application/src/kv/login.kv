@@ -1,10 +1,12 @@
 <Login>:
 	userName:userName                #for python code : for kivy code
 	userPassword:userPassword        #for python code : for kivy code
-
+	FloatLayout:
 	GridLayout:
 		cols:1
-		size: root.width, root.height * 0.7
+		#pos_hint: { "top": 1}
+		size_hint: 1,1.2
+		#size: root.width, root.height * 0.7
 		padding: [30]
 		spacing: [5,5]
 
@@ -63,4 +65,6 @@
 			#pos_hint:{"x":0,"y":0.05}
 			text: "Create Account"
 			font_size: 13
-			on_press: root.manager.current ='signup'
+			on_press: 
+				root.manager.transition.direction = 'left'
+				root.manager.current ='signup'
