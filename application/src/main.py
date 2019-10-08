@@ -26,6 +26,7 @@ from feedback import Feedback
 from inventory import Inventory, AddItem, DeleteItem #, ViewInventory, SearchItem
 from itemshare import ItemShare
 from login import Login
+from signup import SignUp
 from notification import Notification
 from recipes import Recipes, AddRecipe, GetRecipe
 from settings import Settings
@@ -37,6 +38,7 @@ Builder.load_file('kv/feedback.kv')
 Builder.load_file('kv/inventory.kv')
 Builder.load_file('kv/itemshare.kv')
 Builder.load_file('kv/login.kv')
+Builder.load_file('kv/signup.kv')
 Builder.load_file('kv/main.kv')
 Builder.load_file('kv/notification.kv')
 Builder.load_file('kv/recipes.kv')
@@ -49,23 +51,39 @@ class HomeScreen(Screen):    # Main screen after login
     pass
 
 screenManager = ScreenManager()
+#Adding singUp screen
+
+
 screenManager.add_widget(Login(name="userlogin"))
+
+screenManager.add_widget(SignUp(name="signup"))
+
 screenManager.add_widget(HomeScreen(name="homescreen"))
+
 screenManager.add_widget(Profile(username="profile"))
+
 screenManager.add_widget(Recipes(name="recipes"))
+
 screenManager.add_widget(Inventory(name="inventory"))
+
 screenManager.add_widget(Trends(name="trends"))
+
 screenManager.add_widget(ShoppingList(name="shoppinglist"))
+
 screenManager.add_widget(ItemShare(name="shareitems"))
 
 screenManager.add_widget(ManagePL(name="managepl"))
+
 screenManager.add_widget(EditCreateProfile(name="editcreateprofile"))
+
 screenManager.add_widget(SetupEditNotification(name="setupeditnotification"))
 
 screenManager.add_widget(AddRecipe(name="addrecipe"))
+
 screenManager.add_widget(GetRecipe(name="getrecipe"))
 
 screenManager.add_widget(AddItem(name="additem"))
+
 screenManager.add_widget(DeleteItem(name="deleteitem"))
 #screenManager.add_widget(ViewInventory(name="viewinventory"))
 #screenManager.add_widget(SearchItem(name="searchitem"))
