@@ -8,6 +8,7 @@ import kivy
 
 kivy.require('1.11.1')
 from kivy.config import Config
+Config.set('kivy', 'keyboard_mode','systemandmulti')
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -21,7 +22,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.uix.spinner import Spinner
 # This stops the kivy virtual keyboard not showing erorr
-Config.set('kivy', 'keyboard_mode','systemandmulti')
+
 from feedback import Feedback
 from inventory import Inventory, AddItem, DeleteItem #, ViewInventory, SearchItem
 from itemshare import ItemShare
