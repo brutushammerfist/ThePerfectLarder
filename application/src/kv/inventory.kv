@@ -69,6 +69,7 @@
                 
             Label:
                 text: "Measurement: "
+                
             TextInput:
                 id: measurement
                 multiline: False
@@ -83,9 +84,13 @@
 			Label:
 				text: "Storage Location: "
 					
-			TextInput:
+			Spinner:
 				id: storageLocation
-				multiline: False
+				text: "Pantry"
+                values: ["Pantry", "Refrigerator", "Freezer", "Other"]
+                size_hint: None, None
+                size: 400, 25
+                pos_hint:{'center_x':.5, 'top': 1}
 
 		Button:
 			text:"Submit"
