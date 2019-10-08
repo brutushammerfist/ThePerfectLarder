@@ -1,22 +1,104 @@
 <SignUp>:
+
+	userName:userName							#for python code : for kivy code
+	userPassword:userPassword       			#for python code : for kivy code
+	userPasswordConfirm:userPasswordConfirm		#for python code : for kivy code
+	userEmail:userEmail              			#for python code : for kivy code
+	
 	FloatLayout:
 	GridLayout:
-		cols:1
+		cols: 1
 		size: root.width, root.height * 0.7
 		padding: [30]
 		spacing: [5,5]
 		
 		Label:
-			text: "Welcome to the signup Page"
+			text: "Sign up for your Perfect Larder"
+			font_size: 17
+			
+		Label:
+			text: "Please enter your email address:"
+			
+		TextInput:
+			id: userEmail
+			center_x: (root.width/2)
+            top: (root.top/2)+ 100
+            hint_text: "enter email address"
+            size: 250, 35
+            max_lines: 1
+            valign: 'middle'
+            halign: 'center'
+            font_size: 15
+			multiline: False
+			pos_hint: {"x": 0.45 , "top":0.9}
+			#size_hint: 0.4, 0.32
+			
+		Label:
+			text: "Please choose your desired username:"
+		
+		TextInput:
+			id: userName
+			center_x: (root.width/2)
+            top: (root.top/2)+ 100
+            hint_text: "enter username"
+            size: 250, 35
+            max_lines: 1
+            valign: 'middle'
+            halign: 'center'
+            font_size: 15
+			multiline: False
+			pos_hint: {"x": 0.45 , "top":0.9}
+			#size_hint: 0.4, 0.32
+			
+		Label:
+			text: "Choose a password:"
+		
+		TextInput:
+			id: userPassword
+			center_x: (root.width/2)
+            top: (root.top/2)+ 100
+            hint_text: "choose a password"
+            size: 250, 35
+            max_lines: 1
+            valign: 'middle'
+            halign: 'center'
+            font_size: 15
+			multiline: False
+			password: True
+			pos_hint: {"x": 0.45 , "top":0.9}
+			#size_hint: 0.4, 0.32
+			
+		Label:
+			text: "Confirm your password:"
+		
+		TextInput:
+			id: userPasswordConfirm
+			center_x: (root.width/2)
+            top: (root.top/2)+ 100
+            hint_text: "confirm your password"
+            size: 250, 35
+            max_lines: 1
+            valign: 'middle'
+            halign: 'center'
+            font_size: 15
+			multiline: False
+			password: True
+			pos_hint: {"x": 0.45 , "top":0.9}
+			#size_hint: 0.4, 0.32
+			
+		Button:
+			text: "Create your Larder"
+			font_size: 15
+			on_press: root.validateInput()
 			
 		GridLayout:
 		Label:
 			text: "Already have an account?"
 		Button:
-			size_hint: 0.4, 0.31
+			#size_hint: 0.4, 0.31
 			#pos_hint:{"x":0,"y":0.05}
-			text: "SignIn"
-			font_size: 13
+			text: "Sign In"
+			font_size: 15
 			on_press:
 				root.manager.transition.direction = 'right' 
 				root.manager.current ='userlogin'
