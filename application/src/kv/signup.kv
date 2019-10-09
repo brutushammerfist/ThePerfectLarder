@@ -89,7 +89,8 @@
 		Button:
 			text: "Create your Larder"
 			font_size: 15
-			on_press: root.validateInput()
+			on_press: 
+				root.createAccount()
 			
 		GridLayout:
 		Label:
@@ -97,7 +98,7 @@
 		Button:
 			#size_hint: 0.4, 0.31
 			#pos_hint:{"x":0,"y":0.05}
-			text: "Sign In"
+			text: "Return to Sign In Page"
 			font_size: 15
 			on_press:
 				root.manager.transition.direction = 'right' 

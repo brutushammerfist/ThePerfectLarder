@@ -15,6 +15,9 @@ class Database():
         
     def createAccount(self):
         pass
+    
+    def searchUsers(self):
+        pass
 
     def login(self, username, password):
         sql = "SELECT id, username, password FROM Users WHERE username = %s"
