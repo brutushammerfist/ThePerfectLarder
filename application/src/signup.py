@@ -10,7 +10,7 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.app import App
 from kivy.properties import ObjectProperty
-Config.set('kivy', 'keyboard_mode','systemandmulti')
+#Config.set('kivy', 'keyboard_mode','systemandmulti')
 
 class SignUp(Screen):
     
@@ -43,12 +43,12 @@ class SignUp(Screen):
             self.userPassPopup.open()
             self.ids.userPassword.text = ""
             self.ids.userPasswordConfirm.text = ""
-            break
+            #break
             
         if (not re.search(emailRegex, userEmail)):
             self.userEmailPopup.open()
             self.ids.userEmail.text = ""
-            break
+            #break
         
         #Check for userName already in database
         

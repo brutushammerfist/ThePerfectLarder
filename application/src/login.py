@@ -18,7 +18,7 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.app import App
-Config.set('kivy', 'keyboard_mode','systemandmulti')
+#Config.set('kivy', 'keyboard_mode','systemandmulti')
 # Must have to do requests/work with json data
 import json
 import requests

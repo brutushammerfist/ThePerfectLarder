@@ -8,7 +8,7 @@ import kivy
 
 kivy.require('1.11.1')
 from kivy.config import Config
-Config.set('kivy', 'keyboard_mode','systemandmulti')
+#Config.set('kivy', 'keyboard_mode','systemandmulti')
 
 from kivy.app import App
 from kivy.clock import Clock
