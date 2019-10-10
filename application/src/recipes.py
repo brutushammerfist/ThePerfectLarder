@@ -12,6 +12,7 @@ from kivy.uix.gridlayout import GridLayout
 import requests
 import json
 from kivy.app import App
+from kivy.uix.button import Button
 
 class GetRecipe(Screen):
     recipes = []
