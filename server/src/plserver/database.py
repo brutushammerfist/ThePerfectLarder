@@ -195,17 +195,18 @@ class Database():
                 url = "https:" + recipeUrl
                 recipe_list = scrape_schema_recipe.scrape_url(url, python_objects=True)
 
-                recipe = {
-                    'name' : recipe_list[0]['name'],
-                    'cookTime' : recipe_list[0]['cookTime'],
-                    'cookingMethod' : recipe_list[0]['cookingMethod'],
-                    'recipeCategory' : recipe_list[0]['recipeCategory'],
-                    'recipeCuisine' : recipe_list[0]['recipeCuisine'],
-                    'recipeIngredient' : recipe_list[0]['recipeIngredient'],
-                    'recipeInstructions' : recipe_list[0]['recipeInstructions']
-                }
+                if len(recipe_list) != 0:
+                    recipe = {
+                        'name' : recipe_list[0]['name'],
+                        'cookTime' : recipe_list[0]['cookTime'],
+                        #'cookingMethod' : recipe_list[0]['cookingMethod'],
+                        #'recipeCategory' : recipe_list[0]['recipeCategory'],
+                        #'recipeCuisine' : recipe_list[0]['recipeCuisine'],
+                        'recipeIngredient' : recipe_list[0]['recipeIngredient'],
+                        'recipeInstructions' : recipe_list[0]['recipeInstructions']
+                    }
 
-                temp.append(recipe)
+                    temp.append(recipe)
 
         payload = {
             'data' : temp
