@@ -2,52 +2,39 @@
 	userName:userName                #for python code : for kivy code
 	userPassword:userPassword        #for python code : for kivy code
 	FloatLayout:
+        Image:
+            source: "graphics/loginbackground.png"
 	GridLayout:
 		cols:1
-		#pos_hint: { "top": 1}
-		size_hint: 1,1.2
-		#size: root.width, root.height * 0.7
+		size_hint: 1,.67
 		padding: [30]
 		spacing: [5,5]
 
 		GridLayout:
 			cols:1
 			padding: [20, 30, 40, 50]
-			
-		
-		Label:
-		    text: "The Perfect Larder"
-		    font_size: 30
 				
 		TextInput:
 			height: 100
 			id: userName
-			center_x: (root.width/2)
-            top: (root.top/2)+ 100
             hint_text: "username"
-            #size: 250, 35
             max_lines: 1
             valign: 'middle'
             halign: 'center'
             font_size: 15
 			multiline: False
-			#pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.32)
+			size_hint: (0.4, 0.42)
 				
 		TextInput:
 			id: userPassword
-			center_x: (root.width/2)
-            top: (root.top/2)+ 100
             hint_text: "password"
-            size: 250, 35
             max_lines: 1
             valign: 'middle'
             halign: 'center'
             font_size: 15
 			multiline: False
 			password: True
-			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: 0.4, 0.32
+			size_hint: 0.4, 0.42
 			
 		Button:
 			pos_hint:{"x":0.2,"y":0.05}
