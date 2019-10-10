@@ -81,7 +81,7 @@ screenManager.add_widget(SetupEditNotification(name="setupeditnotification"))
 
 screenManager.add_widget(AddRecipe(name="addrecipe"))
 
-screenManager.add_widget(GetRecipe(name="getrecipe"))
+screenManager.add_widget(GetRecipe(name="getrecipes"))
 
 screenManager.add_widget(AddItem(name="additem"))
 

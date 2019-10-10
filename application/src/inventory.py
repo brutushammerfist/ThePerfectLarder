@@ -133,76 +133,7 @@ class DeleteItem(Screen):        #part of inventory
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delItem', headers=headers, data=json.dumps(payload)).json()
 
 
-"""
-class ViewInventory(Screen):      #part of inventory
-    
-        def viewInventory(self):   #need to pass in the user id after login
-    
-            
-            #user inventory popup to show inventory (needs to be scrollable)
-            nameContent = GridLayout(cols=1)
-            nameContent.add_widget(Label(text= 'Display the user inventory'))
-            nameButton = Button(text='OK')
-            nameContent.add_widget(nameButton)
-            inventoryPopup = Popup(title='Inventory', content=nameContent, auto_dismiss=False)
-            nameButton.bind(on_press=inventoryPopup.dismiss)
-            
-            #user inventory popup to show inventory (needs to be scrollable)
-            nameContent = GridLayout(cols=1)
-            nameContent.add_widget(Label(text= 'Inventory Empty'))
-            nameButton = Button(text='OK')
-            nameContent.add_widget(nameButton)
-            errorPopup = Popup(title='Inventory Empty', content=nameContent, auto_dismiss=False)
-            nameButton.bind(on_press=errorPopup.dismiss)
-            
-            headers = {'Content-Type' : 'application/json'}
-            
-            payload = {
-                'userid' : userID
-            }
-            
-            response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getInventory', headers=headers, data=json.dumps(payload)).json()
-            
-            if response['data'] == 'Found inventory.':
-                self.inventoryPopup.open()
-            elif response['data'] == 'Inventory Empty.':
-                self.error.popup.open()  #if inventory is empty
-            
-            
-class SearchItem(Screen):         #part of inventory
-    
-        def searchForItem(self):
-    
-            #popup to confirm item was found
-            nameContent = GridLayout(cols=1)
-            nameContent.add_widget(Label(text= self.itemName.text)) #need to display attributes
-            nameButton = Button(text='OK')
-            nameContent.add_widget(nameButton)
-            searchItemPopup = Popup(title='Search Item', content=nameContent, auto_dismiss=False)
-            nameButton.bind(on_press=searchItemPopup.dismiss)
-            
-            #popup to let the user know the item was not found 
-            nameContent = GridLayout(cols=1)
-            nameContent.add_widget(Label(text= self.itemName.text + ' is not in your inventory'))
-            nameButton = Button(text='OK')
-            nameContent.add_widget(nameButton)
-            itemNotFoundPopup = Popup(title='Item Not Found', content=nameContent, auto_dismiss=False)
-            nameButton.bind(on_press=itemNotFoundPopup.dismiss)
-            
-            headers = {'Content-Type' : 'application/json'}
-            
-            payload = {
-                'itemName' : self.ids.itemName.text
-            }
-            
-            response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/searchItem', headers=headers, data=json.dumps(payload)).json()
-            
-            if response['data'] == 'Item found.':
-                self.searchItemPopup.open()
-                #display attributes to kivy 
-            else:
-                self.itemNotFoundPopup.open()
-    
+"""  
 class PerfectLarder(Screen):
 
         def thePerfectLarder(self):
