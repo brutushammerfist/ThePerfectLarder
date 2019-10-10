@@ -1,5 +1,8 @@
+from bs4 import BeautifulSoup
+import scrape_schema_recipe
 import mysql.connector
 import datetime
+import requests
 import json
 import os
 
@@ -160,3 +163,41 @@ class Database():
             return (json.dumps(dict(data='Item not found in inventory.'), default=str), 401)
         else:
             return (json.dumps(payload, default=str), 200)
+
+    def getRecipes(self, content):
+        sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+
+        inventoryID = result[0][0]
+
+        sql = "SELECT (itemname) FROM Items WHERE inventoryID = %s ORDER BY expiration"
+        val = (inventoryID, )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+
+        searchUrl = 'https://www.foodnetwork.com/search/'
+
+        for i in range(0, 5):
+            if " " in result[i][0]:
+                result[i][0].replace(' ', '-')
+            searchUrl = searchUrl + "-" + result[i][0]
+        searchUrl = searchUrl + '-'
+
+        searchRequest = requests.get(searchUrl)
+        soup = BeautifulSoup(searchRequest.text)
+
+        temp = []
+        for link in soup.find_all('h3', 'm-MediaBlock__a-Headline'):
+            recipeUrl = link.a.get('href')
+            if 'recipes' in recipeUrl:
+                url = "https:" + recipeUrl
+                recipe_List = scrape_schema_recipe.scrape_url(url, python_objects=True)
+                temp.append(recipe_list[0])
+
+        payload = {
+            'data' : temp
+        }
+
+        return (json.dumps(payload, default=str), 200)

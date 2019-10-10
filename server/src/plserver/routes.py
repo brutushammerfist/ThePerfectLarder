@@ -47,3 +47,9 @@ def searchItem():
     content = request.get_json()
     searchCheck = db.searchItem(content)
     return searchCheck
+
+@app.route('/getRecipes', methods = ['POST'])
+def getRecipes():
+    content = request.get_json()
+    getRecipeCheck = db.getRecipes(content)
+    return getRecipeCheck
