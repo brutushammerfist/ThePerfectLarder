@@ -4,27 +4,28 @@
 # By: Adeniyi Adeniran, Chris Whitney, Collin DeWaters, Derek Tiller, Jonathan Schneider
 #     Matthew Perry, Melanie Devoe, and Zachery Miller  
 
-
-
-# setup GUI (kivy)
-
 import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
+from kivy.uix.gridlayout import GridLayout
+import requests
+import json
+from kivy.app import App
 
-class Recipes(Screen):
+class GetRecipe(Screen):
+    recipes = []
     def on_pre_enter(self):
         self.ids.recipes.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
         
         if response['data'] != 'No Recipes Where Found.':
-            self.items = response['data']
+            self.recipes = response['data']
             for n in range(0, len(response['data'])):
-                button = Button(text = response['data'][n]['itemname'] + " - " + str(response['data'][n]['quantity']) + " " + response['data'][n]['measurement'])
-                callback = lambda n:self.delItem(n)
-                button.itemToDel = n
-                button.bind(on_press = callback)
+                button = Button(text = response['data'][n]['name'])
+                #callback = lambda n:self.delItem(n)
+                #button.itemToDel = n
+                #button.bind(on_press = callback)
                 self.ids.recipes.add_widget(button)
         else:
             self.ids.recipes.add_widget(Button(text = 'No recipes where found'))
@@ -40,7 +41,4 @@ class Recipes(Screen):
         
 	
 class AddRecipe(Screen):         #part of recipes
-    pass
-	
-class GetRecipe(Screen):          #part of recipes
     pass
