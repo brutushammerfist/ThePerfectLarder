@@ -1,36 +1,51 @@
 <Inventory>:
+	FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
 	Button:
-		text: "<-"
-		font_size: 20
+		text: ""
+		font_size: 15
 		color: 1,0,0,1
-		size_hint: 0.1, 0.1
-		pos_hint:{'x': 0, 'top': 1}
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'homescreen'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
 		
 	TextInput:
 		id: search
-		size_hint: 0.8, 0.1
-		pos_hint:{'x': 0.1, 'top': 1}
+		size_hint: (0.58, 0.05)
+		valign: 'middle'
+		halign: 'center'
+		font_size: 15
+		pos_hint:{'x': 0.21, 'top': .99}
 	
 	Button:
-		text: "Search"
-		font_size: 20
-		size_hint: 0.1, 0.1
-		pos_hint:{'x': .9, 'top': 1}
+		text: ""
+		font_size: 15
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': .79, 'top': .99}
 		on_press: root.SearchItem()
+		Image:
+			source:"graphics/search.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
 		
 	Button:
 		text: "Add Item"
-		font_size: 20
-		color: 0,1,0,1
-		size_hint: 1, 0.1
+		font_size: 17
+		color: 0, 0, 255, 1
+		size_hint: (.98, 0.09)
+		pos_hint:{'x': .01, 'top': .105}
 		on_press: root.manager.current = 'additem'
 
 	ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
-		size_hint: 1, 0.8
-		pos_hint:{'x': 0, 'y': 0.1}
+		size_hint: (.98, 0.815)
+		pos_hint:{'x': 0.01, 'top': 0.93}
 
 		GridLayout:
 			id: inventoryID
