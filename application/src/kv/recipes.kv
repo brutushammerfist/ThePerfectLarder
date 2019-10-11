@@ -64,7 +64,7 @@
 		color: 1,0,0,1
 		size_hint: 0.1, 0.1
 		pos_hint:{'x': 0, 'top': 1}
-		on_press: root.manager.current =  'homescreen'
+		on_press: root.manager.current =  'recipes'
         
     Label:
 		text: "Recommended Recipes"
@@ -84,3 +84,50 @@
 			size_hint_y: None
             height: self.minimum_height
             row_default_height: 35
+            
+<ViewRecipe>:
+    GridLayout:
+        cols:1
+        Label:
+            id: name
+        
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            
+            GridLayout:
+                cols:1
+                id: ingredients
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 35
+            
+        Label:
+            id: instructions
+            text_size: self.size
+            
+        Label:
+            id: cooktime
+    Button:
+		text: "<-"
+		font_size: 20
+		color: 1,0,0,1
+		size_hint: 0.1, 0.1
+		pos_hint:{'x': 0, 'top': 1}
+		on_press: root.manager.current =  'getrecipes'
+        
+<Recipe>:
+    GridLayout:
+        cols:1
+        Button:
+            text: "Add Recipe"
+            on_press: root.manager.current = 'addrecipe'
+            
+        Button:
+            text: "Get A Recipe"
+            on_press: root.manager.current = 'getrecipes'
+            
+        Button:
+            text: "Back To Home Screen"
+            on_press: root.manager.current = 'homescreen'
+           

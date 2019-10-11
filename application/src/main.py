@@ -29,7 +29,7 @@ from itemshare import ItemShare
 from login import Login
 from signup import SignUp
 from notification import Notification
-from recipes import AddRecipe, GetRecipe
+from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe
 from settings import Settings
 from shoppinglist import ShoppingList
 from trends import Trends
@@ -79,9 +79,13 @@ screenManager.add_widget(EditCreateProfile(name="editcreateprofile"))
 
 screenManager.add_widget(SetupEditNotification(name="setupeditnotification"))
 
+screenManager.add_widget(Recipe(name="recipes"))
+
 screenManager.add_widget(AddRecipe(name="addrecipe"))
 
 screenManager.add_widget(GetRecipe(name="getrecipes"))
+
+screenManager.add_widget(ViewRecipe(name="viewrecipe"))
 
 screenManager.add_widget(AddItem(name="additem"))
 
