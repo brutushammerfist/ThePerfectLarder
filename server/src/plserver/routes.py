@@ -53,3 +53,15 @@ def getRecipes():
     content = request.get_json()
     getRecipeCheck = db.getRecipes(content)
     return getRecipeCheck
+
+@app.route('/addRecipe', methods = ['POST'])
+def addRecipe():
+    content = request.get_json()
+    addRecipeCheck = db.addRecipe(content)
+    return addRecipeCheck
+
+@app.route('/delRecipe', methods = ['POST'])
+def delRecipe():
+    content = request.get_json()
+    delRecipeCheck = db.delRecipe(content)
+    return delRecipeCheck

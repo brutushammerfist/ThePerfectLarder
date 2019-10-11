@@ -61,9 +61,6 @@ class Database():
         val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'])
         self.cursor.execute(sql, val)
         result = self.connector.commit()
-        print("Item commited to database.")
-
-        #print(self.cursor.rowcount, "records inserted.")
 
         return (json.dumps(dict(data='Item added.')), 200)
         
@@ -213,3 +210,26 @@ class Database():
         }
 
         return (json.dumps(payload, default=str), 200)
+
+    def addRecipe(self, content):
+        sql = "INSERT INTO Recipes (name, description, servings, ingredients) VALUES (%s, %s, %s, %s)"
+        val = (content['name'], content['description'], content['servings'], content['ingredients'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+
+        sql = "SELECT id FROM Recipes ORDER BY id DESC LIMIT 1"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+
+        sql = "INSERT INTO PersonalRecipes (userID, recipeID) VALUES (%s, %s)"
+        val = (content['userID'], result[0][0], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+
+        return (json.dumps(dict(data='Recipe added.')), 200)
+
+    def editRecipes(self, content):
+        pass
+
+    def delRecipes(self, content):
+        pass
