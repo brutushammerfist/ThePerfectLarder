@@ -14,47 +14,122 @@
             text: 'Back To Home'
             on_press: root.manager.current = 'homescreen'		
 
-<AddRecipe>:
+#<AddRecipe>:
+#
+#	recipeName:recipeName                #for python code : for kivy code
+#	ingredients:ingredients        		 #for python code : for kivy code
+#	cookDirections:cookDirections        #for python code : for kivy code
+#	
+#	GridLayout:
+#		cols:1
+#		size: root.width, root.height
+#		GridLayout:
+#			cols:2
+#			
+#			Label:
+#				text: "Name: "
+#					
+#			TextInput:
+#				id: recipeName
+#				multiline: False
+#					
+#			Label:
+#				text: "Ingredients: "
+#					
+#			TextInput:
+#				id: ingredients
+#				multiline: True
+#					
+#			Label:
+#				text: "Cooking Directions: "
+#					
+#			TextInput:
+#				id: cookDirections
+#				multiline: True
+#					
+#		Button:
+#			text:"Enter"
+#			#on_press: root.manager.current = 'homescreen' 
+#			#on_press: root.userRecipe()    send data to a function
+#			
+#		Button:
+#            text: 'Back To Home'
+#            on_press: root.manager.current = 'recipes'
 
-	recipeName:recipeName                #for python code : for kivy code
-	ingredients:ingredients        		 #for python code : for kivy code
-	cookDirections:cookDirections        #for python code : for kivy code
-	
-	GridLayout:
-		cols:1
-		size: root.width, root.height
+<AddRecipe>:
+	Button:
+		text: "<-"
+		font_size: 20
+		color: 1,0,0,1
+		size_hint: 0.1, 0.1
+		pos_hint:{'x': 0, 'top': 1}
+		on_press: root.manager.current =  'recipes'
+        
+    Label:
+		text: "Add Personal Recipe"
+		font_size: 20
+		size_hint: 0.8, 0.1
+		pos_hint:{'x': 0.1, 'top': 1}
+
+	ScrollView:
+		do_scroll_x: False
+		do_scroll_y: True
+		size_hint: 1, 0.9
+
 		GridLayout:
-			cols:2
-			
-			Label:
-				text: "Name: "
-					
-			TextInput:
-				id: recipeName
-				multiline: False
-					
-			Label:
-				text: "Ingredients: "
-					
-			TextInput:
+			cols:1
+			size_hint_y: None
+			height: self.minimum_height
+
+			GridLayout:
+				cols:2
+				size_hint_y: None
+				height: self.minimum_height
+				row_default_height: 35
+
+				Label:
+					text: "Recipe Name:"
+
+				TextInput:
+					id: name
+					multiline: False
+
+				Label:
+					text: "Servings:"
+
+				TextInput:
+					id: servings
+					multiline: False
+
+				Label:
+					text: "Description/Instructions:"
+
+				TextInput:
+					id: description
+					size_hint_y: None
+					height: 100
+					multiline: True
+
+			GridLayout:
+				cols:3
 				id: ingredients
-				multiline: True
-					
-			Label:
-				text: "Cooking Directions: "
-					
-			TextInput:
-				id: cookDirections
-				multiline: True
-					
+				size_hint_y: None
+				height: self.minimum_height
+				row_default_height: 35
+
+	GridLayout:
+		cols:2
+		size_hint: 1, 0.1
+
 		Button:
-			text:"Enter"
-			#on_press: root.manager.current = 'homescreen' 
-			#on_press: root.userRecipe()    send data to a function
-			
+			#size_hint: 1, 0.1
+			text: "Add another ingredient"
+			on_press: root.addIngredient()
+
 		Button:
-            text: 'Back To Home'
-            on_press: root.manager.current = 'recipes'
+			#size_hint: 1, 0.1
+			text: "Remove last ingredient"
+			on_press: root.delIngredient()
 		
 
 <GetRecipe>:

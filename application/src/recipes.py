@@ -14,6 +14,8 @@ import json
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.spinner import Spinner
 
 
 class GetRecipe(Screen):
@@ -49,7 +51,21 @@ class GetRecipe(Screen):
         
 	
 class AddRecipe(Screen):         #part of recipes
-    pass
+    def on_pre_enter(self):
+        self.ids.ingredients.add_widget(Label(text = "Ingredient"))
+        self.ids.ingredients.add_widget(Label(text = "Quantity"))
+        self.ids.ingredients.add_widget(Label(text = "Measurement"))
+        self.ids.ingredients.add_widget(TextInput())
+        self.ids.ingredients.add_widget(TextInput())
+        self.ids.ingredients.add_widget(Spinner(text = 'Choose', values = ('lbs', 'oz', 'bag', 'box')))
+
+    def addIngredient(self):
+        self.ids.ingredients.add_widget(TextInput())
+        self.ids.ingredients.add_widget(TextInput())
+        self.ids.ingredients.add_widget(Spinner(text = 'Choose', values = ('lbs', 'oz', 'bag', 'box')))
+
+    def delIngredient(self):
+        pass
     
 class Recipe(Screen):
     pass
