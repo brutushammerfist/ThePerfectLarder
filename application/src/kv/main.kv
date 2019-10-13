@@ -1,6 +1,17 @@
 <HomeScreen>:
-    BoxLayout:
-        orientation: 'vertical'
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	GridLayout:
+		cols:1
+		size_hint: 1,1.13
+		padding: [30]
+		spacing: [5,5]
+
+		GridLayout:
+			cols:1
+			padding: [20, 20, 20, 20]
+
         Button:
             text: 'Profile'
             on_press: root.manager.current = 'profile'
