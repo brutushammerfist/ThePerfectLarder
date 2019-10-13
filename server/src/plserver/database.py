@@ -161,7 +161,7 @@ class Database():
         else:
             return (json.dumps(payload, default=str), 200)
 
-    def getRecipes(self, content):
+    def getReccRecipes(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)

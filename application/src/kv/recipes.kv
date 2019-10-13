@@ -74,7 +74,8 @@
 	ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
-		size_hint: 1, 0.9
+		size_hint: 1, 0.8
+        pos_hint: {'top': 0.9}
 
 		GridLayout:
 			cols:1
@@ -111,25 +112,48 @@
 					multiline: True
 
 			GridLayout:
-				cols:3
-				id: ingredients
-				size_hint_y: None
+				cols:1
+                size_hint_y: None
 				height: self.minimum_height
 				row_default_height: 35
+                
+                GridLayout:
+                    cols:3
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 35
+                    
+                    Label:
+                        text: 'Ingredient'
+                    
+                    Label:
+                        text: 'Quantity'
+                    
+                    Label:
+                        text: 'Measurement'
+                    
+                GridLayout:
+                    cols:1
+                    id: ingredients
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 35
 
 	GridLayout:
-		cols:2
+		cols:3
 		size_hint: 1, 0.1
 
 		Button:
-			#size_hint: 1, 0.1
 			text: "Add another ingredient"
 			on_press: root.addIngredient()
 
 		Button:
-			#size_hint: 1, 0.1
 			text: "Remove last ingredient"
 			on_press: root.delIngredient()
+            
+        Button:
+            text: "Submit"
+            on_press: root.addRecipe()
 		
 
 <GetRecipe>:

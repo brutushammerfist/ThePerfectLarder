@@ -48,11 +48,11 @@ def searchItem():
     searchCheck = db.searchItem(content)
     return searchCheck
 
-@app.route('/getRecipes', methods = ['POST'])
-def getRecipes():
+@app.route('/getReccRecipes', methods = ['POST'])
+def getReccRecipes():
     content = request.get_json()
-    getRecipeCheck = db.getRecipes(content)
-    return getRecipeCheck
+    getReccRecipeCheck = db.getReccRecipes(content)
+    return getReccRecipeCheck
 
 @app.route('/addRecipe', methods = ['POST'])
 def addRecipe():
@@ -65,3 +65,9 @@ def delRecipe():
     content = request.get_json()
     delRecipeCheck = db.delRecipe(content)
     return delRecipeCheck
+    
+@app.route('/getRecipes', methods = ['POST'])
+def getRecipes():
+    content = request.get_json()
+    getRecipeCheck = db.getRecipes(content)
+    return getRecipeCheck

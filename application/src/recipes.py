@@ -16,6 +16,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.spinner import Spinner
+from kivy.uix.popup import Popup
 
 
 class GetRecipe(Screen):
@@ -23,7 +24,7 @@ class GetRecipe(Screen):
     viewrecipe = -1
     def on_pre_enter(self):
         self.ids.recipes.clear_widgets()
-        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
+        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getReccRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
         
         if response['data'] != 'No Recipes Where Found.':
             self.recipes = response['data']
@@ -42,30 +43,68 @@ class GetRecipe(Screen):
     
     def getRecipe(self):
         pass
-   
-    def addRecipe(self):
-        pass
-    
-    def verifyRecipe(self):
-        pass
-        
-	
-class AddRecipe(Screen):         #part of recipes
-    def on_pre_enter(self):
-        self.ids.ingredients.add_widget(Label(text = "Ingredient"))
-        self.ids.ingredients.add_widget(Label(text = "Quantity"))
-        self.ids.ingredients.add_widget(Label(text = "Measurement"))
-        self.ids.ingredients.add_widget(TextInput())
-        self.ids.ingredients.add_widget(TextInput())
-        self.ids.ingredients.add_widget(Spinner(text = 'Choose', values = ('lbs', 'oz', 'bag', 'box')))
 
+class Ingredient(GridLayout):
+    def populate(self):
+        self.cols = 3
+        self.add_widget(TextInput())
+        self.add_widget(TextInput())
+        self.add_widget(Spinner(text = 'Choose', values = ('lbs', 'oz', 'bag', 'box')))
+        
+    def deleteSelf(self):
+        self.parent.remove_widget(self)
+        
+class AddRecipe(Screen):
+    recipeContent = GridLayout(cols=1)
+    recipeContent.add_widget(Label(text='Recipe successfully added'))
+    recipeButton = Button(text='OK')
+    recipeContent.add_widget(recipeButton)
+    recipePopup = Popup(title='Added Recipe', content=recipeContent, auto_dismiss=False)
+    recipeButton.bind(on_press=recipePopup.dismiss)
+
+    def on_pre_enter(self):
+        self.addIngredient()
+        
     def addIngredient(self):
-        self.ids.ingredients.add_widget(TextInput())
-        self.ids.ingredients.add_widget(TextInput())
-        self.ids.ingredients.add_widget(Spinner(text = 'Choose', values = ('lbs', 'oz', 'bag', 'box')))
+        self.ids.ingredients.add_widget(Ingredient())
+        self.ids.ingredients.children[0].populate()
 
     def delIngredient(self):
-        pass
+        self.ids.ingredients.children[0].deleteSelf()
+        
+    def addRecipe(self):
+        payload = {
+            'name' : self.ids.name.text,
+            'servings' : self.ids.servings.text,
+            'description' : self.ids.description.text,
+            'ingredients' : self.extractIngredients()
+        }
+        
+        result = requests.post('http://411orangef19-mgmt.cs.odu.edu/addRecipe', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json
+        
+        if result['data'] == "Recipe Added.":
+            self.ids.name.text = ""
+            self.ids.servings.text = ""
+            self.ids.description.text = ""
+            self.ids.ingredients.clear_widgets()
+            self.addIngredient()
+            self.recipePopup.open()
+    
+    def extractIngredients(self):
+        ingredients = []
+        
+        for i in self.ids.ingredients.children:
+            ingredient = i.children
+            
+            temp = {
+                'name' : ingredient[0].text,
+                'quantity' : ingredient[1].text,
+                'measurement' : ingredient[2].text
+            }
+            
+            ingredients.append(temp)
+            
+        return ingredients
     
 class Recipe(Screen):
     pass
