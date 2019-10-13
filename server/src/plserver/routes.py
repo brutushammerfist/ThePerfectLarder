@@ -71,3 +71,9 @@ def getRecipes():
     content = request.get_json()
     getRecipeCheck = db.getRecipes(content)
     return getRecipeCheck
+    
+@app.route('/getPersonalRecipes', methods = ['POST'])
+def getPersonalRecipes():
+    content = request.get_json()
+    getPersonalRecipesCheck = db.getPersonalRecipes(content)
+    return getPersonalRecipesCheck

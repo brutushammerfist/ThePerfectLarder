@@ -210,6 +210,38 @@ class Database():
         }
 
         return (json.dumps(payload, default=str), 200)
+        
+    def getPersonalRecipes(self, content):
+        sql = "SELECT recipeID FROM PersonalRecipes WHERE userID = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        temp = []
+
+        if len(result) > 0:
+            for i in result:
+                sql = "SELECT name, description, servings, ingredients FROM Recipes WHERE id = %s"
+                val = (i[0], )
+                self.cursor.execute(sql, val)
+                recipe = self.cursor.fetchall()
+                
+                tempJson = {
+                    'name' : i[0],
+                    'description' : i[1],
+                    'servings' : i[2],
+                    'ingredients' : i[3]
+                ]
+                
+                temp.append(tempJson)
+                
+            payload = {
+                'data' : temp
+            }
+            
+            return (json.dumps(payload, default=str), 200)
+        else:
+            return (json.dumps(dict(data='Personal Recipes Empty.')), 401)
 
     def addRecipe(self, content):
         sql = "INSERT INTO Recipes (name, description, servings, ingredients) VALUES (%s, %s, %s, %s)"
