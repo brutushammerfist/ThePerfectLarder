@@ -231,7 +231,7 @@ class Database():
                     'description' : i[1],
                     'servings' : i[2],
                     'ingredients' : i[3]
-                ]
+                }
                 
                 temp.append(tempJson)
                 
