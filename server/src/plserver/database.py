@@ -221,7 +221,7 @@ class Database():
 
         if len(result) > 0:
             for i in result:
-                sql = "SELECT name, description, servings, ingredients FROM Recipes WHERE id = %s"
+                sql = "SELECT id, name, description, servings, ingredients FROM Recipes WHERE id = %s"
                 val = (i[0], )
                 self.cursor.execute(sql, val)
                 recipe = self.cursor.fetchall()
@@ -230,10 +230,11 @@ class Database():
                     debug.write(str(i))
 
                 tempJson = {
-                    'name' : recipe[0][0],
-                    'description' : recipe[0][1],
-                    'servings' : recipe[0][2],
-                    'ingredients' : recipe[0][3]
+                    'recipeID' : recipe[0][0],
+                    'name' : recipe[0][1],
+                    'description' : recipe[0][2],
+                    'servings' : recipe[0][3],
+                    'ingredients' : '{\"ingredients\" : ' + recipe[0][4].replace("\'", "\"") + '}'
                 }
                 
                 temp.append(tempJson)
@@ -263,8 +264,15 @@ class Database():
 
         return (json.dumps(dict(data='Recipe Added.')), 200)
 
-    def editRecipes(self, content):
-        pass
+    def delRecipe(self, content):
+        sql = "DELETE FROM PersonalRecipes WHERE recipeID = %s"
+        val = (content['recipeID'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
 
-    def delRecipes(self, content):
-        pass
+        sql = "DELETE FROM Recipes WHERE id = %s"
+        val = (content['recipeID'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+
+        return (json.dumps(dict(data='Recipe Deleted.')), 200)
