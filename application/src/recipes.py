@@ -74,13 +74,14 @@ class AddRecipe(Screen):
         
     def addRecipe(self):
         payload = {
+            'userID' : App.get_running_app().userID,
             'name' : self.ids.name.text,
             'servings' : self.ids.servings.text,
             'description' : self.ids.description.text,
             'ingredients' : self.extractIngredients()
         }
         
-        result = requests.post('http://411orangef19-mgmt.cs.odu.edu/addRecipe', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json
+        result = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addRecipe', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
         
         if result['data'] == "Recipe Added.":
             self.ids.name.text = ""
@@ -89,6 +90,8 @@ class AddRecipe(Screen):
             self.ids.ingredients.clear_widgets()
             self.addIngredient()
             self.recipePopup.open()
+        else:
+            print(result)
     
     def extractIngredients(self):
         ingredients = []
@@ -97,9 +100,9 @@ class AddRecipe(Screen):
             ingredient = i.children
             
             temp = {
-                'name' : ingredient[0].text,
+                'name' : ingredient[2].text,
                 'quantity' : ingredient[1].text,
-                'measurement' : ingredient[2].text
+                'measurement' : ingredient[0].text
             }
             
             ingredients.append(temp)
