@@ -83,7 +83,7 @@ screenManager.add_widget(Recipe(name="recipes"))
 
 screenManager.add_widget(AddRecipe(name="addrecipe"))
 
-screenManager.add_widget(GetRecipe(name="getrecipes"))
+screenManager.add_widget(GetRecipe(name="getreccrecipes"))
 
 screenManager.add_widget(ViewRecipe(name="viewrecipe"))
 
