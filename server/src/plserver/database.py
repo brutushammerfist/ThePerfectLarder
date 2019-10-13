@@ -226,11 +226,14 @@ class Database():
                 self.cursor.execute(sql, val)
                 recipe = self.cursor.fetchall()
                 
+                with open('/home/mperry/debug.log', 'w') as debug:
+                    debug.write(str(i))
+
                 tempJson = {
-                    'name' : i[0],
-                    'description' : i[1],
-                    'servings' : i[2],
-                    'ingredients' : i[3]
+                    'name' : recipe[0][0],
+                    'description' : recipe[0][1],
+                    'servings' : recipe[0][2],
+                    'ingredients' : recipe[0][3]
                 }
                 
                 temp.append(tempJson)
