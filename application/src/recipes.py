@@ -133,17 +133,70 @@ class ViewRecipe(Screen):
         
 class PersonalRecipe(Screen):
     recipes = []
+    view = -1
     def on_pre_enter(self):
-        self.ids.personalrecipes.clear_widgets()
+        self.ids.personalrecipe.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getPersonalRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
         
         if response['data'] != 'Personal Recipes Empty.':
             self.recipes = response['data']
             for n in range(0, len(response['data'])):
                 button = Button(text = response['data'][n]['name'])
-                #callback = lambda n:self.delItem(n)
-                #button.itemToDel = n
-                #button.bind(on_press = callback)
-                self.ids.personalrecipes.add_widget(button)
+                callback = lambda n:self.viewPersonalRecipe(n)
+                button.recipe = n
+                button.bind(on_press = callback)
+                self.ids.personalrecipe.add_widget(button)
         else:
-            self.ids.personalrecipes.add_widget(Button(text = 'Personal Recipes Currently Empty.'))
+            self.ids.personalrecipe.add_widget(Button(text = 'Personal Recipes Currently Empty.'))
+            
+    def viewPersonalRecipe(self, index):
+        self.view = index
+        self.manager.current = 'viewpersonalrecipe'
+            
+    
+class ViewPersonalRecipe(Screen):
+    delRecipePopup = None
+    
+    def on_pre_enter(self):
+        self.ids.name.text = ""
+        self.ids.ingredients.clear_widgets()
+        self.ids.instructions.text = ""
+        self.ids.servings.text = ""
+        reScreen = self.manager.get_screen('personalrecipe')
+        recipe = reScreen.recipes[reScreen.view.recipe]
+        self.ids.name.text = recipe['name']
+        ingred = json.loads(recipe['ingredients'])
+        for n in ingred['ingredients']:
+            label = Label(text = n['name']+ " - " + n['quantity'] + " " + n['measurement'])
+            self.ids.ingredients.add_widget(label)
+        self.ids.instructions.text = recipe['description']
+        self.ids.servings.text = str(recipe['servings'])
+        
+    def deleteRecipe(self):
+    
+        delContent = GridLayout(cols=1)
+        delContent.add_widget(Label(text= 'Recipe Deleted'))
+        delButton = Button(text='OK')
+        delContent.add_widget(delButton)
+        self.delRecipePopup = Popup(title='Recipe Deleted', content=delContent, auto_dismiss=False)
+        delButton.bind(on_press=self.delPopupDismiss)
+        
+        reScreen = self.manager.get_screen('personalrecipe')
+        recipe = reScreen.recipes[reScreen.view.recipe]
+        
+        headers = {'Content-Type' : 'application/json'}
+           
+        payload = {
+            'recipeID' : recipe['recipeID']
+        }
+            
+        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delRecipe', headers=headers, data=json.dumps(payload)).json()
+        
+        if response['data'] == 'Recipe Deleted.':
+            self.delRecipePopup.open()
+            
+        
+    def delPopupDismiss(self, index):
+        self.delRecipePopup.dismiss()
+        self.manager.current = 'personalrecipe'
+            
