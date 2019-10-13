@@ -3,8 +3,8 @@
         orientation: 'vertical'
 		
 		Button:
-            text: 'Add Recipes'
-            on_press: root.manager.current = 'addrecipe'
+            text: 'Personal Recipes'
+            on_press: root.manager.current = 'persoanlrecipes'
 		
 		Button:
             text: 'Get Recipes'
@@ -13,48 +13,6 @@
 		Button:
             text: 'Back To Home'
             on_press: root.manager.current = 'homescreen'		
-
-#<AddRecipe>:
-#
-#	recipeName:recipeName                #for python code : for kivy code
-#	ingredients:ingredients        		 #for python code : for kivy code
-#	cookDirections:cookDirections        #for python code : for kivy code
-#	
-#	GridLayout:
-#		cols:1
-#		size: root.width, root.height
-#		GridLayout:
-#			cols:2
-#			
-#			Label:
-#				text: "Name: "
-#					
-#			TextInput:
-#				id: recipeName
-#				multiline: False
-#					
-#			Label:
-#				text: "Ingredients: "
-#					
-#			TextInput:
-#				id: ingredients
-#				multiline: True
-#					
-#			Label:
-#				text: "Cooking Directions: "
-#					
-#			TextInput:
-#				id: cookDirections
-#				multiline: True
-#					
-#		Button:
-#			text:"Enter"
-#			#on_press: root.manager.current = 'homescreen' 
-#			#on_press: root.userRecipe()    send data to a function
-#			
-#		Button:
-#            text: 'Back To Home'
-#            on_press: root.manager.current = 'recipes'
 
 <AddRecipe>:
 	Button:
@@ -229,4 +187,37 @@
         Button:
             text: "Back To Home Screen"
             on_press: root.manager.current = 'homescreen'
+            
+<PersonalRecipe>:
+        GridLayout:
+            cols:2
+            Button:
+                text: "<-"
+                font_size: 20
+                color: 1,0,0,1
+                size_hint: 0.1, 0.1
+                pos_hint:{'x': 0, 'top': 1}
+            Label:
+                text: "Personal Recipes"
+                font_size: 20
+                size_hint: 0.8, 0.1
+                pos_hint:{'x': 0.1, 'top': 1}
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                size_hint: (.98, 0.815)
+                pos_hint:{'x': 0.01, 'top': 0.93}
+
+                GridLayout:
+                    id: personalrecipe
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 35
+            Button:
+                text: "Add Recipe"
+                size_hint: 1, 0.1
+                on_press: root.manager.current = 'addrecipe'
+           
+                
            

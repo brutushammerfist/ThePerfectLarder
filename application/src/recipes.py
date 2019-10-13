@@ -130,3 +130,20 @@ class ViewRecipe(Screen):
             self.ids.ingredients.add_widget(label)
         self.ids.instructions.text = str(recipe['recipeInstructions'])
         self.ids.cooktime.text = recipe['cookTime']
+        
+class PersonalRecipe(Screen):
+    recipes = []
+    def on_pre_enter(self):
+        self.ids.personalrecipes.clear_widgets()
+        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getPersonalRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
+        
+        if response['data'] != 'Personal Recipes Empty.':
+            self.recipes = response['data']
+            for n in range(0, len(response['data'])):
+                button = Button(text = response['data'][n]['name'])
+                #callback = lambda n:self.delItem(n)
+                #button.itemToDel = n
+                #button.bind(on_press = callback)
+                self.ids.personalrecipes.add_widget(button)
+        else:
+            self.ids.personalrecipes.add_widget(Button(text = 'Personal Recipes Currently Empty.'))

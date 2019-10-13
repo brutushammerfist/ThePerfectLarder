@@ -63,7 +63,6 @@ screenManager.add_widget(HomeScreen(name="homescreen"))
 
 screenManager.add_widget(Profile(username="profile"))
 
-#screenManager.add_widget(Recipe(name="recipes"))
 
 screenManager.add_widget(Inventory(name="inventory"))
 
@@ -87,11 +86,12 @@ screenManager.add_widget(GetRecipe(name="getreccrecipes"))
 
 screenManager.add_widget(ViewRecipe(name="viewrecipe"))
 
+scrennManager.add_widget(PersonalRecipe(name='personalrecipe'))
+
 screenManager.add_widget(AddItem(name="additem"))
 
 screenManager.add_widget(DeleteItem(name="deleteitem"))
-#screenManager.add_widget(ViewInventory(name="viewinventory"))
-#screenManager.add_widget(SearchItem(name="searchitem"))
+
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
