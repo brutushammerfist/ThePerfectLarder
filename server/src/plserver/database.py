@@ -213,7 +213,7 @@ class Database():
 
     def addRecipe(self, content):
         sql = "INSERT INTO Recipes (name, description, servings, ingredients) VALUES (%s, %s, %s, %s)"
-        val = (content['name'], content['description'], content['servings'], content['ingredients'], )
+        val = (content['name'], content['description'], content['servings'], str(content['ingredients']), )
         self.cursor.execute(sql, val)
         result = self.connector.commit()
 
@@ -226,7 +226,7 @@ class Database():
         self.cursor.execute(sql, val)
         result = self.connector.commit()
 
-        return (json.dumps(dict(data='Recipe added.')), 200)
+        return (json.dumps(dict(data='Recipe Added.')), 200)
 
     def editRecipes(self, content):
         pass
