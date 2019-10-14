@@ -120,7 +120,7 @@ class ViewRecipe(Screen):
         self.ids.ingredients.clear_widgets()
         self.ids.instructions.text = ""
         self.ids.cooktime.text = ""
-        reScreen = self.manager.get_screen('getrecipes')
+        reScreen = self.manager.get_screen('getreccrecipes') # changed from getrecipes to viewrecipe
         recipe = reScreen.recipes[reScreen.viewrecipe.viewrecipe]
         self.ids.name.text = recipe['name']
         #self.ids.ingredients.text = str(recipe['recipeIngredient'])
