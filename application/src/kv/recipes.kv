@@ -127,25 +127,32 @@
             on_press: root.addRecipe()
 
 <GetRecipe>:
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
 	Button:
-		text: "<-"
-		font_size: 20
+		text: ""
+		font_size: 15
 		color: 1,0,0,1
-		size_hint: 0.1, 0.1
-		pos_hint:{'x': 0, 'top': 1}
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'recipes'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
         
     Label:
 		text: "Recommended Recipes"
-		font_size: 20
-		size_hint: 0.8, 0.1
-		pos_hint:{'x': 0.1, 'top': 1}
+		font_size: 22
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.30, 'top': .99}
         
     ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
-		size_hint: 1, 0.8
-		pos_hint:{'x': 0, 'y': 0.1}
+		size_hint: .98, 0.84
+		pos_hint:{'x': 0.01, 'y': 0.1}
 
 		GridLayout:
 			id: recipes
@@ -204,7 +211,7 @@
             on_press: root.manager.current = 'personalrecipe'
             
         Button:
-            text: "Get A Reccomended Recipe"
+            text: "Get A Recommended Recipe"
             on_press: root.manager.current = 'getreccrecipes'
             
         Button:
@@ -212,26 +219,32 @@
             on_press: root.manager.current = 'homescreen'
             
 <PersonalRecipe>:
-    #GridLayout:
-        #cols:2
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+
     Button:
-        text: "<-"
-        font_size: 20
-        color: 1,0,0,1
-        size_hint: 0.1, 0.1
-        pos_hint:{'x': 0, 'top': 1}
+		text: ""
+		font_size: 15
+		color: 1,0,0,1
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
         on_press: root.manager.current = 'recipes'
+        Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
     Label:
         text: "Personal Recipes"
-        font_size: 20
-        size_hint: 0.8, 0.1
-        pos_hint:{'x': 0.1, 'top': 1}
+        font_size: 22
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.27, 'top': .99}
             
     ScrollView:
         do_scroll_x: False
-        do_scroll_y: True
-        size_hint: (.98, 0.815)
-        pos_hint:{'x': 0.01, 'top': 0.9}
+		do_scroll_y: True
+		size_hint: .98, 0.84
+		pos_hint:{'x': 0.01, 'y': 0.1}
 
         GridLayout:
             id: personalrecipe
@@ -241,7 +254,8 @@
             row_default_height: 35
     Button:
         text: "Add Recipe"
-        size_hint: 1, 0.1
+        size_hint: (.98, 0.09)
+        pos_hint:{'x': .01, 'top': .1}
         on_press: root.manager.current = 'addrecipe'
            
 <ViewPersonalRecipe>:
@@ -268,14 +282,17 @@
         Label:
             id: servings
     Button:
-		text: "<-"
-		font_size: 20
+		text: ""
+		font_size: 15
 		color: 1,0,0,1
-		size_hint: 0.1, 0.1
-		pos_hint:{'x': 0, 'top': 1}
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'personalrecipe'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
     Button:
         text: 'Delete'
         size_hint: 1, 0.1
         on_press: root.deleteRecipe()
-           
