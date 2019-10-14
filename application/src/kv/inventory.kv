@@ -60,60 +60,139 @@
 	quantity:quantity        		 #for python code : for kivy code
 	expirationDate:expirationDate    #for python code : for kivy code
 	storageLocation:storageLocation  #for python code : for kivy code
-	
+
+	FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	Button:
+		text: ""
+		font_size: 15
+		color: 1,0,0,1
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
+		on_press: root.manager.current = 'inventory'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
+
+    Label:
+		text: "Add Item to Inventory"
+		font_size: 22
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.30, 'top': .99}
+
 	GridLayout:
 		cols:1
-		size: root.width, root.height
+		height: self.minimum_height
+		padding: [3,70]
+
 		GridLayout:
 			cols:2
-			
+
 			Label:
-				text: "Item Name: "
+			    text: "Item Name: "
+                font_size: 15
+		        size_hint: (.5,.05)
+		        pos_hint:{'x': 0.01}
+		        text_size:self.size
+                halign:'left'
+                valign:'bottom'
 					
 			TextInput:
 				id: itemName
 				multiline: False
-					
+				size_hint_y: None
+				height: 30
+
+		GridLayout:
+		    cols:2
+
 			Label:
 				text: "Quantity: "
+                font_size: 15
+		        size_hint: (.5,1)
+		        pos_hint:{'x': 0.01}
+		        text_size:self.size
+                halign:'left'
+                valign:'bottom'
 					
 			TextInput:
 				id: quantity
 				multiline: False
-                
+				pos_hint:{'x': 0.4}
+				size_hint_y: None
+				height: 30
+
+		GridLayout:
+		    cols:2
+
             Label:
                 text: "Measurement: "
+                font_size: 15
+		        size_hint: (.5,1)
+		        pos_hint:{'x': 0.01}
+		        text_size:self.size
+                halign:'left'
+                valign:'bottom'
                 
             TextInput:
                 id: measurement
-                multiline: False
-					
+				multiline: False
+				pos_hint:{'x': 0.4}
+				size_hint_y: None
+				height: 30
+
+		GridLayout:
+		    cols:2
+
 			Label:
 				text: "Expiration Date: "
+                font_size: 15
+		        size_hint: (.5,1)
+		        pos_hint:{'x': 0.01}
+		        text_size:self.size
+                halign:'left'
+                valign:'bottom'
 					
 			TextInput:
 				id: expirationDate
 				multiline: False
-			
+				pos_hint:{'x': 0.4}
+				size_hint_y: None
+				height: 30
+
+		GridLayout:
+		    cols:2
+
 			Label:
-				text: "Storage Location: "
+		        text: "Storage Location: "
+                font_size: 15
+		        size_hint: (.45,1)
+		        pos_hint:{'x': 0.01}
+		        text_size:self.size
+                halign:'left'
+                valign:'bottom'
 					
 			Spinner:
 				id: storageLocation
 				text: "Pantry"
                 values: ["Pantry", "Refrigerator", "Freezer", "Other"]
-                size_hint: None, None
-                size: 400, 25
-                pos_hint:{'center_x':.5, 'top': 1}
+				pos_hint:{'x': 0.4}
+				size_hint_y: None
+				height: 30
 
-		Button:
-			text:"Submit"
-			on_press: root.addItems() 
-			
-		Button:
-			text:"Back"
-			on_press: root.manager.current = 'inventory' 
-	
+	GridLayout:
+		cols:3
+		size_hint: (.98, 0.1)
+		pos_hint:{'x': .01, 'top': .105}
+
+        Button:
+            text: "Submit"
+            halign:'center'
+            valign:'middle'
+            font_size: 15
+			on_press: root.addItems()
 	
 <DeleteItem>:
 
