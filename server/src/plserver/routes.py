@@ -17,7 +17,11 @@ def login():
     content = request.get_json()
     credentialCheck = db.login(content['username'], content['password'])
     return credentialCheck
-
+@app.route('/singUp', methods = ['POST'])
+def singUp():
+	content = request.get_json()
+	resultCheck = db.signUp(content['username'],content['useremail'],content['password'])
+	return resultCheck
 @app.route('/addItem', methods = ['POST'])
 def addItem():
     content = request.get_json()

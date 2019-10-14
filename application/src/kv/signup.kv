@@ -13,7 +13,7 @@
 		size_hint: 1,.66
 		padding: [30]
 		spacing: [5,5]
-
+		
 		GridLayout:
 			cols:1
 			padding: [20, 30, 40, 50]
@@ -27,7 +27,7 @@
             font_size: 15
 			multiline: False
 			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.42)
+			size_hint: (0.4, 0.5)
 
 		TextInput:
 			id: userName
@@ -38,7 +38,7 @@
             font_size: 15
 			multiline: False
 			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.42)
+			size_hint: (0.4, 0.5)
 
 		TextInput:
 			id: userPassword
@@ -50,7 +50,7 @@
 			multiline: False
 			password: True
 			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.42)
+			size_hint: (0.4, 0.5)
 
 		TextInput:
 			id: userPasswordConfirm
@@ -62,7 +62,7 @@
 			multiline: False
 			password: True
 			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.42)
+			size_hint: (0.4, 0.5)
 
 		Button:
 			text: "Create your Larder"
@@ -71,13 +71,20 @@
 			size_hint: (0.4, 0.62)
 			on_press: 
 				root.createAccount()
-			
+		
 		GridLayout:
 		Button:
 			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.42)
+			size_hint: (0.4, 0.62)
 			text: "Already have an account?"
 			font_size: 15
 			on_press:
 				root.manager.transition.direction = 'right' 
-				root.manager.current ='userlogin'
+				root.manager.current ='userlogin'	
+		#Label:
+		#	text: "Invalid Password"
+		#	font_size: 14
+		#	color: 1,0,1,1
+		#	canvas.before:
+		#		Color:
+		#			rgba: .9, 0, 0.1, 0.03	
