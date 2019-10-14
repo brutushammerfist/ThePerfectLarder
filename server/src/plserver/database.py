@@ -51,6 +51,7 @@ class Database():
             #if yes  
                 #return 1 for name already in database
                 #return 2 for email already in database
+                #return 3 for name and email both in the database
             #if no
                 #perform necessary operation to dump data in the database then
                 #return 0 to confirm data successfully in database

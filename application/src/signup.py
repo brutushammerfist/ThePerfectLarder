@@ -10,6 +10,9 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.app import App
 from kivy.properties import ObjectProperty
+
+import json
+import requests
 #Config.set('kivy', 'keyboard_mode','systemandmulti')
 
 class SignUp(Screen):
@@ -61,7 +64,27 @@ class SignUp(Screen):
                         self.LPM.color = (1,0,1,1)    
                         self.add_widget(self.LPM)
                     else:
-                        print('Sending data to backe end')
+                        print('Sending data to back-end')
+                        #headers = {'Content-Type' : 'application/json'}
+        
+                        #payload = {
+                        #    'useremail' : userEmail,
+                        #    'username' : userName,
+                        #    'password' : userPassword
+                        #}
+                        #response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/singUp', headers=headers, data=json.dumps(payload)).json()
+                        #if(reponse['data'] == 0):
+                        #    # data succefully registered
+                        #    print("succefully registered")
+                        #elif(reponse['data'] == 1):
+                        #    # there is and username already in the database
+                        #    print("That username is present in the database")
+                        #elif(reponse['data'] == 2):
+                        #    # there is and email already in the database
+                        #    print("That email is present in the database")
+                        #else:
+                            #Both username and email already in the database
+                        #    print("That username and email are present in the database")
                 elif(userPassword == ""):
                     print("password can not remain empty")
                     self.remove_widget(self.LE)
