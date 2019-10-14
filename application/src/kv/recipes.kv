@@ -1,22 +1,29 @@
 <AddRecipe>:
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
 	Button:
-		text: "<-"
-		font_size: 20
+		text: ""
+		font_size: 15
 		color: 1,0,0,1
-		size_hint: 0.1, 0.1
-		pos_hint:{'x': 0, 'top': 1}
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'personalrecipe'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
         
     Label:
 		text: "Add Personal Recipe"
-		font_size: 20
-		size_hint: 0.8, 0.1
-		pos_hint:{'x': 0.1, 'top': 1}
+		font_size: 22
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.27, 'top': .99}
 
 	ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
-		size_hint: 1, 0.8
+		size_hint: (.98, 0.8)
         pos_hint: {'top': 0.9}
 
 		GridLayout:
@@ -32,26 +39,38 @@
 
 				Label:
 					text: "Recipe Name:"
+                    font_size: 15
+		            size_hint: (0.58, 0.05)
+		            pos_hint:{'x': 0.01, 'top': .80}
 
 				TextInput:
 					id: name
 					multiline: False
+					pos_hint:{'x': 0.4}
 
 				Label:
 					text: "Servings:"
+                    font_size: 15
+		            size_hint: (0.58, 0.05)
+		            pos_hint:{'x': 0.01, 'top': .80}
 
 				TextInput:
 					id: servings
 					multiline: False
+					pos_hint:{'x': 0.4}
 
 				Label:
-					text: "Description/Instructions:"
+					text: "Description/\nInstructions:"
+                    font_size: 15
+		            size_hint: (0.58, 0.05)
+		            pos_hint:{'x': 0.01, 'top': .80}
 
 				TextInput:
 					id: description
 					size_hint_y: None
 					height: 100
 					multiline: True
+					pos_hint:{'x': 0.4}
 
 			GridLayout:
 				cols:1
@@ -83,20 +102,29 @@
 
 	GridLayout:
 		cols:3
-		size_hint: 1, 0.1
+		size_hint: (.98, 0.1)
+		pos_hint:{'x': .01, 'top': .105}
 
 		Button:
-			text: "Add another ingredient"
+			text: "Add\nAnother\nIngredient"
+            halign:'center'
+            valign:'middle'
+            font_size: 15
 			on_press: root.addIngredient()
 
 		Button:
-			text: "Remove last ingredient"
+			text: "Remove\nLast\nIngredient"
+            halign:'center'
+            valign:'middle'
+            font_size: 15
 			on_press: root.delIngredient()
             
         Button:
             text: "Submit"
+            halign:'center'
+            valign:'middle'
+            font_size: 15
             on_press: root.addRecipe()
-		
 
 <GetRecipe>:
 	Button:
