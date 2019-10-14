@@ -158,8 +158,19 @@
 		on_press: root.manager.current =  'getrecipes'
         
 <Recipe>:
-    GridLayout:
-        cols:1
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	GridLayout:
+		cols:1
+		size_hint: 1,1.3
+		padding: [30]
+		spacing: [5,5]
+
+		GridLayout:
+			cols:1
+			padding: [20, 20, 20, 20]
+
         Button:
             text: "Personal Recipes"
             on_press: root.manager.current = 'personalrecipe'
