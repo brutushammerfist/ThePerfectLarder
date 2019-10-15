@@ -47,8 +47,7 @@ class Database():
                 }
                 return (json.dumps(payload), 401)
 
-    def signUp(self,username, useremail,password):
-        pass
+    def signUp(self,content):
         # check if any user name or email address exist in the data base
             #if yes  
                 #return 1 for name already in database
@@ -57,6 +56,31 @@ class Database():
             #if no
                 #perform necessary operation to dump data in the database then
                 #return 0 to confirm data successfully in database
+        sql = "SELECT id FROM `Users` WHERE `Users`.`username` = %s"
+        usrn = (str(content['username']),)
+        self.cursor.execute(sql,usrn)
+        result1 = self.cursor.fetchall()
+        
+        
+        sqlTwo = "SELECT id FROM `Users` WHERE `Users`.`email` = %s"
+        usre = (str(content['useremail']),)
+        self.cursor.excute(sqlTwo,usre)
+        result2 = self.cursor.fetchall()
+        
+        usrp = (str(content['password']),)
+        
+        if len(result1) == 0 and len(result2) == 0:
+            sqlInsert = "INSERT INTO `Users`(`name`, `email`,  `username`, `password`) VALUES ( %s, %s, %s, %s)"
+            val = (content['username'],content['useremail'],content['password'])
+            self.cursor.execute(sqlInsert,val)
+            result = self.connector.commit()
+            return (json.dumps(dict(data='0')), 200)
+        elif(len(result1) > 0):
+            return (json.dumps(dict(data='1')), 401)
+        elif(len(result2) > 0):
+            return (json.dumps(dict(data='2')), 401)
+        else:
+            return (json.dumps(dict(data='3')), 401)
                 
     def addItem(self, content):
         print("Entering add item.")
