@@ -259,10 +259,18 @@
         on_press: root.manager.current = 'addrecipe'
            
 <ViewPersonalRecipe>:
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+    Label:
+        id: name
+        font_size: 20
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.27, 'top': .99}
+
     GridLayout:
         cols:1
-        Label:
-            id: name
+        pos_hint:{'x': 0.01, 'top': .93}
         
         ScrollView:
             do_scroll_x: False
@@ -274,13 +282,29 @@
                 size_hint_y: None
                 height: self.minimum_height
                 row_default_height: 35
-            
+                size_hint: .98,.5
         Label:
-            id: instructions
-            text_size: self.size
-            
+            text:"Servings: "
+            size_hint: .98,.05
+            valign:'top'
         Label:
             id: servings
+            valign:'top'
+            size_hint: .98,.05
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            Label:
+                id: instructions
+                text_size: self.size
+                valign:'top'
+                #row_default_height: 100
+                padding: 5, 20
+                size: self.texture_size
+                size_hint: .98,1.7
+
     Button:
 		text: ""
 		font_size: 15
