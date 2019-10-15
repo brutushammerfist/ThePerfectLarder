@@ -18,7 +18,7 @@ def login():
     credentialCheck = db.login(content['username'], content['password'])
     return credentialCheck
 @app.route('/singUp', methods = ['POST'])
-def singUp():
+def signUp():
 	content = request.get_json()
 	resultCheck = db.signUp(content['username'],content['useremail'],content['password'])
 	return resultCheck

@@ -108,14 +108,14 @@ class SignUp(Screen):
                     # Password combo was valid, send to server.
                     print("All account data valid, sending payload to server.")
 
-                    # headers = {'Content-Type' : 'application/json'}
+                    headers = {'Content-Type' : 'application/json'}
 
-                    # payload = {
-                    #    'useremail' : userEmail,
-                    #    'username' : userName,
-                    #    'password' : userPassword
-                    # }
-                    # response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/singUp', headers=headers, data=json.dumps(payload)).json()
+                    payload = {
+                        'useremail' : userEmail,
+                        'username' : userName,
+                        'password' : userPassword
+                     }
+                    response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
                     # if(response['data'] == 0):
                     #    # data successfully registered
                     #    print("successfully registered")
