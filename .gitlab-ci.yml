@@ -1,6 +1,7 @@
 stages:
  - test
- 
+ - build
+
 test:
  stage: test
  script:
@@ -8,3 +9,10 @@ test:
   - export FLASK_APP=../plserver.py
   - export DATABASE_NAME=testing
   - python3 test_plserver.py
+
+build:
+  stage: build
+  script:
+   - cd ./application/src
+   - buildozer android debug
+   - buildozer serve
