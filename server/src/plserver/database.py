@@ -46,7 +46,9 @@ class Database():
                     'data' : 'Incorrect password.'
                 }
                 return (json.dumps(payload), 401)
+
     def signUp(self,username, useremail,password):
+        pass
         # check if any user name or email address exist in the data base
             #if yes  
                 #return 1 for name already in database
@@ -55,6 +57,7 @@ class Database():
             #if no
                 #perform necessary operation to dump data in the database then
                 #return 0 to confirm data successfully in database
+                
     def addItem(self, content):
         print("Entering add item.")
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
