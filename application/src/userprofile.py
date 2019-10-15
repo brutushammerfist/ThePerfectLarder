@@ -16,7 +16,8 @@ from kivy.properties import ObjectProperty
 
 # `Profile`: Allows for account creation, editing, and deletion in the TPL server.
 class Profile(Screen):
-    pass
+    def on_enter(self):
+        pass
 
     # region Properties
 
@@ -33,10 +34,10 @@ class Profile(Screen):
 
     # region Initialization
 
-    def __init__(self, username, password="", email=""):
-        self.username = username
-        self.password = password
-        self.email = email
+#     def __init__(self, username, password="", email=""):
+#         self.username = username
+#         self.password = password
+#         self.email = email
 
     # endregion
 

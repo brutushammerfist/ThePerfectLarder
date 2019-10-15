@@ -63,7 +63,7 @@ screenManager.add_widget(SignUp(name="signup"))
 
 screenManager.add_widget(HomeScreen(name="homescreen"))
 
-screenManager.add_widget(Profile(username="profile"))
+screenManager.add_widget(Profile(name="profile"))
 
 screenManager.add_widget(Inventory(name="inventory"))
 

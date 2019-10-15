@@ -1,15 +1,25 @@
 <Profile>:
-	BoxLayout:
-        orientation: 'vertical'
+	FloatLayout:
+		Image:
+			source: "graphics/generalbackground.png"
+			
+	GridLayout:
+		cols:1
+		padding: [30]
+		spacing: [5, 5]
+		
 		Button:
             text: 'Manage Perfect Larder'
             on_press: root.manager.current = 'managepl'
+            
 		Button:
             text: 'Edit/Create Profile'
             on_press: root.manager.current = 'editcreateprofile'
+            
 		Button:
             text: 'Setup/Edit Notifications'
             on_press: root.manager.current = 'setupeditnotification'
+            
 		Button:
             text: 'Back To Home'
             on_press: root.manager.current = 'homescreen'
@@ -20,6 +30,9 @@
 	userPassword:userPassword        #for python code : for kivy code
 	userEmail:userEmail              #for python code : for kivy code
 	
+	FloatLayout:
+		Image:
+			source: "graphics/generalbackground.png"
 	BoxLayout:
         orientation: 'vertical'
 		GridLayout:
@@ -31,6 +44,10 @@
 			TextInput:
 				id: userName
 				multiline: False
+				write_tab: False
+				valign: 'middle'
+				halign: 'center'
+				size_hint: 1, 0.5
 				
 			Label:
 				text: "Password: "
@@ -38,6 +55,11 @@
 			TextInput:
 				id: userPassword
 				multiline: False
+				write_tab: False
+				valign: 'middle'
+				halign: 'center'
+				size_hint: 0.4, 0.5
+				password: True
 				
 			Label:
 				text: "Email: "
@@ -45,6 +67,11 @@
 			TextInput:
 				id: userEmail
 				multiline: False
+				write_tab: False
+				valign: 'middle'
+				halign: 'center'
+				size_hint: 0.4, 0.5
+				
 		Button:
             text: 'Submit'
             #on_press: root.Profile()      send to function

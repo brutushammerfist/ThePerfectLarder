@@ -13,29 +13,30 @@
 			padding: [20, 20, 20, 20]
 
         Button:
-            text: 'Profile'
+            text: 'My Profile'
             on_press: root.manager.current = 'profile'
 		
 		Button:
-            text: 'Recipes'
+            text: 'My Recipes'
             on_press: root.manager.current = 'recipes'
 			
 		Button:
-            text: 'Inventory'
+            text: 'My Inventory'
             on_press: root.manager.current = 'inventory'
 			
 		Button:
-            text: 'Trends'
+            text: 'My Trends'
             on_press: root.manager.current = 'trends'
 			
 		Button:
-            text: 'Shopping List'
+            text: 'My Shopping List'
             on_press: root.manager.current = 'shoppinglist'
 			
 		Button:
-            text: 'Share Items'
+            text: 'Share My Items'
             on_press: root.manager.current = 'shareitems'
 			
 		Button:
             text: 'Logout'
-            on_press: root.manager.current = 'userlogin'
+            on_press: 
+            	root.manager.current = 'userlogin'
