@@ -77,6 +77,7 @@ class SignUp(Screen):
         widget = Label(text=message)
         widget.font_size = 14
         widget.color = (1, 0, 1, 1)
+        widget.pos_hint = {"top":.68}
         return widget
 
     # endregion
