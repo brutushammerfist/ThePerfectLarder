@@ -64,15 +64,21 @@ class Database():
         
         sqlTwo = "SELECT id FROM `Users` WHERE `Users`.`email` = %s"
         usre = (str(content['useremail']),)
-        self.cursor.excute(sqlTwo,usre)
+        self.cursor.execute(sqlTwo,usre)
         result2 = self.cursor.fetchall()
         
         usrp = (str(content['password']),)
         
         if len(result1) == 0 and len(result2) == 0:
-            sqlInsert = "INSERT INTO `Users`(`name`, `email`,  `username`, `password`) VALUES ( %s, %s, %s, %s)"
-            val = (content['username'],content['useremail'],content['password'])
-            self.cursor.execute(sqlInsert,val)
+            sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
+            self.cursor.execute(sql)
+            result = self.cursor.fetchall()
+
+            inventoryID = result[0][0] + 1
+
+            sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID) VALUES (%s, %s, %s, %s, %s, %s)"
+            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, )
+            self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
         elif(len(result1) > 0):

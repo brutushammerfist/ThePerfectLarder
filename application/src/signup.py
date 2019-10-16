@@ -87,8 +87,10 @@ class SignUp(Screen):
     def createAccount(self):
 
         # Validate user inputs from text fields.
+        name = self.ids.name.text
         userName = self.ids.userName.text
         userEmail = self.ids.userEmail.text
+        phone = self.ids.phone.text
         userPassword = self.ids.userPassword.text
         userPasswordConfirm = self.ids.userPasswordConfirm.text
         self.remove_widget(self.LE)
@@ -111,23 +113,25 @@ class SignUp(Screen):
                     headers = {'Content-Type' : 'application/json'}
 
                     payload = {
+                        'name' : name,
                         'useremail' : userEmail,
+                        'phone' : phone,
                         'username' : userName,
                         'password' : userPassword
                      }
                     response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
-                    # if(response['data'] == 0):
-                    #    # data successfully registered
-                    #    print("successfully registered")
-                    # elif(response['data'] == 1):
-                    #    # there is and username already in the database
-                    #    print("That username is present in the database")
-                    # elif(response['data'] == 2):
-                    #    # there is and email already in the database
-                    #    print("That email is present in the database")
-                    # else:
-                    # Both username and email already in the database
-                    #    print("That username and email are present in the database")
+                    if(response['data'] == 0):
+                        # data successfully registered
+                        print("successfully registered")
+                    elif(response['data'] == 1):
+                        # there is and username already in the database
+                        print("That username is present in the database")
+                    elif(response['data'] == 2):
+                        # there is and email already in the database
+                        print("That email is present in the database")
+                    else:
+                        # Both username and email already in the database
+                        print("That username and email are present in the database")
 
                     return
 

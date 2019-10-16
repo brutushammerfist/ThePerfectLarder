@@ -15,4 +15,3 @@ build:
   script:
    - cd ./application/src
    - buildozer android debug
-   - buildozer serve
