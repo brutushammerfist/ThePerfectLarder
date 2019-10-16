@@ -15,3 +15,4 @@ build:
   script:
    - cd ./application/src
    - buildozer android debug
+   - sudo chmod -R a+rwx .buildozer/
