@@ -89,19 +89,28 @@ class Database():
             return (json.dumps(dict(data='3')), 401)
                 
     def addItem(self, content):
-        print("Entering add item.")
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
         
         inventoryID = result[0][0]
-        print("Inventory ID is " + str(inventoryID))
-
-        sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location) VALUES (%s, %s, %s, %s, %s, %s)"
-        val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'])
+        
+        sql = "SELECT id, itemname, quantity, measurement, location FROM Items WHERE inventoryID = %s AND itemname = %s AND measurement = %s AND location = %s"
+        val = (inventoryID, content['itemname'], content['measurement'], content['location'], )
         self.cursor.execute(sql, val)
-        result = self.connector.commit()
+        result = self.cursor.fetchall()
+        
+        if len(result) == 0:
+            sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location) VALUES (%s, %s, %s, %s, %s, %s)"
+            val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'], )
+            self.cursor.execute(sql, val)
+            result = self.connector.commit()
+        else:
+            sql = "UPDATE Items SET quantity = %s WHERE id = %s"
+            val = ((content['quantity'] + result[0][2]), result[0][0])
+            self.cursor.execute(sql, val)
+            result = self.connector.commit()
 
         return (json.dumps(dict(data='Item added.')), 200)
         
