@@ -66,7 +66,7 @@ class Inventory(Screen):
     
 class AddItem(Screen):            #part of inventory
         
-    def addItems (self):
+    def addItems(self):
     
         #popup to confirm item was added
         nameContent = GridLayout(cols=1)
