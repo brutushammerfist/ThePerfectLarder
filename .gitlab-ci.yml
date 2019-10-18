@@ -15,4 +15,6 @@ build:
   script:
    - cd ./application/src
    - buildozer android debug
-   - sudo chmod -R a+rwx .buildozer/
+   - cp bin/perfectlarder-0.1-debug.apk /opt/perfectlarder_dist/app-$(git rev-parse --short HEAD).apk
+   - chmod -R a+rwx .buildozer/
+   
