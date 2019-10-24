@@ -5,7 +5,7 @@
 #     Matthew Perry, Melanie Devoe, and Zachery Miller 
 
 import unittest
-import Inventory, Additem, DeleteItem
+import Inventory, Additem, 6DeleteItem
 
 class TestInventory(unittest.TestCase):
   
@@ -28,7 +28,7 @@ class TestInventory(unittest.TestCase):
             key = 'banana'
             search = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/searchItem', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID='1', itemname=key))).json()
             
-        self.assertEqual(search['data'], 'Item Found.')
+        self.assertTrue(len(search['data']) > 0)
 
 class TestAddItem(unittest.TestCase):
 
