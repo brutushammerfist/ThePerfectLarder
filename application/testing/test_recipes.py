@@ -10,20 +10,34 @@ import Recipes
 
 
 class TestRecipes(unittest.TestCase):
+		
+	def test_Addrecipe(self):
 
-	# Will likely be done on the server side
-	# def test_recommendRecipes(self):
-		# query the recipe database for recipes that match the users inventory
-		# display to users
-		
-		
-	# def test_userRecipe(self):
-		# add recipe to the database
-		
-		
-	#def test_verifyRecipeWasUsed(self):
-		# remove the items that were used in the recipe from the inventory
+		payload = {
+            'userID' : '1',
+            'name' : 'Cookies',
+            'servings' : '4',
+            'description' : 'Peanut Butter Cookies',
+            'ingredients' : '1 cup peanut butter, 1/2 cup sugar, 1 stick butter'
+        }
+        
+        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addRecipe', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+
+        self.assertEquals(response['data'], 'Recipe Added.')
+
+	def test_DelRecipe(self):
+
+		headers = {'Content-Type' : 'application/json'}
+           
+        payload = {
+            'recipeID' : '1'
+        }
+            
+        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delRecipe', headers=headers, data=json.dumps(payload)).json()
+        
+        self.assertEquals(response['data'],'Recipe Deleted.')
+
 		
 #need below to run tests
-#if __name__ == '__main__':
-#	unittest.main()
+if __name__ == '__main__':
+	unittest.main()
