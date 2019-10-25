@@ -5,7 +5,7 @@
 #     Matthew Perry, Melanie Devoe, and Zachery Miller 
 
 import unittest
-import Inventory, Additem, 6DeleteItem
+import Inventory, Additem, DeleteItem
 
 class TestInventory(unittest.TestCase):
   
