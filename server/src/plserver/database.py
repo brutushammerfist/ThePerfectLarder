@@ -15,16 +15,10 @@ class Database():
             database = os.environ['DATABASE_NAME']
         )
         self.cursor = self.connector.cursor()
-        
-    def createAccount(self):
-        pass
-    
-    def searchUsers(self):
-        pass
 
-    def login(self, username, password):
+    def login(self, content):
         sql = "SELECT id, username, password FROM Users WHERE username = %s"
-        usr = (str(username), )
+        usr = (str(content['username']), )
         self.cursor.execute(sql, usr)
         result = self.cursor.fetchall()
 
@@ -34,11 +28,10 @@ class Database():
             }
             return (json.dumps(payload), 401)
         else:
-            data = result[0]
-            if password == data[2]:
+            if content['password'] == result[0][2]:
                 payload = {
                     'data' : 'Successful login.',
-                    'userID' : data[0]
+                    'userID' : result[0][0]
                 }
                 return (json.dumps(payload), 200)
             else:
@@ -111,6 +104,10 @@ class Database():
             val = ((content['quantity'] + result[0][2]), result[0][0])
             self.cursor.execute(sql, val)
             result = self.connector.commit()
+            
+        #
+        #   Add purchased items to Usage history
+        #
 
         return (json.dumps(dict(data='Item added.')), 200)
         
@@ -154,6 +151,10 @@ class Database():
         
             self.cursor.execute(sql, val)
             self.connector.commit()
+            
+            #
+            #   Update used items in Usage history
+            #
         
             return (json.dumps(dict(data='Item deleted.')), 200)
         else:
@@ -326,3 +327,9 @@ class Database():
         result = self.connector.commit()
 
         return (json.dumps(dict(data='Recipe Deleted.')), 200)
+        
+    def getTrends(self, content):
+        pass
+        
+    def getShoppingList(self, content):
+        pass
