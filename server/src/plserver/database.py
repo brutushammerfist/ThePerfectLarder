@@ -108,7 +108,7 @@ class Database():
             }
             
             sql = "INSERT INTO FoodUse (itemname, measurement, usage)"
-            val = (content['itemname'], content['measurement'], useData, )
+            val = (content['itemname'], content['measurement'], json.dumps(useData), )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
             
@@ -148,7 +148,7 @@ class Database():
             useData['purchasedTotal'] += content['quantity']
             
             sql = "UPDATE FoodUse SET usage = %s WHERE id = %s"
-            val = (useData, useID, )
+            val = (json.dumps(useData), useID, )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
 
