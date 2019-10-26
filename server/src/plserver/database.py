@@ -95,19 +95,62 @@ class Database():
         result = self.cursor.fetchall()
         
         if len(result) == 0:
-            sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location) VALUES (%s, %s, %s, %s, %s, %s)"
-            val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'], )
+            useData = {
+                'purchased' : [
+                    {
+                        'date' : datetime.datetime.now().strftime("%Y-%m-%d"),
+                        'quantity' : content['quantity']
+                    }
+                ],
+                'purchasedTotal' : content['quantity'],
+                'used' : [],
+                'usedTotal' : 0
+            }
+            
+            sql = "INSERT INTO FoodUse (itemname, measurement, usage)"
+            val = (content['itemname'], content['measurement'], useData, )
+            self.cursor.execute(sql, val)
+            result = self.connector.commit()
+            
+            sql = "SELECT id FROM FoodUse ORDER BY id DESC"
+            self.cursor.execute(sql)
+            result = self.cursor.fetchall()
+            useID = result[0][0]
+            
+            sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location, useID) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'], useID, )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
         else:
             sql = "UPDATE Items SET quantity = %s WHERE id = %s"
-            val = ((content['quantity'] + result[0][2]), result[0][0])
+            val = ((content['quantity'] + result[0][2]), result[0][0], )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
             
-        #
-        #   Add purchased items to Usage history
-        #
+            sql = "SELECT useID FROM Items WHERE id = %s"
+            val = (result[0][0], )
+            self.cursor.execute(sql, val)
+            result = self.cursor.fetchall()
+            useID = result[0][0]
+            
+            sql = "SELECT usage FROM FoodUse WHERE id = %s"
+            val = (useID, )
+            self.cursor.execute(sql, val)
+            result = self.cursor.fetchall()
+            
+            purchased = {
+                'date' : datetime.datetime.now().strftime("%Y-%m-%d"),
+                'quantity' : content['quantity']
+            }
+            
+            useData = json.loads(result[0][0])
+            useData['purchased'].append(purchased)
+            useData['purchasedTotal'] += content['quantity']
+            
+            sql = "UPDATE FoodUse SET usage = %s WHERE id = %s"
+            val = (useData, useID, )
+            self.cursor.execute(sql, val)
+            result = self.connector.commit()
 
         return (json.dumps(dict(data='Item added.')), 200)
         
