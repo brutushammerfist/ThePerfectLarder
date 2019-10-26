@@ -195,41 +195,77 @@
 			on_press: root.addItems()
 	
 <DeleteItem>:
+	FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	Button:
+		text: ""
+		font_size: 15
+		color: 1,0,0,1
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
+		on_press: root.manager.current =  'inventory'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y		
+    Label:
+		text: "My Inventory"
+		font_size: 22
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.30, 'top': .99}
 
 	GridLayout:
 		id: del
 		cols:1
-		size: root.width, root.height
-		
-		Label:
-			id: name
-			
-		Label:
-			id: exp
-			
-		Label:
-			id: quantity
-			
-		Label:
-			id: loc
+		size_hint: (.98, 0.8)
+        pos_hint: {'top': 0.9}
 			
 		GridLayout:
 			cols:2
 			
 			Label:
-				text: "Quantity Used"
+				text: "Item:"
+			
+			Label:
+				id: name
+				
+			Label:
+				text: "Expiration Date:"
+			
+			Label:
+				id: exp
+			
+			Label:
+				text: "Quantity:"
+			
+			Label:
+				id: quantity
+			
+			Label:
+				text: "Location:"
+			
+			Label:
+				id: loc
+			
+			Label:
+				text: "Quantity Used:"
+				size_hint: (0.28, 0.25)
 				
 			TextInput:
 				id: used
 				multiline: False
+				size_hint: (0.28, 0.25)
+				valign: 'middle'
+				halign: 'center'
 				
 		Button:
 			text: "Submit"
-			on_press: root.deleteItems()
-			
-		Button:
-			text:"Back"
-			on_press: root.manager.current = 'inventory' 			
+			font_size: 17
+			color: 0, 0, 255, 1
+			size_hint: (.98, 0.09)
+			pos_hint:{'x': .01, 'top': .105}
+			on_press: root.deleteItems()			
 				
 
 <SearchItem>:
