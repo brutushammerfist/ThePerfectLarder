@@ -1,5 +1,6 @@
 # Python Rules
 **.pyc
+**__pycache__
 
 # Java Rules
 **.class
