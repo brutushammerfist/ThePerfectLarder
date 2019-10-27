@@ -136,12 +136,15 @@
                 halign:'left'
                 valign:'bottom'
                 
-            TextInput:
+            #TextInput:
+            #    id: measurement
+			#	multiline: False
+			#	pos_hint:{'x': 0.4}
+			#	size_hint_y: None
+			#	height: 30
+            
+            Spinner:
                 id: measurement
-				multiline: False
-				pos_hint:{'x': 0.4}
-				size_hint_y: None
-				height: 30
 
 		GridLayout:
 		    cols:2
@@ -258,7 +261,15 @@
 				size_hint: (0.28, 0.25)
 				valign: 'middle'
 				halign: 'center'
-				
+            
+            Label:
+                text: "Used or Expired?"
+                size_hint: (0.28, 0.25)
+            
+            Spinner:
+                id: useType
+                values: 'Used', 'Expired'
+                
 		Button:
 			text: "Submit"
 			font_size: 17

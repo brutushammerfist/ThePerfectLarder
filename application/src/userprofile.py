@@ -65,6 +65,18 @@ class Profile(Screen):
 
     # endregion
 
+class Settings(Screen):
+    
+    def on_pre_enter(self):
+        measureType = App.get_running_app().userMeasurement
+        if measureType == 0:
+            self.ids.imperial.value = 'down'
+        else:
+            self.ids.metric.value = 'down'
+    
+    def updateMeasurement(self):
+        App.get_running_app().userMeasurement
+    
 
 class ManagePL(Screen):  # part of the user profile
     pass

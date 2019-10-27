@@ -35,10 +35,9 @@ from login import Login
 from signup import SignUp
 from notification import Notification
 from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe, PersonalRecipe, ViewPersonalRecipe
-from settings import Settings
 from shoppinglist import ShoppingList
 from trends import Trends
-from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification
+from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification, Settings
 
 Builder.load_file('kv/feedback.kv')
 Builder.load_file('kv/inventory.kv')
@@ -98,12 +97,16 @@ screenManager.add_widget(AddItem(name="additem"))
 
 screenManager.add_widget(DeleteItem(name="deleteitem"))
 
+screenManager.add_widget(Settings(name="settings"))
+
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
 class testApp(App):
 
     userID = 0
+    userMeasurement = False
+    userNotif = True
     
     def update(self, dt):
         pass

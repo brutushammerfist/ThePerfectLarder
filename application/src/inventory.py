@@ -34,11 +34,12 @@ class Inventory(Screen):
         if response['data'] != 'Inventory is currently empty.':
             self.items = response['data']
             for n in range(0, len(response['data'])):
-                button = Button(text = response['data'][n]['itemname'] + " - " + str(response['data'][n]['quantity']) + " " + response['data'][n]['measurement'])
-                callback = lambda n:self.delItem(n)
-                button.itemToDel = n
-                button.bind(on_press = callback)
-                self.ids.inventoryID.add_widget(button)
+                if response['data'][n]['quantity'] > 0:
+                    button = Button(text = response['data'][n]['itemname'] + " - " + str(response['data'][n]['quantity']) + " " + response['data'][n]['measurement'])
+                    callback = lambda n:self.delItem(n)
+                    button.itemToDel = n
+                    button.bind(on_press = callback)
+                    self.ids.inventoryID.add_widget(button)
         else:
             self.ids.inventoryID.add_widget(Button(text = 'Inventory currently empty.'))
     
@@ -127,7 +128,8 @@ class DeleteItem(Screen):        #part of inventory
             
         payload = {
             'itemID' : item['itemID'],
-            'quantity' : self.ids.used.text
+            'quantity' : self.ids.used.text,
+            'useType' : self.ids.useType.text
             }
             
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delItem', headers=headers, data=json.dumps(payload)).json()

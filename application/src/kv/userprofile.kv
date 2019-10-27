@@ -13,72 +13,36 @@
             on_press: root.manager.current = 'managepl'
             
 		Button:
-            text: 'Edit/Create Profile'
-            on_press: root.manager.current = 'editcreateprofile'
-            
-		Button:
-            text: 'Setup/Edit Notifications'
-            on_press: root.manager.current = 'setupeditnotification'
+            text: 'Profile Settings'
+            on_press: root.manager.current = 'settings'
             
 		Button:
             text: 'Back To Home'
             on_press: root.manager.current = 'homescreen'
             
-<EditCreateProfile>:
-
-	userName:userName                #for python code : for kivy code
-	userPassword:userPassword        #for python code : for kivy code
-	userEmail:userEmail              #for python code : for kivy code
-	
-	FloatLayout:
+<Settings>:
+    FloatLayout:
 		Image:
 			source: "graphics/generalbackground.png"
-	BoxLayout:
-        orientation: 'vertical'
-		GridLayout:
-			cols:2
-		
-			Label:
-				text: "Name: "
-				
-			TextInput:
-				id: userName
-				multiline: False
-				write_tab: False
-				valign: 'middle'
-				halign: 'center'
-				size_hint: 1, 0.5
-				
-			Label:
-				text: "Password: "
-				
-			TextInput:
-				id: userPassword
-				multiline: False
-				write_tab: False
-				valign: 'middle'
-				halign: 'center'
-				size_hint: 0.4, 0.5
-				password: True
-				
-			Label:
-				text: "Email: "
-				
-			TextInput:
-				id: userEmail
-				multiline: False
-				write_tab: False
-				valign: 'middle'
-				halign: 'center'
-				size_hint: 0.4, 0.5
-				
-		Button:
-            text: 'Submit'
-            #on_press: root.Profile()      send to function
-		
-		Button:
-            text: 'Back'
-            on_press: root.manager.current = 'profile'
+    GridLayout:
+		cols:2
+		padding: [30]
+		spacing: [5, 5]
+        
+        Label:
+            text: 'Measurement Values'
+            
+        GridLayout:
+            cols:2
+            ToggleButton:
+                id: imperial
+                text: 'Imperial'
+                group: 'measurements'
+                
+            ToggleButton:
+                id: metric
+                text: 'Metric'
+                group: 'measurements'
            
 <ManagePL>:                                                            
 	BoxLayout:

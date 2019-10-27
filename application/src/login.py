@@ -60,6 +60,8 @@ class Login(Screen):
         # if incorrect, clear password and have them try again
         if response['data'] == 'Successful login.':
             App.get_running_app().userID = response['userID']
+            App.get_running_app().userMeasurement = response['measureType']
+            App.get_running_app().userNotif = response['notifPref']
             self.manager.current = 'homescreen'
         elif response['data'] == 'Invalid username.':
             self.ids.userPassword.text = ""

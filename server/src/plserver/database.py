@@ -17,7 +17,7 @@ class Database():
         self.cursor = self.connector.cursor()
 
     def login(self, content):
-        sql = "SELECT id, username, password FROM Users WHERE username = %s"
+        sql = "SELECT id, username, password, metric, notifications FROM Users WHERE username = %s"
         usr = (str(content['username']), )
         self.cursor.execute(sql, usr)
         result = self.cursor.fetchall()
@@ -31,7 +31,9 @@ class Database():
             if content['password'] == result[0][2]:
                 payload = {
                     'data' : 'Successful login.',
-                    'userID' : result[0][0]
+                    'userID' : result[0][0],
+                    'measureType' : result[0][3],
+                    'notifPref' : result[0][4]
                 }
                 return (json.dumps(payload), 200)
             else:
@@ -104,7 +106,9 @@ class Database():
                 ],
                 "purchasedTotal" : content["quantity"],
                 "used" : [],
-                "usedTotal" : 0
+                "usedTotal" : 0,
+                "wasted" : [],
+                "wastedTotal" : 0
             }
 
             sql = "INSERT INTO FoodUse (itemname, measurement, `usage`) VALUES (%s, %s, %s)"
@@ -179,7 +183,7 @@ class Database():
         return (json.dumps(dict(data="Could not pull item.")), 401)
 
     def delItem(self, content):
-        sql = "SELECT id, itemname, quantity, measurement, location FROM Items WHERE id = %s"
+        sql = "SELECT id, itemname, quantity, measurement, location, useID FROM Items WHERE id = %s"
         val = (content['itemID'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
@@ -188,18 +192,49 @@ class Database():
             newQuantity = result[0][2] - float(content['quantity'])
         
             if newQuantity <= 0:
-                sql = "DELETE FROM Items WHERE id = %s"
-                val = (content['itemID'], )
+                #sql = "DELETE FROM Items WHERE id = %s"
+                sql = "UPDATE Items SET quantity = %s WHERE id = %s"
+                val = (0, content['itemID'], )
             else:
                 sql = "UPDATE Items SET quantity = %s WHERE id = %s"
                 val = (newQuantity, content['itemID'], )
+                
+            useID = result[0][5]
+            
+            sql = "SELECT `usage` FROM FoodUse WHERE id = %s"
+            val= (useID, )
+            self.cursor.execute(sql, val)
+            result = self.cursor.fetchall()
+            
+            useData = json.loads(result[0][0])
+            
+            if content['Used']:
+                used = {
+                    "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
+                    "quantity" : content["quantity"]
+                }
+                useData['used'].append(used)
+                useData['usedTotal'] = float(useData['usedTotal']) + float(content['quantity'])
+                
+                sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
+                val = (json.dumps(useData), useID, )
+                self.cursor.execute(sql, val)
+                result = self.connector.commit()
+            else:
+                exp = {
+                    "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
+                    "quantity" : content["quantity"]
+                }
+                expData['wasted'].append(exp)
+                expData['wastedTotal'] = float(useData['wastedTotal']) + float(content['quantity'])
+                
+                sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
+                val = (json.dumps(expData), useID, )
+                self.cursor.execute(sql, val)
+                result = self.connector.commit()
         
             self.cursor.execute(sql, val)
             self.connector.commit()
-            
-            #
-            #   Update used items in Usage history
-            #
         
             return (json.dumps(dict(data='Item deleted.')), 200)
         else:
