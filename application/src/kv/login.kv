@@ -1,8 +1,11 @@
+#:import Window kivy.core.window.Window
 <Login>:
 	
 	userName:userName                #for python code : for kivy code
 	userPassword:userPassword        #for python code : for kivy code
 	FloatLayout:
+		height: Window.height
+		width: Window.width
         Image:
             source: "graphics/loginbackground.png"
 	GridLayout:

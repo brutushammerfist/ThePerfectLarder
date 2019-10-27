@@ -8,8 +8,11 @@ import kivy
 
 kivy.require('1.11.1')
 from kivy.config import Config
-Config.set('graphics', 'width', '320')
-Config.set('graphics', 'height', '640')
+from kivy.core.window import Window
+Config.set('graphics', 'width', Window.width)
+Config.set('graphics', 'height', Window.height)
+#Config.set('graphics', 'width', '320')
+#Config.set('graphics', 'height', '640')
 #Config.set('kivy', 'keyboard_mode','systemandmulti')
 
 from kivy.app import App

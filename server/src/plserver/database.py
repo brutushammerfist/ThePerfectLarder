@@ -53,15 +53,15 @@ class Database():
         usrn = (str(content['username']),)
         self.cursor.execute(sql,usrn)
         result1 = self.cursor.fetchall()
-        
-        
+
+
         sqlTwo = "SELECT id FROM `Users` WHERE `Users`.`email` = %s"
         usre = (str(content['useremail']),)
         self.cursor.execute(sqlTwo,usre)
         result2 = self.cursor.fetchall()
-        
+
         usrp = (str(content['password']),)
-        
+
         if len(result1) == 0 and len(result2) == 0:
             sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
             self.cursor.execute(sql)
@@ -80,80 +80,82 @@ class Database():
             return (json.dumps(dict(data='2')), 401)
         else:
             return (json.dumps(dict(data='3')), 401)
-                
+
     def addItem(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
-        
+
         inventoryID = result[0][0]
-        
+
         sql = "SELECT id, itemname, quantity, measurement, location FROM Items WHERE inventoryID = %s AND itemname = %s AND measurement = %s AND location = %s"
         val = (inventoryID, content['itemname'], content['measurement'], content['location'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
-        
+
         if len(result) == 0:
             useData = {
-                'purchased' : [
+                "purchased" : [
                     {
-                        'date' : datetime.datetime.now().strftime("%Y-%m-%d"),
-                        'quantity' : content['quantity']
+                        "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
+                        "quantity" : content["quantity"]
                     }
                 ],
-                'purchasedTotal' : content['quantity'],
-                'used' : [],
-                'usedTotal' : 0
+                "purchasedTotal" : content["quantity"],
+                "used" : [],
+                "usedTotal" : 0
             }
-            
-            sql = "INSERT INTO FoodUse (itemname, measurement, usage)"
+
+            sql = "INSERT INTO FoodUse (itemname, measurement, `usage`) VALUES (%s, %s, %s)"
             val = (content['itemname'], content['measurement'], json.dumps(useData), )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
-            
-            sql = "SELECT id FROM FoodUse ORDER BY id DESC"
+
+            sql = "SELECT id FROM FoodUse ORDER BY id DESC;"
             self.cursor.execute(sql)
             result = self.cursor.fetchall()
             useID = result[0][0]
-            
+
             sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location, useID) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             val = (inventoryID, content['itemname'], content['expDate'], content['quantity'], content['measurement'], content['location'], useID, )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
         else:
+            itemID = result[0][0]
+
             sql = "UPDATE Items SET quantity = %s WHERE id = %s"
-            val = ((content['quantity'] + result[0][2]), result[0][0], )
+            val = ((float(content['quantity']) + float(result[0][2])), itemID, )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
-            
+
             sql = "SELECT useID FROM Items WHERE id = %s"
-            val = (result[0][0], )
+            val = (itemID, )
             self.cursor.execute(sql, val)
             result = self.cursor.fetchall()
             useID = result[0][0]
-            
-            sql = "SELECT usage FROM FoodUse WHERE id = %s"
+
+            sql = "SELECT `usage` FROM FoodUse WHERE id = %s"
             val = (useID, )
             self.cursor.execute(sql, val)
             result = self.cursor.fetchall()
-            
+
             purchased = {
                 'date' : datetime.datetime.now().strftime("%Y-%m-%d"),
                 'quantity' : content['quantity']
             }
-            
+
             useData = json.loads(result[0][0])
             useData['purchased'].append(purchased)
-            useData['purchasedTotal'] += content['quantity']
-            
-            sql = "UPDATE FoodUse SET usage = %s WHERE id = %s"
+            useData['purchasedTotal'] = float(useData['purchasedTotal']) + float(content['quantity'])
+
+            sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
             val = (json.dumps(useData), useID, )
             self.cursor.execute(sql, val)
             result = self.connector.commit()
 
         return (json.dumps(dict(data='Item added.')), 200)
-        
+
     def getItem(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
