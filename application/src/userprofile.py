@@ -14,6 +14,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.app import App
 from kivy.uix.behaviors import ToggleButtonBehavior
+from kivy.uix.button import Button
 
 import requests
 import json
@@ -77,6 +78,11 @@ class Settings(Screen):
             self.ids.imperial.state = 'down'
         else:
             self.ids.metric.state = 'down'
+            
+        for i in App.get_running_app().storageLocations:
+            button = Button(text=i)
+            self.ids.locations.add_widget(button)
+            button.bind(lambda button:self.ids.locations.remove_widget(button))
     
     def updateMeasurement(self):
         #button = 0

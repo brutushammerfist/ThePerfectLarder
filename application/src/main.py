@@ -105,8 +105,9 @@ screenManager.add_widget(Settings(name="settings"))
 class testApp(App):
 
     userID = 0
-    userMeasurement = False
-    userNotif = True
+    userMeasurement = 0
+    userNotif = 0
+    storageLocations = 0
     
     def update(self, dt):
         pass

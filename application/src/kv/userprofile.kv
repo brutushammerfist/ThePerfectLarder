@@ -24,43 +24,58 @@
     FloatLayout:
 		Image:
 			source: "graphics/generalbackground.png"
-    GridLayout:
-        cols:1
+    ScrollView:
+        do_scroll_x: False
+		do_scroll_y: True
         GridLayout:
-            cols:2
-            padding: [30]
-            spacing: [5, 5]
-            size_hint_y: 0.5
-            
-            Label:
-                text: 'Measurement Values'
-                
+            cols:1
+            size_hint_y: None
+            height: self.minimum_height
             GridLayout:
                 cols:2
-                ToggleButton:
-                    id: imperial
-                    text: 'Imperial'
-                    group: 'measurements'
-                    allow_no_selection: False
+                padding: [30]
+                spacing: [5, 5]
+                size_hint_y: None
+                height: self.minimum_height
+                
+                Label:
+                    text: 'Measurement Values'
                     
-                ToggleButton:
-                    id: metric
-                    text: 'Metric'
-                    group: 'measurements'
-                    allow_no_selection: False
-        GridLayout:
-            cols:2
-            padding: [30]
-            spacing: [5, 5]
-            default_row_height: 50
-            size_hint_y: 0.5
-            
-            Button:
-                text: 'Submit'
-                on_press: root.updateMeasurement()
-            Button:
-                text: 'Back'
-                on_press: root.manager.current = 'profile'
+                GridLayout:
+                    cols:2
+                    ToggleButton:
+                        id: imperial
+                        text: 'Imperial'
+                        group: 'measurements'
+                        allow_no_selection: False
+                        
+                    ToggleButton:
+                        id: metric
+                        text: 'Metric'
+                        group: 'measurements'
+                        allow_no_selection: False
+            Label:
+                text: ''
+                
+            GridLayout:
+                id: locations
+                cols: 2
+                size_hint_y: None
+                height: self.minimum_height
+                    
+            GridLayout:
+                cols:2
+                padding: [30]
+                spacing: [5, 5]
+                size_hint_y: None
+                height: self.minimum_height
+                
+                Button:
+                    text: 'Submit'
+                    on_press: root.updateMeasurement()
+                Button:
+                    text: 'Back'
+                    on_press: root.manager.current = 'profile'
            
 <ManagePL>:                                                            
 	BoxLayout:

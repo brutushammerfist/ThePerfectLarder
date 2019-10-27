@@ -17,7 +17,7 @@ class Database():
         self.cursor = self.connector.cursor()
 
     def login(self, content):
-        sql = "SELECT id, username, password, metric, notifications FROM Users WHERE username = %s"
+        sql = "SELECT id, username, password, metric, notifications, storageLocations FROM Users WHERE username = %s"
         usr = (str(content['username']), )
         self.cursor.execute(sql, usr)
         result = self.cursor.fetchall()
@@ -33,7 +33,8 @@ class Database():
                     'data' : 'Successful login.',
                     'userID' : result[0][0],
                     'measureType' : result[0][3],
-                    'notifPref' : result[0][4]
+                    'notifPref' : result[0][4],
+                    'locations' : result[0][5]
                 }
                 return (json.dumps(payload), 200)
             else:
@@ -70,9 +71,13 @@ class Database():
             result = self.cursor.fetchall()
 
             inventoryID = result[0][0] + 1
+            
+            storageLocations = {
+                'locations' : ['Fridge', 'Freezer', 'Dry']
+            }
 
-            sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID) VALUES (%s, %s, %s, %s, %s, %s)"
-            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, )
+            sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID, storageLocations) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, storageLocations, )
             self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
@@ -417,6 +422,14 @@ class Database():
     def updateMeasurementSetting(self, content):
         sql = "UPDATE Users SET metric = %s WHERE id = %s"
         val = (content['measureType'], content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+        
+        return (json.dumps(dict(data='Successfully Updated.')), 200)
+        
+    def updateStorageLocations(self, content):
+        sql = "UPDATE Users SET storageLocations = %s WHERE id = %s"
+        val = (content['locations'], content['userID'], )
         self.cursor.execute(sql, val)
         result = self.connector.commit()
         

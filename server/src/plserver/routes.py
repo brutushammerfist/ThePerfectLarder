@@ -67,3 +67,7 @@ def getShoppingList():
 @app.route('/updateMeasurementSetting', methods = ['POST'])
 def updateMeasurementSetting():
     return db.updateMeasurementSetting(request.get_json())
+    
+@app.route('/updateStorageLocations', methods = ['POST'])
+def updateStorageLocations():
+    return db.updateStorageLocations(request.get_json())
