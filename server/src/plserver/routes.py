@@ -63,3 +63,7 @@ def getTrends():
 @app.route('/getShoppingList', methods = ['POST'])
 def getShoppingList():
     return db.getShoppingList(request.get_json())
+    
+@app.route('/updateMeasurementSetting', methods = ['POST'])
+def updateMeasurementSetting():
+    return db.updateMeasurementSetting(request.get_json())

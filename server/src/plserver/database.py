@@ -413,3 +413,9 @@ class Database():
         
     def getShoppingList(self, content):
         pass
+
+    def updateMeasurementSetting(self, content):
+        sql = "UPDATE Users SET metric = %s WHERE id = %s"
+        val = (content['measureType'], content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()

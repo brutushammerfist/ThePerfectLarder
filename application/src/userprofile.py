@@ -12,7 +12,8 @@ import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
-
+from kivy.app import App
+from kivy.uix.behaviors import ToggleButtonBehavior
 
 # `Profile`: Allows for account creation, editing, and deletion in the TPL server.
 class Profile(Screen):
@@ -70,13 +71,30 @@ class Settings(Screen):
     def on_pre_enter(self):
         measureType = App.get_running_app().userMeasurement
         if measureType == 0:
-            self.ids.imperial.value = 'down'
+            self.ids.imperial.state = 'down'
         else:
-            self.ids.metric.value = 'down'
+            self.ids.metric.state = 'down'
     
     def updateMeasurement(self):
-        App.get_running_app().userMeasurement
-    
+        #button = 0
+        #for i in ToggleButtonBehavior.get_widgets('measurements'):
+        #    if i.state == 'down':
+        #        button = i
+        #        break
+        payload = {
+            'userID' : App.get_running_app().userID
+        }
+        if self.ids.imperial.state == 'down':
+            payload['measureType'] = 0
+        else:
+            payload['measureType'] = 1
+            
+        r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateMeasurementSetting', headers={'Content-Type':'application/json'}, data=json.dumps(payload))
+        
+        if r['data'] == 'Successfully Updated.':
+            self.manager.current = 'profile'
+            App.get_running_app().userMeasurement = payload['measureType']
+
 
 class ManagePL(Screen):  # part of the user profile
     pass

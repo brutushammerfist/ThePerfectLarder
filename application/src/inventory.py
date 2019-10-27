@@ -66,6 +66,12 @@ class Inventory(Screen):
         self.manager.current = 'deleteitem'
     
 class AddItem(Screen):            #part of inventory
+
+    def on_pre_enter(self):
+        if App.get_running_app().userMeasurement == 0:
+            self.ids.measurement.values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)')
+        else:
+            self.ids.measurement.values = ('mL', 'liter(L)', 'gram(g)')
         
     def addItems(self):
     
