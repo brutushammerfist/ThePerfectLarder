@@ -15,6 +15,9 @@ from kivy.properties import ObjectProperty
 from kivy.app import App
 from kivy.uix.behaviors import ToggleButtonBehavior
 
+import requests
+import json
+
 # `Profile`: Allows for account creation, editing, and deletion in the TPL server.
 class Profile(Screen):
     def on_enter(self):
@@ -89,7 +92,7 @@ class Settings(Screen):
         else:
             payload['measureType'] = 1
             
-        r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateMeasurementSetting', headers={'Content-Type':'application/json'}, data=json.dumps(payload))
+        r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateMeasurementSetting', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
         
         if r['data'] == 'Successfully Updated.':
             self.manager.current = 'profile'

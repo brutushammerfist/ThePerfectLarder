@@ -419,3 +419,5 @@ class Database():
         val = (content['measureType'], content['userID'], )
         self.cursor.execute(sql, val)
         result = self.connector.commit()
+        
+        return (json.dumps(dict(data='Successfully Updated.')), 200)
