@@ -66,25 +66,23 @@ class Database():
         
         if(len(result1) != 0 and result2 != 0):
             return (json.dumps(dict(data='3')), 401)
-        if(len(result1) != 0 ):
+        elif(len(result1) != 0 ):
             return (json.dumps(dict(data='1')), 401)
-        if(len(result2) != 0):
+        elif(len(result2) != 0):
             return (json.dumps(dict(data='2')), 401)
-        
-        usrp = (str(content['password']),)
-        
-        if len(result1) == 0 and len(result2) == 0:
-            sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
-            self.cursor.execute(sql)
-            result = self.cursor.fetchall()
-
-            inventoryID = result[0][0] + 1
-
-            sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID) VALUES (%s, %s, %s, %s, %s, %s)"
-            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, )
-            self.cursor.execute(sqlInsert, val)
-            result = self.connector.commit()
-            return (json.dumps(dict(data='0')), 200)
+        else:            
+            if len(result1) == 0 and len(result2) == 0:
+                sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
+                self.cursor.execute(sql)
+                result = self.cursor.fetchall()
+    
+                inventoryID = result[0][0] + 1
+    
+                sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID) VALUES (%s, %s, %s, %s, %s, %s)"
+                val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, )
+                self.cursor.execute(sqlInsert, val)
+                result = self.connector.commit()
+                return (json.dumps(dict(data='0')), 200)
 
     def addItem(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
