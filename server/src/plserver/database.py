@@ -76,14 +76,13 @@ class Database():
             self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
-        if(len(result1) != 0 and result2 != 0):
+        elif(len(result1) != 0 and result2 != 0):
             return (json.dumps(dict(data='3')), 401)
-        if(len(result1) != 0 ):
-            return (json.dumps(dict(data='1')), 401)
-        if(len(result2) != 0):
-            return (json.dumps(dict(data='2')), 401)
-        
-
+        else:
+            if(len(result1) != 0 ):
+                return (json.dumps(dict(data='1')), 401)
+            if(len(result2) != 0):
+                return (json.dumps(dict(data='2')), 401)
     def addItem(self, content):
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
