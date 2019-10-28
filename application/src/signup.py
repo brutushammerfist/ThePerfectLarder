@@ -70,6 +70,11 @@ class SignUp(Screen):
         return PasswordValidationResponse.VALID
 
     # endregion
+    def validatePhonenumber(self,phoneTemp):
+        if phoneTemp.isdigit():
+            return True
+        else:
+            return False
 
     # region Widgets
     @staticmethod
@@ -98,73 +103,94 @@ class SignUp(Screen):
         self.remove_widget(self.LPM)
         self.remove_widget(self.LPE)
 
+        #Validate name
+        if name != "":
         # Validate email.
-        if self.checkEmailValidity(userEmail):
-
-            # Validate username.
-            if userName != "":
-
-                # Validate password fields.
-                passwordValidation = self.validatePasswords(userPassword, userPasswordConfirm)
-
-                if passwordValidation == PasswordValidationResponse.VALID:
-                    # Password combo was valid, send to server.
-                    print("All account data valid, sending payload to server.")
-
-                    headers = {'Content-Type' : 'application/json'}
-
-                    payload = {
-                        'name' : name,
-                        'useremail' : userEmail,
-                        'phone' : phone,
-                        'username' : userName,
-                        'password' : userPassword
-                     }
-                    response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
-                    if(response['data'] == 0):
-                        # data successfully registered
-                        print("successfully registered")
-                    elif(response['data'] == 1):
-                        # there is and username already in the database
-                        print("That username is present in the database")
-                    elif(response['data'] == 2):
-                        # there is and email already in the database
-                        print("That email is present in the database")
+            if self.checkEmailValidity(userEmail):
+    
+                if phone != "":
+                    # Validate username.
+                    passwordValidation = self.validatePasswords(userPassword, userPasswordConfirm)
+                    phoneNumMustBeInt = self.validatePhonenumber(phone)
+                    if(phoneNumMustBeInt != False):
+                            # Validate password fields.
+                    
+                        if userName != "":
+                            if passwordValidation == PasswordValidationResponse.VALID:
+                                # Password combo was valid, send to server.
+                                print("All account data valid, sending payload to server.")
+            
+                                headers = {'Content-Type' : 'application/json'}
+            
+                                payload = {
+                                    'name' : name,
+                                    'useremail' : userEmail,
+                                    'phone' : phone,
+                                    'username' : userName,
+                                    'password' : userPassword
+                                 }
+                                response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
+                                print(response['data'])
+                                #if(response['data'] == 0):
+                                    # data successfully registered
+                                    #print("successfully registered")
+                                #elif(response['data'] == 1):
+                                    # there is and username already in the database
+                                    #print("That username is present in the database")
+                                #elif(response['data'] == 2):
+                                    # there is and email already in the database
+                                    #print("That email is present in the database")
+                                #else:
+                                    # Both username and email already in the database
+                                    #print("That username and email are present in the database")
+            
+                                #return
+            
+                            elif passwordValidation == PasswordValidationResponse.NOTMATCHING:
+                                # Passwords did not match, alert user to try again.
+                                print("Passwords do not match")
+                                self.remove_widget(self.LE)
+                                self.remove_widget(self.LPE)
+                                self.LPM = self.widgetWithMessage("Passwords do not match!")
+                                self.add_widget(self.LPM)
+                                return
+            
+                            elif passwordValidation == PasswordValidationResponse.CONFIRMNOTENTERED or passwordValidation == PasswordValidationResponse.NOTENTERED:
+                                # Password or Confirm Password text field not entered, alert user to try again.
+                                label = 'Password field' if passwordValidation == PasswordValidationResponse.NOTENTERED else 'Confirm Password field'
+                                print("%s must not be blank." % label)
+                                self.remove_widget(self.LE)
+                                self.remove_widget(self.LUE)
+                                self.LPE = self.widgetWithMessage("%s must not be blank." % label)
+                                self.add_widget(self.LPE)
+                                return
+                            
+                        else:
+                            # Username field was empty, alert user to try again.
+                            print("Username can not remain empty")
+                            self.remove_widget(self.LE)
+                            self.remove_widget(self.LUE)
+                            self.LUE = self.widgetWithMessage("Username can not remain empty.")
+                            self.add_widget(self.LUE)
                     else:
-                        # Both username and email already in the database
-                        print("That username and email are present in the database")
-
-                    return
-
-                elif passwordValidation == PasswordValidationResponse.NOTMATCHING:
-                    # Passwords did not match, alert user to try again.
-                    print("Passwords do not match")
+                        print("Phone number must be an integer.")
+                        self.remove_widget(self.LE)
+                        self.LUE = self.widgetWithMessage("Phone number must be an integer.")
+                        self.add_widget(self.LUE)
+                else:
+                    print("Phone number can  not remain empty")
                     self.remove_widget(self.LE)
-                    self.remove_widget(self.LPE)
-                    self.LPM = self.widgetWithMessage("Passwords do not match!")
-                    self.add_widget(self.LPM)
-                    return
-
-                elif passwordValidation == PasswordValidationResponse.CONFIRMNOTENTERED or passwordValidation == PasswordValidationResponse.NOTENTERED:
-                    # Password or Confirm Password text field not entered, alert user to try again.
-                    label = 'Password field' if passwordValidation == PasswordValidationResponse.NOTENTERED else 'Confirm Password field'
-                    print("%s must not be blank." % label)
-                    self.remove_widget(self.LE)
-                    self.remove_widget(self.LUE)
-                    self.LPE = self.widgetWithMessage("%s must not be blank." % label)
-                    self.add_widget(self.LPE)
-                    return
-
+                    self.LE = self.widgetWithMessage("Phone number can  not remain empty")
+                    self.add_widget(self.LE)
+                    
             else:
-                # Username field was empty, alert user to try again.
-                print("Username can not remain empty")
+                # Email value was invalid, alert user to try again.
+                print("This is an invalid Email")
                 self.remove_widget(self.LE)
-                self.LUE = self.widgetWithMessage("Username can not remain empty.")
-                self.add_widget(self.LUE)
-
+                self.LE = self.widgetWithMessage("This is an invalid email address.")
+                self.add_widget(self.LE)
         else:
-            # Email value was invalid, alert user to try again.
-            print("This is an invalid Email")
-            self.LE = self.widgetWithMessage("This is an invalid email address.")
+            print("Name can  not remain empty")
+            self.LE = self.widgetWithMessage("Name can  not remain empty.")
             self.add_widget(self.LE)
     # endregion
