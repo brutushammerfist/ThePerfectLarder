@@ -76,7 +76,7 @@ class Database():
             self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
-        elif(len(result1) != 0 and result2 != 0):
+        elif(len(result1) != 0 and len(result2) != 0):
             return (json.dumps(dict(data='3')), 401)
         else:
             if(len(result1) != 0 ):
