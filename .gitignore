@@ -12,3 +12,6 @@
 # Ignore built apk from Buildozer
 **/bin
 **/.buildozer
+
+#Ignore git merge files
+**.orig
