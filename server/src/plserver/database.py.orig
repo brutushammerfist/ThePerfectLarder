@@ -56,14 +56,14 @@ class Database():
         usrn = (str(content['username']),)
         self.cursor.execute(sql,usrn)
         result1 = self.cursor.fetchall()
-
-
+        
+        
             
         sqlTwo = "SELECT id FROM `Users` WHERE `Users`.`email` = %s"
         usre = (str(content['useremail']),)
         self.cursor.execute(sqlTwo,usre)
         result2 = self.cursor.fetchall()
-
+                    
         if len(result1) == 0 and len(result2) == 0:
             sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
             self.cursor.execute(sql)

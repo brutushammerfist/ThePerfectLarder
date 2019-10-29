@@ -70,6 +70,10 @@ class Profile(Screen):
 
     # endregion
 
+#class StorageLocation(GridLayout):
+#    def deleteSelf(self):
+#        self.parent.remove_widget(self)
+    
 class Settings(Screen):
     
     def on_pre_enter(self):
@@ -82,7 +86,24 @@ class Settings(Screen):
         for i in App.get_running_app().storageLocations:
             button = Button(text=i)
             self.ids.locations.add_widget(button)
-            button.bind(lambda button:self.ids.locations.remove_widget(button))
+            button.bind(on_press=lambda i:self.removeLocation(i))
+            
+    def addLocation(self):
+        if self.ids.newLoc.text != "":
+            loc = self.ids.newLoc.text
+            button = Button(text=loc)
+            self.ids.locations.add_widget(button)
+            button.bind(on_press=lambda loc:self.removeLocation(loc))
+            
+    def removeLocation(self, location):
+        #self.ids.locations.children.pop(0)
+        num = 0
+        for i in self.ids.locations.children:
+            if i.text == location:
+                self.ids.locations.children.pop(num)
+                break
+            else:
+                num += 1
     
     def updateMeasurement(self):
         #button = 0
