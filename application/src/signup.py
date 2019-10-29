@@ -4,7 +4,7 @@ import re
 kivy.require('1.11.1')
 from kivy.config import Config
 
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
@@ -49,6 +49,7 @@ class SignUp(Screen):
     LPM = Label()
     LPE = Label()
     LUE = Label()
+    SRC = Label()
 
     # region Field Validation
     # `checkEmailValidity`: Verifies a given email.
@@ -81,7 +82,8 @@ class SignUp(Screen):
     def widgetWithMessage(message):
         widget = Label(text=message)
         widget.font_size = 14
-        widget.color = (1, 0, 1, 1)
+        widget.bold = True
+        widget.color = (1, 0, 0,0.75)
         widget.pos_hint = {"top":.68}
         return widget
 
@@ -131,20 +133,24 @@ class SignUp(Screen):
                                  }
                                 response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
                                 print(response['data'])
-                                #if(response['data'] == 0):
+                                if(response['data'] == 0):
                                     # data successfully registered
-                                    #print("successfully registered")
-                                #elif(response['data'] == 1):
+                                    self.SRC = self.widgetWithMessage("successfully registered")
+                                    self.add_widget(self.SRC)
+                                    #sm = ScreenManager()
+                                    #sm.add_widget(Screen(name = ''))
+                                    print("successfully registered")
+                                elif(response['data'] == 1):
                                     # there is and username already in the database
-                                    #print("That username is present in the database")
-                                #elif(response['data'] == 2):
+                                    print("That username is present in the database")
+                                elif(response['data'] == 2):
                                     # there is and email already in the database
-                                    #print("That email is present in the database")
-                                #else:
+                                    print("That email is present in the database")
+                                else:
                                     # Both username and email already in the database
-                                    #print("That username and email are present in the database")
+                                    print("That username and email are present in the database")
             
-                                #return
+                                return
             
                             elif passwordValidation == PasswordValidationResponse.NOTMATCHING:
                                 # Passwords did not match, alert user to try again.
