@@ -69,15 +69,18 @@ class Database():
             sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
             self.cursor.execute(sql)
             result = self.cursor.fetchall()
-
-            inventoryID = result[0][0] + 1
+            
+            if len(result) > 0:
+                inventoryID = result[0][0] + 1
+            else:
+                inventoryID = 1
             
             storageLocations = {
                 'locations' : ['Fridge', 'Freezer', 'Dry']
             }
 
             sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID, storageLocations) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, storageLocations, )
+            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, json.dumps(storageLocations), )
             self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
