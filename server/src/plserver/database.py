@@ -57,8 +57,6 @@ class Database():
         self.cursor.execute(sql,usrn)
         result1 = self.cursor.fetchall()
 
-
-            
         sqlTwo = "SELECT id FROM `Users` WHERE `Users`.`email` = %s"
         usre = (str(content['useremail']),)
         self.cursor.execute(sqlTwo,usre)
@@ -68,26 +66,19 @@ class Database():
             sql = "SELECT inventoryID FROM Users ORDER BY inventoryID DESC"
             self.cursor.execute(sql)
             result = self.cursor.fetchall()
-<<<<<<< HEAD
-            
+
             if len(result) > 0:
                 inventoryID = result[0][0] + 1
             else:
                 inventoryID = 1
-            
+
             storageLocations = {
                 'locations' : ['Fridge', 'Freezer', 'Dry']
             }
 
             sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID, storageLocations) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, json.dumps(storageLocations), )
-=======
-
             inventoryID = result[0][0] + 1
-
-            sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID) VALUES (%s, %s, %s, %s, %s, %s)"
-            val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, )
->>>>>>> 2eacc711b1a1897b376a58bb539885ac58bd220c
             self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
