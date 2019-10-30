@@ -15,8 +15,19 @@ class Database():
             database = os.environ['DATABASE_NAME']
         )
         self.cursor = self.connector.cursor()
+        
+    def ensureConnected(self):
+        if not self.connector.is_connected():
+            self.connector = mysql.connector.connect(
+                host = "localhost",
+                user = "test",
+                passwd = "test",
+                database = os.environ['DATABASE_NAME']
+            )
+            self.cursor = self.connector.cursor()
 
     def login(self, content):
+        self.ensureConnected()
         sql = "SELECT id, username, password, metric, notifications, storageLocations FROM Users WHERE username = %s"
         usr = (str(content['username']), )
         self.cursor.execute(sql, usr)
@@ -44,6 +55,7 @@ class Database():
                 return (json.dumps(payload), 401)
 
     def signUp(self,content):
+        self.ensureConnected()
         # check if any user name or email address exist in the data base
             #if yes  
                 #return 1 for name already in database
@@ -89,7 +101,9 @@ class Database():
                 return (json.dumps(dict(data='1')), 401)
             if(len(result2) != 0):
                 return (json.dumps(dict(data='2')), 401)
+                
     def addItem(self, content):
+        self.ensureConnected()
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -167,6 +181,7 @@ class Database():
         return (json.dumps(dict(data='Item added.')), 200)
 
     def getItem(self, content):
+        self.ensureConnected()
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -189,6 +204,7 @@ class Database():
         return (json.dumps(dict(data="Could not pull item.")), 401)
 
     def delItem(self, content):
+        self.ensureConnected()
         sql = "SELECT id, itemname, quantity, measurement, location, useID FROM Items WHERE id = %s"
         val = (content['itemID'], )
         self.cursor.execute(sql, val)
@@ -231,11 +247,11 @@ class Database():
                     "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
                     "quantity" : content["quantity"]
                 }
-                expData['wasted'].append(exp)
-                expData['wastedTotal'] = float(useData['wastedTotal']) + float(content['quantity'])
+                useData['wasted'].append(exp)
+                useData['wastedTotal'] = float(useData['wastedTotal']) + float(content['quantity'])
                 
                 sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
-                val = (json.dumps(expData), useID, )
+                val = (json.dumps(useData), useID, )
                 self.cursor.execute(sql, val)
                 result = self.connector.commit()
         
@@ -247,6 +263,7 @@ class Database():
             return (json.dumps(dict(data='Item does not exist')), 401)
 
     def getInventory(self, content):
+        self.ensureConnected()
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -273,6 +290,7 @@ class Database():
             return (json.dumps(payload, default=str), 200)
 
     def searchItem(self, content):
+        self.ensureConnected()
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -299,6 +317,7 @@ class Database():
             return (json.dumps(payload, default=str), 200)
 
     def getReccRecipes(self, content):
+        self.ensureConnected()
         sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -349,6 +368,7 @@ class Database():
         return (json.dumps(payload, default=str), 200)
         
     def getPersonalRecipes(self, content):
+        self.ensureConnected()
         sql = "SELECT recipeID FROM PersonalRecipes WHERE userID = %s"
         val = (content['userID'], )
         self.cursor.execute(sql, val)
@@ -385,6 +405,7 @@ class Database():
             return (json.dumps(dict(data='Personal Recipes Empty.')), 401)
 
     def addRecipe(self, content):
+        self.ensureConnected()
         sql = "INSERT INTO Recipes (name, description, servings, ingredients) VALUES (%s, %s, %s, %s)"
         val = (content['name'], content['description'], content['servings'], str(content['ingredients']), )
         self.cursor.execute(sql, val)
@@ -402,6 +423,7 @@ class Database():
         return (json.dumps(dict(data='Recipe Added.')), 200)
 
     def delRecipe(self, content):
+        self.ensureConnected()
         sql = "DELETE FROM PersonalRecipes WHERE recipeID = %s"
         val = (content['recipeID'], )
         self.cursor.execute(sql, val)
@@ -415,12 +437,29 @@ class Database():
         return (json.dumps(dict(data='Recipe Deleted.')), 200)
         
     def getTrends(self, content):
-        pass
+        self.ensureConnected()
+        
+        # Get items in user's inventory, along with its useID
+        
+        # Get usage information from FoodUse
+        
+        # If month is selected(content['month'] exists), return information from specific month, unless month does not exist in usage history
+        
+        # Else, month is not selected(content['month'] does not exist), return information from last 30 days, unless usage history does not exist
         
     def getShoppingList(self, content):
-        pass
+        self.ensureConnected()
+        
+        # Get items in user's inventory, along with its useID
+        
+        # Get usage information from FoodUse
+        
+        # Calculate how much of which items are missing from inventory based upon usage history
+        
+        # Return shopping list in json format
 
     def updateMeasurementSetting(self, content):
+        self.ensureConnected()
         sql = "UPDATE Users SET metric = %s WHERE id = %s"
         val = (content['measureType'], content['userID'], )
         self.cursor.execute(sql, val)
@@ -429,6 +468,7 @@ class Database():
         return (json.dumps(dict(data='Successfully Updated.')), 200)
         
     def updateStorageLocations(self, content):
+        self.ensureConnected()
         sql = "UPDATE Users SET storageLocations = %s WHERE id = %s"
         val = (content['locations'], content['userID'], )
         self.cursor.execute(sql, val)
