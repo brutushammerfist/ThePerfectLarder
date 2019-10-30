@@ -50,6 +50,8 @@ class SignUp(Screen):
     LPE = Label()
     LUE = Label()
     SRC = Label()
+    ResponseErrorMessage = Label()
+    
 
     # region Field Validation
     # `checkEmailValidity`: Verifies a given email.
@@ -88,7 +90,15 @@ class SignUp(Screen):
         return widget
 
     # endregion
-
+    @staticmethod
+    def widgetWithSuccessMessage(message):
+        widget = Label(text=message)
+        widget.font_size = 14
+        widget.bold = True
+        widget.color = (0, 1, 0,0.75)
+        widget.pos_hint = {"top":.68}
+        return widget
+    # region Widgets
     # region Account Creation
 
     # `createAccount`: Validates the user entered account data. Alerts user if invalid, sends to server if valid.
@@ -132,23 +142,34 @@ class SignUp(Screen):
                                     'password' : userPassword
                                  }
                                 response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
-                                print(response['data'])
-                                if(response['data'] == 0):
+                                self.remove_widget(self.LE)
+                                self.remove_widget(self.LPE)
+                                self.remove_widget(self.LUE)
+                                self.remove_widget(self.LPM)
+                                self.remove_widget(self.ResponseErrorMessage)
+                                self.remove_widget(self.SRC)
+                                if(response['data'] == '0'):
                                     # data successfully registered
-                                    self.SRC = self.widgetWithMessage("successfully registered")
+                                    self.SRC = self.widgetWithSuccessMessage("successfully registered")
                                     self.add_widget(self.SRC)
                                     #sm = ScreenManager()
                                     #sm.add_widget(Screen(name = ''))
-                                    print("successfully registered")
-                                elif(response['data'] == 1):
+                                    #print("successfully registered")
+                                elif(response['data'] == '1'):
+                                    self.ResponseErrorMessage  = self.widgetWithMessage("That username is present in the database")
+                                    self.add_widget(self.ResponseErrorMessage)
                                     # there is and username already in the database
-                                    print("That username is present in the database")
-                                elif(response['data'] == 2):
+                                    #print("That username is present in the database")
+                                elif(response['data'] == '2'):
                                     # there is and email already in the database
-                                    print("That email is present in the database")
+                                    self.ResponseErrorMessage  = self.widgetWithMessage("That email is present in the database")
+                                    self.add_widget(self.ResponseErrorMessage)
+                                    #print("That email is present in the database")
                                 else:
                                     # Both username and email already in the database
-                                    print("That username and email are present in the database")
+                                    self.ResponseErrorMessage  = self.widgetWithMessage("That username and email are present in the database")
+                                    self.add_widget(self.ResponseErrorMessage)
+                                    #print("That username and email are present in the database")
             
                                 return
             
@@ -157,6 +178,7 @@ class SignUp(Screen):
                                 print("Passwords do not match")
                                 self.remove_widget(self.LE)
                                 self.remove_widget(self.LPE)
+                                self.remove_widget(self.LUE)
                                 self.LPM = self.widgetWithMessage("Passwords do not match!")
                                 self.add_widget(self.LPM)
                                 return
@@ -173,6 +195,7 @@ class SignUp(Screen):
                             
                         else:
                             # Username field was empty, alert user to try again.
+                            self.remove_widget(self.LUE)
                             print("Username can not remain empty")
                             self.remove_widget(self.LE)
                             self.remove_widget(self.LUE)
