@@ -83,20 +83,20 @@ class SignUp(Screen):
     @staticmethod
     def widgetWithMessage(message):
         widget = Label(text=message)
-        widget.font_size = 14
+        widget.font_size = 45
         widget.bold = True
         widget.color = (1, 0, 0,0.75)
-        widget.pos_hint = {"top":.68}
+        widget.pos_hint = {"top":.65}
         return widget
 
     # endregion
     @staticmethod
     def widgetWithSuccessMessage(message):
         widget = Label(text=message)
-        widget.font_size = 14
+        widget.font_size = 45
         widget.bold = True
         widget.color = (0, 1, 0,0.75)
-        widget.pos_hint = {"top":.68}
+        widget.pos_hint = {"top":.65}
         return widget
     # region Widgets
     # region Account Creation

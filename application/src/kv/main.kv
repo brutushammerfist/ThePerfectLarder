@@ -4,39 +4,45 @@
             source: "graphics/generalbackground.png"
 	GridLayout:
 		cols:1
-		size_hint: 1,1.13
+		size_hint: 1,1.01
 		padding: [30]
 		spacing: [5,5]
 
 		GridLayout:
 			cols:1
-			padding: [20, 20, 20, 20]
 
         Button:
             text: 'My Profile'
+            font_size: 65
             on_press: root.manager.current = 'profile'
 		
 		Button:
             text: 'My Recipes'
+            font_size: 65
             on_press: root.manager.current = 'recipes'
 			
 		Button:
             text: 'My Inventory'
+            font_size: 65
             on_press: root.manager.current = 'inventory'
 			
 		Button:
             text: 'My Trends'
+            font_size: 65
             on_press: root.manager.current = 'trends'
 			
 		Button:
             text: 'My Shopping List'
+            font_size: 65
             on_press: root.manager.current = 'shoppinglist'
 			
 		Button:
             text: 'Share My Items'
+            font_size: 65
             on_press: root.manager.current = 'shareitems'
 			
 		Button:
             text: 'Logout'
+            font_size: 65
             on_press: 
             	root.manager.current = 'userlogin'

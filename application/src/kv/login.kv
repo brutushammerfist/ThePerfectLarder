@@ -14,16 +14,14 @@
 
 		GridLayout:
 			cols:1
-			padding: [20, 30, 40, 50]
 				
 		TextInput:
 			height: 30
 			id: userName
             hint_text: "username"
             max_lines: 1
-            valign: 'middle'
             halign: 'center'
-            font_size: 16
+            font_size: 65
 			multiline: False
 			write_tab: False
 				
@@ -32,19 +30,17 @@
 			id: userPassword
             hint_text: "password"
             max_lines: 1
-            valign: 'middle'
             halign: 'center'
-            font_size: 16
+            font_size: 65
 			multiline: False
 			password: True
 			write_tab: False
 			
 		Button:
 			pos_hint:{"x":0.2,"y":0.05}
-			text_size: self.size
-			font_size: 16
+			font_size: 65
 			halign: 'center'
-			valign: 'middle'
+			valign: 'center'
 			text:"Login"
 			#on_press: root.manager.current = 'homescreen' 
 			on_press: root.userLogin()    #to check the login credentials
@@ -52,10 +48,13 @@
 		GridLayout:
 		Label:
 			text: "Want your own Perfect Larder?"
-			font_size: 24
+			halign: 'center'
+			font_size: 65
 		Button:
 			text: "Create an Account"
-			font_size: 24
+			halign: 'center'
+			valign: 'center'
+			font_size: 65
 			on_press: 
 				root.manager.transition.direction = 'left'
 				root.manager.current ='signup'
