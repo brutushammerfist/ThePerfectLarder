@@ -9,7 +9,7 @@ import kivy
 kivy.require('1.11.1')
 from kivy.config import Config
 from kivy.core.window import Window
-Window.size = (360, 640)
+Window.size = (1080, 1920)
 #Config.set('kivy', 'keyboard_mode','systemandmulti')
 
 from kivy.app import App
