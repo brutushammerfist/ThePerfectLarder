@@ -23,6 +23,8 @@ from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.uix.spinner import Spinner
+from kivy.core.window import Window
+Window.softinput_mode = 'below_target'
 # This stops the kivy virtual keyboard not showing erorr
 
 from feedback import Feedback

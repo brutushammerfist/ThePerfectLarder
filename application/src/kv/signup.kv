@@ -10,44 +10,42 @@
             source: "graphics/signupbackground.png"
 	GridLayout:
 		cols:1
-		size_hint: 1,.66
-		padding: [30]
+		size_hint: 1,.60
+		padding: [60]
 		spacing: [5,5]
-		
+
 		GridLayout:
 			cols:1
-			padding: [20, 30, 40, 50]
 
 		TextInput:
 			id: name
 			hint_text: "Enter Your Name"
 			max_lines: 1
-			valign: 'middle'
             halign: 'center'
-            font_size: 14
+            text_size: self.size
 			multiline: False
 			size_hint: (0.4, 0.5)
+			write_tab: False
 
 		TextInput:
 			id: userEmail
             hint_text: "Enter E-mail"
             max_lines: 1
-            valign: 'middle'
             halign: 'center'
-            font_size: 14
+            text_size: self.size
 			multiline: False
-			pos_hint: {"x": 0.45 , "top":0.9}
 			size_hint: (0.4, 0.5)
+			write_tab: False
 
 		TextInput:
 			id: phone
 			hint_text: "Enter Phone Number"
 			max_lines: 1
-			valign: 'middle'
             halign: 'center'
-            font_size: 14
+            text_size: self.size
 			multiline: False
 			size_hint: (0.4, 0.5)
+			write_tab: False
 
 		TextInput:
 			id: userName
@@ -55,49 +53,50 @@
             max_lines: 1
             valign: 'middle'
             halign: 'center'
-            font_size: 14
+            text_size: self.size
 			multiline: False
-			pos_hint: {"x": 0.45 , "top":0.9}
 			size_hint: (0.4, 0.5)
+			write_tab: False
 
 		TextInput:
 			id: userPassword
             hint_text: "Enter Password"
             max_lines: 1
-            valign: 'middle'
             halign: 'center'
-            font_size: 14
+            text_size: self.size
 			multiline: False
 			password: True
-			pos_hint: {"x": 0.45 , "top":0.9}
 			size_hint: (0.4, 0.5)
+			write_tab: False
 
 		TextInput:
 			id: userPasswordConfirm
             hint_text: "Confirm Password"
             max_lines: 1
-            valign: 'middle'
             halign: 'center'
-            font_size: 14
+            text_size: self.size
 			multiline: False
 			password: True
-			pos_hint: {"x": 0.45 , "top":0.9}
 			size_hint: (0.4, 0.5)
+			write_tab: False
 
 		Button:
-			text: "Create your Larder"
-			font_size: 15
+			text: "Create My Larder"
+			text_size: self.size
+			halign: 'center'
+			valign: 'center'
 			pos_hint: {"x": 0.45 , "top":0.9}
-			size_hint: (0.4, 0.62)
 			on_press: 
 				root.createAccount()
 		
 		GridLayout:
 		Button:
-			pos_hint: {"x": 0.45 , "top":0.9}
+			#pos_hint: {"x": 0.45 , "top":0.9}
 			size_hint: (0.4, 0.62)
 			text: "Already have an account?"
-			font_size: 15
+			text_size: self.size
+			halign: 'center'
+			valign: 'center'
 			on_press:
 				root.manager.transition.direction = 'right' 
 				root.manager.current ='userlogin'	
