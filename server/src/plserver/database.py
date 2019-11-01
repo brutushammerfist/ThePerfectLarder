@@ -492,12 +492,7 @@ class Database():
 
         largestYval = 0
 
-        #with open("/home/mperry/debug.log", 'a') as debug:
-        #    debug.write("Calculating points!")
-
         while(segmentStopDate <= datetime.date.today()):
-            #with open("/home/mperry/debug.log", 'a') as debug:
-            #    debugwrite(str)
             
             usedSegmentTotal = 0
             wastedSegmentTotal = 0
@@ -522,14 +517,6 @@ class Database():
             segmentBeginDate = segmentBeginDate + datetime.timedelta(days=14)
             segmentStopDate = segmentStopDate + datetime.timedelta(days=14)
         
-        #with open("/home/mperry/debug.log", 'a') as debug:
-        #    debug.write("UsedPoints\n")
-        #    debug.write(usedPoints)
-        #    debug.write("\nWastedPoints\n")
-        #    debug.write(wastedPoints)
-        #    debug.write("\nLargestY\n")
-        #    debug.write(largestYval)
-        
         # Return values to application
         payload = {
             'used' : usedPoints,
@@ -538,17 +525,108 @@ class Database():
         }
         
         return (json.dumps(payload), 200)
+        
+    def generatePerfectLarder(self, content):
+        self.ensureConnected()
+        
+        # Get inventoryID
+        sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        # Get items in user's inventory, along with its useID
+        sql = "SELECT id, itemname, measurement, useID FROM Items WHERE inventoryID = %s"
+        val = (result[0][0], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        userItems = result
+        useData = []
+        
+        # Get use data for each item and store in parallel list
+        for x in userItems:
+            sql = "SELECT id, itemname, measurement, `usage` FROM FoodUse WHERE id = %s"
+            val = (x[3], )
+            self.cursor.execute(sql, val)
+            result = self.cursor.fetchone()
+            data = {
+                "id" : result[0],
+                "itemname" : result[1],
+                "measurement" : result[2],
+                "usage" : json.loads(result[3]),
+                "useValues" : [],
+                "useTotal" : 0
+            }
+            useData.append(data)
+        
+        # Only look at last 6 months of use data    
+        cutOffDate = datetime.date.today() - datetime.timedelta(days=168)
+        
+        for x in useData:
+            for index, i in enumerate(x['usage']['used']):
+                if i['date'] < cutOffDate:
+                    x['used'].pop(index)
+        
+        #useValues = []
+        segmentBeginDate = cutOffDate
+        segmentStopDate = cutOffDate + datetime.timedelta(days=14)
+                    
+        while(segmentStopDate <= datetime.date.today()):
+
+            for x in useData:
+                usedSegmentTotal = 0
+                
+                for i in x['usage']['used']:
+                    if i['date'] > segmentBeginDate and i['date'] <= segmentStopDate:
+                        usedSegmentTotal += i['quantity']
+                
+                x['useValues'].append(usedSegmentTotal)
+                x['useTotal'] += usedSegmentTotal
+
+            segmentBeginDate = segmentBeginDate + datetime.timedelta(days=14)
+            segmentStopDate = segmentStopDate + datetime.timedelta(days=14)
+            
+        for x in useData:
+            x['need'] = x['useTotal'] / 12
+            
+        return useData
+        
+    def getPerfectLarder(self, content):
+        self.ensureConnected()
+        
+        return (json.dumps(dict(data=self.generatePerfectLarder(content))), 200)
 
     def getShoppingList(self, content):
         self.ensureConnected()
         
+        useData = self.generatePerfectLarder(content)
+        
+        # Calculate how much of which items are missing from inventory based upon perfect larder
+        
+        # Get inventoryID
+        sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
         # Get items in user's inventory, along with its useID
+        sql = "SELECT id, itemname, quantity, measurement FROM Items WHERE inventoryID = %s"
+        val = (result[0][0], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
         
-        # Get usage information from FoodUse
+        userItems = result
         
-        # Calculate how much of which items are missing from inventory based upon usage history
-        
+        for index, x in enumerate(useData):
+            for i in userItems:
+                if x['itemname'] == i[1] and x['measurement'] == i[3]:
+                    x['need'] -= i[2]
+                    if x['need'] <= 0:
+                        useData.pop(index)
+                
         # Return shopping list in json format
+        return (json.dumps(dict(data=useData)), 200)
 
     def updateMeasurementSetting(self, content):
         self.ensureConnected()

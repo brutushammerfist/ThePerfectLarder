@@ -60,6 +60,10 @@ def getPersonalRecipes():
 def getTrends():
     return db.getTrends(request.get_json())
     
+@app.route('/getPerfectLarder', methods = ['POST'])
+def getPerfectLarder():
+    return db.getPerfectLarder(request.get_json())
+    
 @app.route('/getShoppingList', methods = ['POST'])
 def getShoppingList():
     return db.getShoppingList(request.get_json())
