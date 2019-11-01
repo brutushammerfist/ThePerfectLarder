@@ -18,7 +18,6 @@ class Trends(Screen):
 
     def on_pre_enter(self):
 
-        print('entering pre enter')
 
         headers = {'Content-Type' : 'application/json'}
            
@@ -28,7 +27,6 @@ class Trends(Screen):
             
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getTrends', headers=headers, data=json.dumps(payload)).json()
 
-        print(response)
 
         graph = Graph(xlabel='Time', ylabel='Use/Wasted', x_ticks_minor=1, x_ticks_major=3, y_ticks_major=1, y_grid_label=True, x_grid_label=True, padding=5, x_grid=True, y_grid=True, xmin=0, xmax=12, ymin=0, ymax=20)
 

@@ -1,12 +1,54 @@
 <ShoppingList>:
-	BoxLayout:
-        orientation: 'vertical'
+	FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	Button:
+		text: ""
+		font_size: 15
+		color: 1,0,0,1
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .90}
+		on_press: root.manager.current =  'homescreen'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
 		
-		Button:
-            text: 'Back To Home'
-            on_press: root.manager.current = 'homescreen'
+	TextInput:
+		id: search
+		size_hint: (0.58, 0.05)
+		halign: 'center'
+		font_size: 15
+		pos_hint:{'x': 0.21, 'top': .90}
+	
+	Button:
+		text: ""
+		font_size: 15
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': .79, 'top': .90}
+		on_press: root.SearchItem()
+		Image:
+			source:"graphics/search.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
 		
-	#function call
-	#add items button
-	#edit items button
-	#delete items button
+	Button:
+		text: "Add Item"
+		font_size: 65
+		color: 0, 0, 255, 1
+		size_hint: (.98, 0.09)
+		pos_hint:{'x': .01, 'top': .105}
+		#on_press: root.manager.current = ' '
+
+	ScrollView:
+		do_scroll_x: False
+		do_scroll_y: True
+		size_hint: (.98, 0.815)
+		pos_hint:{'x': 0.01, 'top': 0.84}
+
+		GridLayout:
+			id: inventoryID
+			cols: 1
+			size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 70
