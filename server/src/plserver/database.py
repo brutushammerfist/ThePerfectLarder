@@ -230,7 +230,7 @@ class Database():
             
             useData = json.loads(result[0][0])
             
-            if content['Used']:
+            if content['Used'] == 'used':
                 used = {
                     "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
                     "quantity" : content["quantity"]
@@ -439,14 +439,79 @@ class Database():
     def getTrends(self, content):
         self.ensureConnected()
         
+        # Get inventoryID
+        sql = "SELECT (inventoryID) FROM Users WHERE id = %s"
+        val = (content['userID'], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
         # Get items in user's inventory, along with its useID
+        sql = "SELECT id, itemname, measurement, useID FROM Items WHERE inventoryID = %s"
+        val = (result[0][0], )
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        
+        userItems = result
+        useData = []
         
         # Get usage information from FoodUse
+        for x in userItems:
+            sql = "SELECT usage FROM FoodUse WHERE id = %s"
+            val = (x[3], )
+            self.cursor.execute(sql, val)
+            result = self.cursor.fetchone()
+            useData.append(json.loads(result[0]))
         
-        # If month is selected(content['month'] exists), return information from specific month, unless month does not exist in usage history
+        # Trim items from usage history that are older than 6 months(technically 24 weeks)
+        cutOffDate = datetime.date.today() - datetime.timedelta(days=168)
         
-        # Else, month is not selected(content['month'] does not exist), return information from last 30 days, unless usage history does not exist
+        for x in useData:
+            index = 0
+            for i in x['used']:
+                if i['date'] < cutOffDate:
+                    x['used'].pop(index)
+                index += 1
+            indexToo = 0
+            for j in x['wasted']:
+                if j['date'] < cutOffDate:
+                    x['wasted'].pop(indexToo)
+                indexToo += 1
+                
+        # Calculate (x,y) values to send to mobile application
+        usedPoints = []
+        usedPoints.append((0, 0))
+        wastedPoints = []
+        wastedPoints.append((0, 0))
         
+        segmentBeginDate = cutOffDate
+        segmentStopDate = cutOffDate + datetime.timedelta(days=14)
+        xValue = 1
+        
+        usedSegmentTotal = 0
+        wastedSegmentTotal = 0
+        
+        while(segmentStopDate <= datetime.date.today())
+            for x in useData:
+                for i in x['used']:
+                    if i['date'] > segmentBeginDate and i['date'] <= segmentStopDate:
+                        usedSegmentTotal += i['quantity']
+                for j in x['wasted']:
+                    if j['date'] > segmentBeginDate and j['date'] <= segmentStopDate:
+                        wastedSegmentTotal += j['quantity']
+                        
+            usedPoints.append((xValue, usedSegmentTotal))
+            wastedPoints.append((xValue, wastedSegmentTotal))
+                        
+            xValue += 1
+        
+        # Return values to application
+        payload = {
+            'used' : usedPoints,
+            'wasted' : wastedPoints
+        }
+        
+        return (json.dumps(payload), 200)
+
     def getShoppingList(self, content):
         self.ensureConnected()
         

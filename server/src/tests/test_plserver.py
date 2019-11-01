@@ -57,7 +57,7 @@ class test_plserver(TestCase):
 
         delID = data['item']['itemID']
 
-        response = self.client.post('/delItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(itemID=delID, quantity=0.5)))
+        response = self.client.post('/delItem', headers={'Content-Type':'application/json'}, data=json.dumps(dict(itemID=delID, quantity=0.5, Used='used')))
         data = json.loads(response.data)
 
         self.assert200(response, "Deleting item failed.")
