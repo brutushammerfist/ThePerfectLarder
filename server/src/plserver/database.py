@@ -456,12 +456,15 @@ class Database():
         
         # Get usage information from FoodUse
         for x in userItems:
-            sql = "SELECT usage FROM FoodUse WHERE id = %s"
+            sql = "SELECT `usage` FROM FoodUse WHERE id = %s"
             val = (x[3], )
             self.cursor.execute(sql, val)
             result = self.cursor.fetchone()
             useData.append(json.loads(result[0]))
         
+        #with open("/home/mperry/debug.log", 'a') as debug:
+        #    debug.write("Trimming data!")
+
         # Trim items from usage history that are older than 6 months(technically 24 weeks)
         cutOffDate = datetime.date.today() - datetime.timedelta(days=168)
         
@@ -486,11 +489,19 @@ class Database():
         segmentBeginDate = cutOffDate
         segmentStopDate = cutOffDate + datetime.timedelta(days=14)
         xValue = 1
-        
-        usedSegmentTotal = 0
-        wastedSegmentTotal = 0
-        
-        while(segmentStopDate <= datetime.date.today())
+
+        largestYval = 0
+
+        #with open("/home/mperry/debug.log", 'a') as debug:
+        #    debug.write("Calculating points!")
+
+        while(segmentStopDate <= datetime.date.today()):
+            #with open("/home/mperry/debug.log", 'a') as debug:
+            #    debugwrite(str)
+            
+            usedSegmentTotal = 0
+            wastedSegmentTotal = 0
+
             for x in useData:
                 for i in x['used']:
                     if i['date'] > segmentBeginDate and i['date'] <= segmentStopDate:
@@ -501,13 +512,29 @@ class Database():
                         
             usedPoints.append((xValue, usedSegmentTotal))
             wastedPoints.append((xValue, wastedSegmentTotal))
-                        
+            
+            if usedSegmentTotal > largestYval:
+                largestYval = usedSegmentTotal
+            if wastedSegmentTotal > largestYval:
+                largestYval = wastedSegmentTotal
+
             xValue += 1
+            segmentBeginDate = segmentBeginDate + datetime.timedelta(days=14)
+            segmentStopDate = segmentStopDate + datetime.timedelta(days=14)
+        
+        #with open("/home/mperry/debug.log", 'a') as debug:
+        #    debug.write("UsedPoints\n")
+        #    debug.write(usedPoints)
+        #    debug.write("\nWastedPoints\n")
+        #    debug.write(wastedPoints)
+        #    debug.write("\nLargestY\n")
+        #    debug.write(largestYval)
         
         # Return values to application
         payload = {
             'used' : usedPoints,
-            'wasted' : wastedPoints
+            'wasted' : wastedPoints,
+            'largest' : largestYval
         }
         
         return (json.dumps(payload), 200)
