@@ -10,9 +10,9 @@
             source: "graphics/signupbackground.png"
 	GridLayout:
 		cols:1
-		size_hint: 1,.60
+		size_hint: 1,.67
 		padding: [60]
-		spacing: [5,5]
+		spacing: [10,10]
 
 		GridLayout:
 			cols:1
@@ -22,7 +22,7 @@
 			hint_text: "Enter Your Name"
 			max_lines: 1
             halign: 'center'
-            text_size: self.size
+            font_size: 50
 			multiline: False
 			size_hint: (0.4, 0.5)
 			write_tab: False
@@ -32,7 +32,7 @@
             hint_text: "Enter E-mail"
             max_lines: 1
             halign: 'center'
-            text_size: self.size
+            font_size: 50
 			multiline: False
 			size_hint: (0.4, 0.5)
 			write_tab: False
@@ -42,7 +42,7 @@
 			hint_text: "Enter Phone Number"
 			max_lines: 1
             halign: 'center'
-            text_size: self.size
+            font_size: 50
 			multiline: False
 			size_hint: (0.4, 0.5)
 			write_tab: False
@@ -53,7 +53,7 @@
             max_lines: 1
             valign: 'middle'
             halign: 'center'
-            text_size: self.size
+            font_size: 50
 			multiline: False
 			size_hint: (0.4, 0.5)
 			write_tab: False
@@ -63,7 +63,7 @@
             hint_text: "Enter Password"
             max_lines: 1
             halign: 'center'
-            text_size: self.size
+            font_size: 50
 			multiline: False
 			password: True
 			size_hint: (0.4, 0.5)
@@ -74,7 +74,7 @@
             hint_text: "Confirm Password"
             max_lines: 1
             halign: 'center'
-            text_size: self.size
+            font_size: 50
 			multiline: False
 			password: True
 			size_hint: (0.4, 0.5)
@@ -82,7 +82,7 @@
 
 		Button:
 			text: "Create My Larder"
-			text_size: self.size
+			font_size: 50
 			halign: 'center'
 			valign: 'center'
 			pos_hint: {"x": 0.45 , "top":0.9}
@@ -91,10 +91,9 @@
 		
 		GridLayout:
 		Button:
-			#pos_hint: {"x": 0.45 , "top":0.9}
 			size_hint: (0.4, 0.62)
 			text: "Already have an account?"
-			text_size: self.size
+			font_size: 50
 			halign: 'center'
 			valign: 'center'
 			on_press:

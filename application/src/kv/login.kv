@@ -8,7 +8,7 @@
             source: "graphics/loginbackground.png"
 	GridLayout:
 		cols:1
-		size_hint: 1,.57
+		size_hint: 1,.66
 		padding: [60]
 		spacing: [10,10]
 
@@ -21,7 +21,7 @@
             hint_text: "username"
             max_lines: 1
             halign: 'center'
-            font_size: 65
+            font_size: 67
 			multiline: False
 			write_tab: False
 				
@@ -31,14 +31,14 @@
             hint_text: "password"
             max_lines: 1
             halign: 'center'
-            font_size: 65
+            font_size: 67
 			multiline: False
 			password: True
 			write_tab: False
 			
 		Button:
 			pos_hint:{"x":0.2,"y":0.05}
-			font_size: 65
+			font_size: 67
 			halign: 'center'
 			valign: 'center'
 			text:"Login"
@@ -54,7 +54,7 @@
 			text: "Create an Account"
 			halign: 'center'
 			valign: 'center'
-			font_size: 65
+			font_size: 67
 			on_press: 
 				root.manager.transition.direction = 'left'
 				root.manager.current ='signup'

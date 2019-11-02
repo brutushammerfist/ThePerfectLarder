@@ -86,7 +86,7 @@ class SignUp(Screen):
         widget.font_size = 45
         widget.bold = True
         widget.color = (1, 0, 0,0.75)
-        widget.pos_hint = {"top":.65}
+        widget.pos_hint = {"top":.66}
         return widget
 
     # endregion
@@ -96,7 +96,7 @@ class SignUp(Screen):
         widget.font_size = 45
         widget.bold = True
         widget.color = (0, 1, 0,0.75)
-        widget.pos_hint = {"top":.65}
+        widget.pos_hint = {"top":.66}
         return widget
     # region Widgets
     # region Account Creation

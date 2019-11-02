@@ -44,7 +44,7 @@ requirements = python3,kivy,libffi,requests
 
 # (list) Garden requirements
 #garden_requirements =
-
+garden_requirements = graph
 # (str) Presplash of the application
 #presplash.filename = %(source.dir)s/data/presplash.png
 
