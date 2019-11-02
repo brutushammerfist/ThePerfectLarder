@@ -22,79 +22,95 @@
             text: 'Back To Home'
             font_size: 65
             on_press: root.manager.current = 'homescreen'
-            
+       
 <Settings>:
     FloatLayout:
 		Image:
 			source: "graphics/generalbackground.png"
+    Button:
+	    text: ""
+	    font_size: 15
+	    color: 1,0,0,1
+	    size_hint: (0.2, 0.05)
+	    pos_hint:{'x': 0.01, 'top': .99}
+	    on_press: root.manager.current = 'profile'
+	    Image:
+		    source:"graphics/back.png"
+		    center_x: self.parent.center_x
+		    center_y: self.parent.center_y
+
+    Label:
+		text: "Profile Settings"
+		font_size: 67
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.30, 'top': .99}
+    
     GridLayout:
-        cols:1
-        GridLayout:
-            cols:2
-            pos_hint:{'x': 0.21, 'top': .99}
-            size_hint: (0.58, 0.05)
-                
+		cols:1
+		size_hint: (.98, 0.2)
+        pos_hint:{'x': 0.01, 'top': .92}
+		halign: 'left'
+        spacing: [10,10]
+			
+		GridLayout:
+			cols:1
+            size_hint: (.98, 0.3)            
             Label:
                 text: 'Measurement Values'
+                font_size: 57
                     
             GridLayout:
                 cols:2
                 ToggleButton:
+                    font_size: 50
                     id: imperial
                     text: 'Imperial'
                     group: 'measurements'
                     allow_no_selection: False
                         
                 ToggleButton:
+                    font_size: 50
                     id: metric
                     text: 'Metric'
                     group: 'measurements'
                     allow_no_selection: False
-        ScrollView:
-            size_hint: (.98, 0.815)
-            pos_hint:{'x': 0.01, 'top': 0.93}
-            padding: [30]
-            GridLayout:
-                cols:1
-                size_hint_y: None
-                height: self.minimum_height
-                default_row_height: 35
-                padding: [30]
-                Label:
-                    text: 'Storage Locations'
-                    
-                GridLayout:
-                    id: locations
-                    cols: 1
-                    size_hint_y: None
-                    height: self.minimum_height
-                    default_row_height: 35
-                    spacing: [40]
                 
-                GridLayout:
-                    cols: 2
-                    size_hint_y: None
-                    height: self.minimum_height
-                    spacing: [40]
-                    TextInput:
-                        id: newLoc
-                    
-                    Button:
-                        text: 'Add Location'
-                        on_press: self.addLocation()
-                    
         GridLayout:
-            cols:2
-            size_hint_y: 0.33
-            size_hint: (.98, 0.09)
-            pos_hint:{'x': .01, 'top': .105}
+            cols: 2
+            size_hint: (0.50, 0.3)
             
+            TextInput:
+                id: newLoc
+                font_size: 57
+                    
             Button:
-                text: 'Submit'
-                on_press: root.updateMeasurement()
-            Button:
-                text: 'Back'
-                on_press: root.manager.current = 'profile'
+                text: 'Add Location'
+                font_size: 57
+                on_press: self.addLocation()
+
+            Label:
+                text: 'Storage Locations'
+                font_size: 57
+
+    Button:
+        text: 'Submit'
+        font_size: 65
+		size_hint: (.98, 0.1)
+		pos_hint:{'x': .01, 'top': .11}
+        on_press: root.updateMeasurement()
+
+	ScrollView:
+		do_scroll_x: False
+		do_scroll_y: True
+		size_hint: (.98,.815)
+		pos_hint:{'x': 0.01, 'top': 0.72}
+
+		GridLayout:
+			id: locations
+			cols: 1
+			size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 150
            
 <ManagePL>:                                                            
 	BoxLayout:
