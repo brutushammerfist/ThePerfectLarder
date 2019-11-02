@@ -1,13 +1,13 @@
 <Inventory>:
+	spacing: [10,10]
 	FloatLayout:
-        Image:
+		Image:
             source: "graphics/generalbackground.png"
+
 	Button:
-		text: ""
-		font_size: 15
-		color: 1,0,0,1
-		size_hint: (0.2, 0.05)
-		pos_hint:{'x': 0.01, 'top': .90}
+		text: " "
+		size_hint: (0.2, 0.07)
+		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'homescreen'
 		Image:
 			source:"graphics/back.png"
@@ -16,16 +16,15 @@
 		
 	TextInput:
 		id: search
-		size_hint: (0.58, 0.05)
+		size_hint: (0.58, 0.07)
 		halign: 'center'
-		font_size: 15
-		pos_hint:{'x': 0.21, 'top': .90}
+		font_size: 75
+		pos_hint:{'x': 0.21, 'top': .99}
 	
 	Button:
-		text: ""
-		font_size: 15
-		size_hint: (0.2, 0.05)
-		pos_hint:{'x': .79, 'top': .90}
+		text: " "
+		size_hint: (0.2, 0.07)
+		pos_hint:{'x': .79, 'top': .99}
 		on_press: root.SearchItem()
 		Image:
 			source:"graphics/search.png"
@@ -43,15 +42,15 @@
 	ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
-		size_hint: (.98, 0.815)
-		pos_hint:{'x': 0.01, 'top': 0.84}
+		size_hint: (.98,.815)
+		pos_hint:{'x': 0.01, 'top': 0.92}
 
 		GridLayout:
 			id: inventoryID
 			cols: 1
 			size_hint_y: None
             height: self.minimum_height
-            row_default_height: 70
+            row_default_height: 175
 
 <AddItem>:
 
@@ -77,115 +76,84 @@
 
     Label:
 		text: "Add Item to Inventory"
-		font_size: 22
+		font_size: 67
 		size_hint: (0.58, 0.05)
 		pos_hint:{'x': 0.30, 'top': .99}
 
 	GridLayout:
 		cols:1
-		height: self.minimum_height
-		padding: [3,70]
-
+		size_hint: (.98, 0.8)
+        pos_hint:{'x': 0.01, 'top': .92}
+		halign: 'left'
+			
 		GridLayout:
 			cols:2
+			size_hint: (0.50, 0.12)
 
 			Label:
 			    text: "Item Name: "
-                font_size: 15
-		        size_hint: (.5,.05)
-		        pos_hint:{'x': 0.01}
-		        text_size:self.size
-                halign:'left'
-                valign:'bottom'
+                font_size: 65
 					
 			TextInput:
 				id: itemName
 				multiline: False
-				size_hint_y: None
-				height: 30
+				font_size: 65
+				halign: 'center'
 
 		GridLayout:
 		    cols:2
+			size_hint: (0.50, 0.12)
 
 			Label:
 				text: "Quantity: "
-                font_size: 15
-		        size_hint: (.5,1)
-		        pos_hint:{'x': 0.01}
-		        text_size:self.size
-                halign:'left'
-                valign:'bottom'
+                font_size: 65
 					
 			TextInput:
 				id: quantity
 				multiline: False
-				pos_hint:{'x': 0.4}
-				size_hint_y: None
-				height: 30
+				font_size: 65
+				halign: 'center'
 
 		GridLayout:
 		    cols:2
+			size_hint: (0.50, 0.12)
 
             Label:
                 text: "Measurement: "
-                font_size: 15
-		        size_hint: (.5,1)
-		        pos_hint:{'x': 0.01}
-		        text_size:self.size
-                halign:'left'
-                valign:'bottom'
-                
-            #TextInput:
-            #    id: measurement
-			#	multiline: False
-			#	pos_hint:{'x': 0.4}
-			#	size_hint_y: None
-			#	height: 30
+                font_size: 65
             
             Spinner:
                 id: measurement
+				font_size: 65
 
 		GridLayout:
 		    cols:2
+			size_hint: (0.50, 0.12)
 
 			Label:
 				text: "Expiration Date: "
-                font_size: 15
-		        size_hint: (.5,1)
-		        pos_hint:{'x': 0.01}
-		        text_size:self.size
-                halign:'left'
-                valign:'bottom'
+                font_size: 65
 					
 			TextInput:
 				id: expirationDate
 				multiline: False
-				pos_hint:{'x': 0.4}
-				size_hint_y: None
-				height: 30
+				font_size: 65
+				halign: 'center'
 
 		GridLayout:
 		    cols:2
+			size_hint: (0.50, 0.12)
 
 			Label:
 		        text: "Storage Location: "
-                font_size: 15
-		        size_hint: (.45,1)
-		        pos_hint:{'x': 0.01}
-		        text_size:self.size
-                halign:'left'
-                valign:'bottom'
-					
+                font_size: 65
+
 			Spinner:
 				id: storageLocation
-				text: "Pantry"
+                font_size: 65
                 values: ["Pantry", "Refrigerator", "Freezer", "Other"]
-				pos_hint:{'x': 0.4}
-				size_hint_y: None
-				height: 30
-
 	GridLayout:
-		cols:3
+		cols:1
 		size_hint: (.98, 0.1)
 		pos_hint:{'x': .01, 'top': .105}
 
@@ -213,7 +181,7 @@
 			center_y: self.parent.center_y		
     Label:
 		text: "My Inventory"
-		font_size: 22
+		font_size: 67
 		size_hint: (0.58, 0.05)
 		pos_hint:{'x': 0.30, 'top': .99}
 
@@ -221,63 +189,75 @@
 		id: del
 		cols:1
 		size_hint: (.98, 0.8)
-        pos_hint: {'top': 0.9}
+        pos_hint:{'x': 0.01, 'top': .92}
 			
 		GridLayout:
 			cols:2
+			size_hint: (0.50, 0.12)
 			
 			Label:
 				text: "Item:"
-			
+				font_size: 65
+
 			Label:
 				id: name
+				font_size: 65
 				
 			Label:
 				text: "Expiration Date:"
+				font_size: 65
 			
 			Label:
 				id: exp
+				font_size: 65
 			
 			Label:
 				text: "Quantity:"
+				font_size: 65
 			
 			Label:
 				id: quantity
+				font_size: 65
 			
 			Label:
 				text: "Location:"
+				font_size: 65
 			
 			Label:
 				id: loc
+				font_size: 65
 			
 			Label:
 				text: "Quantity Used:"
-				size_hint: (0.28, 0.25)
+				font_size: 65
 				
 			TextInput:
 				id: used
 				multiline: False
-				size_hint: (0.28, 0.25)
-				valign: 'middle'
 				halign: 'center'
+				font_size: 65
             
             Label:
                 text: "Used or Expired?"
-                size_hint: (0.28, 0.25)
+				font_size: 65
             
             Spinner:
                 id: useType
                 values: 'Used', 'Expired'
+				font_size: 65
                 
-		Button:
-			text: "Submit"
-			font_size: 17
-			color: 0, 0, 255, 1
-			size_hint: (.98, 0.09)
+		GridLayout:
+			cols:1
+			size_hint: (.98, 0.1)
 			pos_hint:{'x': .01, 'top': .105}
-			on_press: root.deleteItems()			
-				
 
+        	Button:
+            	text: "Submit"
+            	halign:'center'
+            	valign:'middle'
+            	font_size: 65
+				on_press: root.deleteItems()			
+				
 <SearchItem>:
 	itemName:itemName                #for python code : for kivy code
 	GridLayout:
