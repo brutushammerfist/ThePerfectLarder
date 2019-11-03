@@ -16,7 +16,7 @@
         
     Label:
 		text: "Add Personal Recipe"
-		font_size: 22
+		font_size: 65
 		size_hint: (0.58, 0.05)
 		pos_hint:{'x': 0.27, 'top': .99}
 
@@ -35,11 +35,11 @@
 				cols:2
 				size_hint_y: None
 				height: self.minimum_height
-				row_default_height: 35
+				row_default_height: 125
 
 				Label:
 					text: "Recipe Name:"
-                    font_size: 15
+                    font_size: 60
 		            size_hint: (0.58, 0.05)
 		            pos_hint:{'x': 0.01, 'top': .80}
 
@@ -50,9 +50,9 @@
 
 				Label:
 					text: "Servings:"
-                    font_size: 15
+                    font_size: 60
 		            size_hint: (0.58, 0.05)
-		            pos_hint:{'x': 0.01, 'top': .80}
+		            pos_hint:{'x': 0.01, 'top': .55}
 
 				TextInput:
 					id: servings
@@ -61,14 +61,14 @@
 
 				Label:
 					text: "Description/\nInstructions:"
-                    font_size: 15
+                    font_size: 60
 		            size_hint: (0.58, 0.05)
 		            pos_hint:{'x': 0.01, 'top': .80}
 
 				TextInput:
 					id: description
 					size_hint_y: None
-					height: 100
+					height: 200
 					multiline: True
 					pos_hint:{'x': 0.4}
 
@@ -82,23 +82,27 @@
                     cols:3
                     size_hint_y: None
                     height: self.minimum_height
-                    row_default_height: 35
+                    row_default_height: 100
                     
                     Label:
                         text: 'Ingredient'
+                        font_size: 60
                     
                     Label:
                         text: 'Quantity'
+                        font_size: 60
                     
                     Label:
                         text: 'Measurement'
+                        font_size: 60
                     
                 GridLayout:
                     cols:1
                     id: ingredients
+                    font_size:60
                     size_hint_y: None
                     height: self.minimum_height
-                    row_default_height: 35
+                    row_default_height: 100
 
 	GridLayout:
 		cols:3
@@ -109,21 +113,21 @@
 			text: "Add\nAnother\nIngredient"
             halign:'center'
             valign:'middle'
-            font_size: 15
+            font_size: 50
 			on_press: root.addIngredient()
 
 		Button:
 			text: "Remove\nLast\nIngredient"
             halign:'center'
             valign:'middle'
-            font_size: 15
+            font_size: 50
 			on_press: root.delIngredient()
             
         Button:
             text: "Submit"
             halign:'center'
             valign:'middle'
-            font_size: 15
+            font_size: 50
             on_press: root.addRecipe()
 
 <GetRecipe>:
@@ -133,8 +137,7 @@
 	Button:
 		text: ""
 		font_size: 15
-		color: 1,0,0,1
-		size_hint: (0.2, 0.05)
+		size_hint: (0.2, 0.07)
 		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'recipes'
 		Image:
@@ -144,78 +147,130 @@
         
     Label:
 		text: "Recommended Recipes"
-		font_size: 22
-		size_hint: (0.58, 0.05)
+		font_size: 65
+		size_hint: (0.58, 0.07)
 		pos_hint:{'x': 0.30, 'top': .99}
         
     ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
-		size_hint: .98, 0.84
-		pos_hint:{'x': 0.01, 'y': 0.1}
+		size_hint: (.98, 0.84)
+		pos_hint:{'x': 0.01, 'top': 0.92}
 
 		GridLayout:
 			id: recipes
 			cols: 1
 			size_hint_y: None
             height: self.minimum_height
-            row_default_height: 35
+            row_default_height: 175
             
 <ViewRecipe>:
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	Button:
+		text: " "
+		font_size: 15
+		size_hint: (0.2, 0.07)
+		pos_hint:{'x': 0.01, 'top': .99}
+		on_press: root.manager.current =  'recipes'
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
+    Label:
+		id: name
+		font_size: 60
+		size_hint: (0.58, 0.07)
+		pos_hint:{'x': 0.27, 'top': .99}
+
+    Label:
+        text: "Ingredients"
+        font_size: 55
+        size_hint:(0.98,0.07)
+        pos_hint:{'x': 0.01, 'top': 0.92}
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        pos_hint:{'x': 0.01, 'top': 0.86}
+        size_hint: (.98,.3)
+
+        GridLayout:
+            cols:1
+            id: ingredients
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 45
+
     GridLayout:
         cols:1
+        pos_hint:{'x': 0.01, 'top': 1.03}
         Label:
-            id: name
-        
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            
-            GridLayout:
-                cols:1
-                id: ingredients
-                size_hint_y: None
-                height: self.minimum_height
-                row_default_height: 35
-            
+            text:"Instructions"
+            font_size: 55
+            size_hint:(0.98,0.1)
+
+    ## This does not work and breaks the other scroll
+    #ScrollView:
+        #do_scroll_x: False
+        #do_scroll_y: True
+        #pos_hint:{'x': 0.01, 'top': 0.86}
+        #size_hint: (.98,.3)
+
+        #GridLayout:
+            #cols:1
+            #id: instructions
+            #size_hint_y: None
+            #height: self.minimum_height
+            #row_default_height: 45
+
+    ## Haven't been able to get instructions to display properly yet
+    GridLayout:
+        cols:1
+        pos_hint:{'x':0.01, 'top': 1.05}
         Label:
             id: instructions
             text_size: self.size
-            
+            size_hint:(0.98,0.5)
+    GridLayout:
+        cols:2
+        pos_hint:{'x': 0.01, 'top': .53}
+        Label:
+            text:"Cook Time"
+            font_size: 55
+            size_hint:(0.50,0.1)
         Label:
             id: cooktime
-    Button:
-		text: "<-"
-		font_size: 20
-		color: 1,0,0,1
-		size_hint: 0.1, 0.1
-		pos_hint:{'x': 0, 'top': 1}
-		on_press: root.manager.current =  'getrecipes'
-        
+            font_size: 55
+            size_hint:(0.50,0.1)
+
 <Recipe>:
     FloatLayout:
         Image:
             source: "graphics/generalbackground.png"
 	GridLayout:
 		cols:1
-		size_hint: 1,1.3
-		padding: [30]
-		spacing: [5,5]
+        pos_hint:{'x': 0.01, 'top': 1.25}
+		size_hint: (.98,1)
+		spacing: [10,10]
 
 		GridLayout:
 			cols:1
-			padding: [20, 20, 20, 20]
 
         Button:
             text: "Personal Recipes"
+            font_size: 65
             on_press: root.manager.current = 'personalrecipe'
             
         Button:
             text: "Get A Recommended Recipe"
+            font_size: 65
             on_press: root.manager.current = 'getreccrecipes'
             
         Button:
             text: "Back To Home Screen"
+            font_size: 65
             on_press: root.manager.current = 'homescreen'
             
 <PersonalRecipe>:
@@ -236,24 +291,25 @@
 			center_y: self.parent.center_y
     Label:
         text: "Personal Recipes"
-        font_size: 22
-		size_hint: (0.58, 0.05)
+        font_size: 65
+		size_hint: (0.58, 0.07)
 		pos_hint:{'x': 0.27, 'top': .99}
             
     ScrollView:
         do_scroll_x: False
 		do_scroll_y: True
-		size_hint: .98, 0.84
-		pos_hint:{'x': 0.01, 'y': 0.1}
+		size_hint: (.98,.815)
+		pos_hint:{'x': 0.01, 'top': 0.92}
 
         GridLayout:
             id: personalrecipe
             cols: 1
             size_hint_y: None
             height: self.minimum_height
-            row_default_height: 35
+            row_default_height: 175
     Button:
         text: "Add Recipe"
+        font_size:65
         size_hint: (.98, 0.09)
         pos_hint:{'x': .01, 'top': .1}
         on_press: root.manager.current = 'addrecipe'
@@ -264,52 +320,75 @@
             source: "graphics/generalbackground.png"
     Label:
         id: name
-        font_size: 20
-		size_hint: (0.58, 0.05)
+        font_size: 60
+		size_hint: (0.58, 0.07)
 		pos_hint:{'x': 0.27, 'top': .99}
+
+    Label:
+        text: "Ingredients"
+        font_size: 55
+        size_hint:(0.98,0.07)
+        pos_hint:{'x': 0.01, 'top': 0.92}
+        
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        pos_hint:{'x': 0.01, 'top': 0.86}
+        size_hint: (.98,.3)
+
+        GridLayout:
+            cols:1
+            id: ingredients
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 45
 
     GridLayout:
         cols:1
-        pos_hint:{'x': 0.01, 'top': .93}
-        
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            
-            GridLayout:
-                cols:1
-                id: ingredients
-                size_hint_y: None
-                height: self.minimum_height
-                row_default_height: 35
-                size_hint: .98,.5
+        pos_hint:{'x': 0.01, 'top': 1.03}
         Label:
-            text:"Servings: "
-            size_hint: .98,.05
-            valign:'top'
+            text:"Instructions"
+            font_size: 55
+            size_hint:(0.98,0.1)
+
+    ## This does not work and breaks the other scroll
+    #ScrollView:
+        #do_scroll_x: False
+        #do_scroll_y: True
+        #pos_hint:{'x': 0.01, 'top': 0.86}
+        #size_hint: (.98,.3)
+
+        #GridLayout:
+            #cols:1
+            #id: instructions
+            #size_hint_y: None
+            #height: self.minimum_height
+            #row_default_height: 45
+
+    ## Haven't been able to get instructions or servings to display properly yet
+    GridLayout:
+        cols:1
+        pos_hint:{'x':0.01, 'top': 1.05}
+        Label:
+            id: instructions
+            text_size: self.size
+            size_hint:(0.98,0.5)
+    GridLayout:
+        cols:2
+        pos_hint:{'x': 0.01, 'top': .55}
+        Label:
+            text:"Servings:"
+            font_size: 55
+            size_hint:(0.50,0.1)
         Label:
             id: servings
-            valign:'top'
-            size_hint: .98,.05
-
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-
-            Label:
-                id: instructions
-                text_size: self.size
-                valign:'top'
-                #row_default_height: 100
-                padding: 5, 20
-                size: self.texture_size
-                size_hint: .98,1.7
+            font_size: 55
+            size_hint:(0.50,0.1)
 
     Button:
 		text: ""
-		font_size: 15
-		color: 1,0,0,1
-		size_hint: (0.2, 0.05)
+		font_size: 65
+		size_hint: (0.2, 0.07)
 		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'personalrecipe'
 		Image:
@@ -318,5 +397,7 @@
 			center_y: self.parent.center_y
     Button:
         text: 'Delete'
-        size_hint: 1, 0.1
+        font_size: 65
+        size_hint: (.98, 0.09)
+        pos_hint:{'x': .01, 'top': .105}
         on_press: root.deleteRecipe()
