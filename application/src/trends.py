@@ -28,16 +28,14 @@ class Trends(Screen):
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getTrends', headers=headers, data=json.dumps(payload)).json()
 
 
-        graph = Graph(xlabel='Time', ylabel='Use/Wasted', x_ticks_minor=1, x_ticks_major=3, y_ticks_major=1, y_grid_label=True, x_grid_label=True, padding=5, x_grid=True, y_grid=True, xmin=0, xmax=12, ymin=0, ymax=20)
+        graph = Graph(xlabel='Time', ylabel='Use/Wasted', x_ticks_minor=1, x_ticks_major=3, y_ticks_minor=1, y_ticks_major=3, y_grid_label=True, x_grid_label=True, padding=5, x_grid=True, y_grid=True, xmin=0, xmax=12, ymin=-1, ymax=20)
 
         plot = MeshLinePlot(color = [0,1,0,1])
-        #plot.points = response['used']
-        plot.points = [(2,8),(7,8),(4,8),(2,3)]
+        plot.points = response['used']
         graph.add_plot(plot)
 
         plot = MeshLinePlot(color = [1,0,0,1])
-        #plot.points = response['wasted']
-        plot.points = [(1,8),(5,4),(4,7),(9,3)]
+        plot.points = response['wasted']
         graph.add_plot(plot)
 
         self.ids.graph.add_widget(graph)
