@@ -90,7 +90,7 @@ class Database():
 
             sqlInsert = "INSERT INTO Users (name, email, phone, username, password, inventoryID, storageLocations) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             val = (content['name'], content['useremail'], content['phone'], content['username'], content['password'], inventoryID, json.dumps(storageLocations), )
-            inventoryID = result[0][0] + 1
+            #inventoryID = result[0][0] + 1
             self.cursor.execute(sqlInsert, val)
             result = self.connector.commit()
             return (json.dumps(dict(data='0')), 200)
@@ -462,21 +462,18 @@ class Database():
             result = self.cursor.fetchone()
             useData.append(json.loads(result[0]))
         
-        #with open("/home/mperry/debug.log", 'a') as debug:
-        #    debug.write("Trimming data!")
-
         # Trim items from usage history that are older than 6 months(technically 24 weeks)
         cutOffDate = datetime.date.today() - datetime.timedelta(days=168)
         
         for x in useData:
             index = 0
             for i in x['used']:
-                if i['date'] < cutOffDate:
+                if datetime.date.fromisoformat(i['date']) < cutOffDate:
                     x['used'].pop(index)
                 index += 1
             indexToo = 0
             for j in x['wasted']:
-                if j['date'] < cutOffDate:
+                if datetime.date.fromisoformat(j['date']) < cutOffDate:
                     x['wasted'].pop(indexToo)
                 indexToo += 1
                 
@@ -499,10 +496,10 @@ class Database():
 
             for x in useData:
                 for i in x['used']:
-                    if i['date'] > segmentBeginDate and i['date'] <= segmentStopDate:
+                    if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
                         usedSegmentTotal += i['quantity']
                 for j in x['wasted']:
-                    if j['date'] > segmentBeginDate and j['date'] <= segmentStopDate:
+                    if datetime.date.fromisoformat(j['date']) > segmentBeginDate and datetime.date.fromisoformat(j['date']) <= segmentStopDate:
                         wastedSegmentTotal += j['quantity']
                         
             usedPoints.append((xValue, usedSegmentTotal))
@@ -565,7 +562,7 @@ class Database():
         
         for x in useData:
             for index, i in enumerate(x['usage']['used']):
-                if i['date'] < cutOffDate:
+                if datetime.date.fromisoformat(i['date']) < cutOffDate:
                     x['used'].pop(index)
         
         #useValues = []
@@ -578,7 +575,7 @@ class Database():
                 usedSegmentTotal = 0
                 
                 for i in x['usage']['used']:
-                    if i['date'] > segmentBeginDate and i['date'] <= segmentStopDate:
+                    if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
                         usedSegmentTotal += i['quantity']
                 
                 x['useValues'].append(usedSegmentTotal)
