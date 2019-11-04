@@ -3,6 +3,7 @@ import scrape_schema_recipe
 import mysql.connector
 import datetime
 import requests
+import math
 import json
 import os
 
@@ -615,12 +616,24 @@ class Database():
         
         userItems = result
         
-        for index, x in enumerate(useData):
+        needsToDel = []
+
+        #for index, x in enumerate(useData):
+        index = 0
+        for x in useData:
             for i in userItems:
                 if x['itemname'] == i[1] and x['measurement'] == i[3]:
                     x['need'] -= i[2]
-                    if x['need'] <= 0:
-                        useData.pop(index)
+                    if x['need'] < 0.5:
+                        needsToDel.append(index)
+                    else:
+                        x['need'] = math.ceil(x['need'])
+            index += 1
+        
+        needsToDel.reverse()
+
+        for x in needsToDel:
+            useData.pop(x)
                 
         # Return shopping list in json format
         return (json.dumps(dict(data=useData)), 200)
