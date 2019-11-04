@@ -14,13 +14,36 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.uix.spinner import Spinner
 import requests
 import json
 
 class ShoppingList(Screen):
 	
+    def OpenAdd(self):
+        self.addpopup.open()
+    
     def DelItem(self):
         pass
+        
+    def CancelUpdate(self):
+        
+        self.popup.close()
+        
+    def CancelAdd(self):
+        
+        self.addpopup.close()
+        
+    def AddItem(self):
+        
+        self.items.append({
+            'itemname' : self.addpopup.itemName,
+            'quantity' : self.addpopup.quantity,
+            'measurement' : self.addpopup.measurement
+        })
+        
+        self.addpopup.close()
         
     def EditItem(self):
         
@@ -47,12 +70,36 @@ class ShoppingList(Screen):
     delcontent = GridLayout(cols = 1)
     button1 = Button(text = "Edit")
     button2 = Button(text = "Delete")
+    button3 = Button(text = "Cancel")
     delcontent.add_widget(button1)
     delcontent.add_widget(button2)
+    delcontent.add_widget(button3)
     popup = Popup(title = "Edit Item", content = delcontent, auto_dismiss = False, id = 'popup')
     button1.bind(on_press = EditItem)
     button2.bind(on_press = DelItem)
+    button3.bind(on_press = CancelUpdate)
     editpopup = None
+    
+    addcontent = GridLayout(cols = 2)
+    label1 = Label(text = "Item Name")
+    text1 = TextInput(multiline = False, id = 'itemName')
+    label2 = Label(text = "Quantity")
+    text2 = TextInput(multiline = False, id = 'quantity')
+    label3 = Label(text = "Measurement")
+    spinner3 = Spinner(values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)'), id = 'measurement')
+    button4 = Button(text = "Cancel")
+    button5 = Button(text = "Submit")
+    addcontent.add_widget(label1)
+    addcontent.add_widget(text1)
+    addcontent.add_widget(label2)
+    addcontent.add_widget(text2)
+    addcontent.add_widget(label3)
+    addcontent.add_widget(spinner3)
+    addcontent.add_widget(button4)
+    addcontent.add_widget(button5)
+    addpopup = Popup(title = "Add Item", content = addcontent, auto_dismiss = False, id = 'addPopup')
+    button4.bind(on_press = CancelAdd)
+    button5.bind(on_press = AddItem)
     
     def on_pre_enter(self):
         
@@ -83,27 +130,3 @@ class ShoppingList(Screen):
         self.items[self.selectedItem]['quantity'] = self.quantity
         self.items[self.selectedItem]['measurement'] = self.measurement
         self.popup.close()
-    
-    def CancelUpdate(self):
-        
-        self.popup.close()
-        
-    def AddItem(self):
-        pass
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
