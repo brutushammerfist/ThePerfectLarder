@@ -30,11 +30,11 @@ class Trends(Screen):
 
         graph = Graph(xlabel='Time', ylabel='Use/Wasted', x_ticks_minor=1, x_ticks_major=3, y_ticks_minor=1, y_ticks_major=3, y_grid_label=True, x_grid_label=True, padding=5, x_grid=True, y_grid=True, xmin=0, xmax=12, ymin=-1, ymax=20)
 
-        plot = MeshLinePlot(color = [0,1,0,1])
+        plot = LinePlot(line_width=4, color = [0,1,0,1])
         plot.points = response['used']
         graph.add_plot(plot)
 
-        plot = MeshLinePlot(color = [1,0,0,1])
+        plot = LinePlot(line_width=4, color = [1,0,0,1])
         plot.points = response['wasted']
         graph.add_plot(plot)
 

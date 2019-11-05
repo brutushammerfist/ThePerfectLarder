@@ -1,12 +1,26 @@
 <Trends>:
+	FloatLayout:
+		Image:
+			source: "graphics/generalbackground.png"
+
 	GridLayout:
 		cols:1
-		size: root.width, root.height
+		#size: root.width, root.height
 		
+		Label:
+			text: "Trends"
+			font_size: 67
+			size_hint: (0.98, 0.05)
+			pos_hint:{'x': 0.98, 'top': .99}
+
 		GridLayout:
 			cols:1
-			id : graph
+			id: graph
+			size: root.width, root.height
 
 		Button:
 			text: 'Back To Home'
+			font_size: 65
+			size_hint: (.98, 0.1)
+			pos_hint:{'x': .01, 'top': .11}
 			on_press: root.manager.current = 'homescreen'
