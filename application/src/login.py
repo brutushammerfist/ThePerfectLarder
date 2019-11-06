@@ -109,4 +109,3 @@ class Login(Screen):
                 self.passWordEmptyPopup.open()
         else:
             self.nameEmptyPopup.open()
-            

@@ -37,6 +37,14 @@ class SignUp(Screen):
     userPassPopup = Popup(title='Check your Password', content=passContent, auto_dismiss=False)
     passButton.bind(on_press=userPassPopup.dismiss)
 
+    # Popup to notify the user the registration was successful and to redirect them to the login page
+    regContent = GridLayout(cols=1)
+    regContent.add_widget(Label(text='Registration successful!'))
+    regButton = Button(text='OK')
+    regContent.add_widget(regButton)
+    regPopup = Popup(title='Cannot Connect', content=regContent, auto_dismiss=False, size_hint=(.85, .2))
+    regButton.bind(on_press=regPopup.dismiss)
+
     # Popup to prompt for email re-input
     emailContent = GridLayout(cols=1)
     emailContent.add_widget(Label(text='Specified email address is not valid.'))
@@ -152,6 +160,8 @@ class SignUp(Screen):
                                     # data successfully registered
                                     self.SRC = self.widgetWithSuccessMessage("successfully registered")
                                     self.add_widget(self.SRC)
+                                    self.regPopup.open()
+                                    self.manager.current = 'userlogin'
                                     #sm = ScreenManager()
                                     #sm.add_widget(Screen(name = ''))
                                     #print("successfully registered")
@@ -170,7 +180,7 @@ class SignUp(Screen):
                                     self.ResponseErrorMessage  = self.widgetWithMessage("That username and email are present in the database")
                                     self.add_widget(self.ResponseErrorMessage)
                                     #print("That username and email are present in the database")
-            
+
                                 return
             
                             elif passwordValidation == PasswordValidationResponse.NOTMATCHING:
