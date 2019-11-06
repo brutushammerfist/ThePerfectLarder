@@ -17,6 +17,7 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.spinner import Spinner
 from kivy.uix.popup import Popup
+from kivy.core.window import WindowBase
 
 
 class GetRecipe(Screen):
@@ -123,12 +124,13 @@ class ViewRecipe(Screen):
         reScreen = self.manager.get_screen('getreccrecipes') # changed from getrecipes to viewrecipe
         recipe = reScreen.recipes[reScreen.viewrecipe.viewrecipe]
         self.ids.name.text = recipe['name']
-        #self.ids.ingredients.text = str(recipe['recipeIngredient'])
-        ingred =  str(recipe['recipeIngredient']).split(',')
-        for i in ingred:
-            label = Label(text = i) 
+        for i in recipe['recipeIngredient']:
+            label = Label(text = str(i)) 
             self.ids.ingredients.add_widget(label)
-        self.ids.instructions.text = str(recipe['recipeInstructions'])
+        for i in recipe['recipeInstructions']:
+            steptext = i['text']
+            label = Label(text = steptext, text_size=(700, None))
+            self.ids.instructions.add_widget(label)
         self.ids.cooktime.text = recipe['cookTime']
         
 class PersonalRecipe(Screen):
