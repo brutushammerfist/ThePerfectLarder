@@ -42,7 +42,7 @@ class SignUp(Screen):
     regContent.add_widget(Label(text='Registration successful!'))
     regButton = Button(text='OK')
     regContent.add_widget(regButton)
-    regPopup = Popup(title='Cannot Connect', content=regContent, auto_dismiss=False, size_hint=(.85, .2))
+    regPopup = Popup(title='Registration Confirmation Status', content=regContent, auto_dismiss=False, size_hint=(.85, .2))
     regButton.bind(on_press=regPopup.dismiss)
 
     # Popup to prompt for email re-input
