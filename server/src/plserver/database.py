@@ -655,3 +655,6 @@ class Database():
         result = self.connector.commit()
         
         return (json.dumps(dict(data='Successfully Updated.')), 200)
+    def getItemsAboutToExpire(self,content):
+        
+        return  (json.dumps(dict(data='0')), 200)

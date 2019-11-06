@@ -8,13 +8,14 @@
 #setup GUI(kivy)
 
 import kivy
+import datetime
 kivy.require('1.11.1')
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
+import json
+import requests
 
 class ItemShare(Screen):
-	pass
-	
 	#itemName = ObjectProperty(None)
 	#shareWith = ObjectProperty(None)
 	
@@ -25,3 +26,18 @@ class ItemShare(Screen):
 		#clearing data field
 		#self.itemName.text = ""
 		#self.shareWith.text = ""
+	def on_pre_enter(self):
+		todaysDate = datetime.datetime.now()
+		year = todaysDate.year
+		day = todaysDate.strftime("%d")
+		month = todaysDate.strftime("%m")
+		
+		headers = {'Content-Type' : 'application/json'}
+		
+		payload = {
+			'userID' : App.get_running_app().userID, 
+			'currentYear': year,
+			'currentMonth': month,
+			'currentDay': day,
+		}
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()	
