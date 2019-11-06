@@ -116,6 +116,82 @@ class Database():
         val = (inventoryID, content['itemname'], content['measurement'], content['location'], )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
+        
+        if 'expDate' not in content.keys():
+            sql = "SELECT expiration FROM ShelfLife WHERE name = %s"
+            val = (content['itemname'], )
+            self.cursor.execute(sql, val)
+            itemExpData = self.cursor.fetchall()
+            
+            if content['location'] == 'Dry':
+                if 'DOP_Pantry_Metric' != None:
+                    min = itemExpData[0][0]['DOP_Pantry_Min']
+                    metric = itemExpData[0][0]['DOP_Pantry_Metric']
+                    if metric.lower() == 'days':
+                        content['expDate'] = datetime.date.today() + timedelta(days=min)
+                    elif metric.lower() == 'weeks':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                    elif metric.lower() == 'months':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                    elif metric.lower() == 'years':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+                elif 'Pantry_Metric' != None:
+                    min = itemExpData[0][0]['Pantry_Min']
+                    metric = itemExpData[0][0]['Pantry_Metric']
+                    if metric.lower() == 'days':
+                        content['expDate'] = datetime.date.today() + timedelta(days=min)
+                    elif metric.lower() == 'weeks':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                    elif metric.lower() == 'months':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                    elif metric.lower() == 'years':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+            elif content['location'] == 'Fridge':
+                if 'DOP_Refrigerate_Metric' != None:
+                    min = itemExpData[0][0]['DOP_Refrigerate_Min']
+                    metric = itemExpData[0][0]['DOP_Refrigerate_Metric']
+                    if metric.lower() == 'days':
+                        content['expDate'] = datetime.date.today() + timedelta(days=min)
+                    elif metric.lower() == 'weeks':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                    elif metric.lower() == 'months':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                    elif metric.lower() == 'years':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+                elif 'Refrigerate_Metric' != None:
+                    min = itemExpData[0][0]['Refrigerate_Min']
+                    metric = itemExpData[0][0]['Refrigerate_Metric']
+                    if metric.lower() == 'days':
+                        content['expDate'] = datetime.date.today() + timedelta(days=min)
+                    elif metric.lower() == 'weeks':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                    elif metric.lower() == 'months':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                    elif metric.lower() == 'years':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+            elif content['location'] == 'Freezer':
+                if 'DOP_Freeze_Metric' != None:
+                    min = itemExpData[0][0]['DOP_Freeze_Min']
+                    metric = itemExpData[0][0]['DOP_Freeze_Metric']
+                    if metric.lower() == 'days':
+                        content['expDate'] = datetime.date.today() + timedelta(days=min)
+                    elif metric.lower() == 'weeks':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                    elif metric.lower() == 'months':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                    elif metric.lower() == 'years':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+                elif 'Freeze_Metric' != None:
+                    min = itemExpData[0][0]['Freeze_Min']
+                    metric = itemExpData[0][0]['Freeze_Metric']
+                    if metric.lower() == 'days':
+                        content['expDate'] = datetime.date.today() + timedelta(days=min)
+                    elif metric.lower() == 'weeks':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                    elif metric.lower() == 'months':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                    elif metric.lower() == 'years':
+                        content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
 
         if len(result) == 0:
             useData = {
@@ -353,9 +429,6 @@ class Database():
                     recipe = {
                         'name' : recipe_list[0]['name'],
                         'cookTime' : recipe_list[0]['cookTime'],
-                        #'cookingMethod' : recipe_list[0]['cookingMethod'],
-                        #'recipeCategory' : recipe_list[0]['recipeCategory'],
-                        #'recipeCuisine' : recipe_list[0]['recipeCuisine'],
                         'recipeIngredient' : recipe_list[0]['recipeIngredient'],
                         'recipeInstructions' : recipe_list[0]['recipeInstructions']
                     }
@@ -655,6 +728,7 @@ class Database():
         result = self.connector.commit()
         
         return (json.dumps(dict(data='Successfully Updated.')), 200)
+        
     def getItemsAboutToExpire(self,content):
         
         return  (json.dumps(dict(data='0')), 200)
