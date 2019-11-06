@@ -17,7 +17,7 @@ import requests
 class Trends(Screen):
 
     def on_pre_enter(self):
-
+        self.ids.graph.clear_widgets()
 
         headers = {'Content-Type' : 'application/json'}
            
