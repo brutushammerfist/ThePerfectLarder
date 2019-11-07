@@ -115,6 +115,7 @@ class testApp(App):
     
     def build(self):
         Clock.schedule_interval(self.update, 1)
+        self.sm = screenManager
         return screenManager
         
 if __name__ == "__main__":

@@ -25,11 +25,46 @@ class ShoppingList(Screen):
         self.addpopup.open()
     
     def DelItem(self):
-        pass
+
+        screen = App.get_running_app().sm.get_screen('shoppinglist')
+        item = screen.items[screen.selectedItem.itemToDel]
+        screen.items.pop(screen.selectedItem.itemToDel)
+        for x in (screen.ids.inventoryID.children):
+            name = x.text.split('-')[0][:-1]
+            if name == item['itemname']: 
+                screen.ids.inventoryID.remove_widget(x)
+        screen.popup.dismiss()
         
     def CancelUpdate(self):
         
-        self.popup.close()
+        #screen = self.manager.get_screen('shoppinglist')
+        #screen.popup.close()
+        self.parent.parent.parent.parent.dismiss()
+    
+    def UpdateItem(self, popup):
+        
+        #self.items[self.selectedItem]['quantity'] = quantity
+        #self.items[self.selectedItem]['measurement'] = measurement
+        print(str(popup.children[0].children[0].children[0].children[0].children))
+        for x in (popup.children[0].children[0].children[0].children[0].children):
+            if "TextInput" in str(type(x)):
+                quantity = float(x.text)
+            if "Spinner" in str(type(x)):
+                measurement = x.text
+        for x in (popup.children[0].children[0].children[0].children):
+            if "Label" in str(type(x)):
+                label = x.text
+        
+        self.items[self.selectedItem.itemToDel]['quantity'] = quantity
+        self.items[self.selectedItem.itemToDel]['measurement'] = measurement
+        self.ids.inventoryID.children
+        for x in (self.ids.inventoryID.children):
+            name = x.text.split('-')[0][:-1]
+            if name == label: 
+                x.text = name + " - " + str(quantity) + " " + measurement
+            
+        self.popup.dismiss()
+        popup.dismiss()
         
     def CancelAdd(self):
         
@@ -47,23 +82,28 @@ class ShoppingList(Screen):
         
     def EditItem(self):
         
-        editcontent = GridLayout(col = 1)
-        editcontent.add_widget(Label(text = self.items[self.selectedItem]['itemname']))
-        editcontent2 = GridLayout(col = 2)
-        editcontent2.add_widget(TextInput(text = self.items[self.selectedItem]['quantity'], id = 'quantity'))
+        #screen = self.manager.get_screen('shoppinglist')
+        print(str(type(self.parent.parent.parent.parent)))
+        screen = App.get_running_app().sm.get_screen('shoppinglist')
+        editcontent = GridLayout(cols = 1)
+        editcontent.add_widget(Label(text = screen.items[screen.selectedItem.itemToDel]['itemname']))
+        editcontent2 = GridLayout(cols = 2)
+        editcontent2.add_widget(TextInput(text = str(screen.items[screen.selectedItem.itemToDel]['need']), id = 'quantity'))
         
-        editcontent2.add_widget(Spinner(text = self.items[self.selectedItem]['measurement'], values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)'), id = 'measurement'))
+        editcontent2.add_widget(Spinner(text = screen.items[screen.selectedItem.itemToDel]['measurement'], values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)'), id = 'measurement'))
         buttonA = Button(text = 'Cancel')
         buttonB = Button(text = 'Submit')
         
         editcontent2.add_widget(buttonA)
         editcontent2.add_widget(buttonB)
-        buttonA.bind(on_press = self.CancelUpdate)
-        buttonB.bind(on_press = self.UpdateItem)
         
         editcontent.add_widget(editcontent2)
         self.editpopup = Popup(title = 'Edit Item', content = editcontent, auto_dismiss = False)
+        buttonA.bind(on_press = self.editpopup.dismiss)
+        #buttonB.bind(on_press = screen.UpdateItem)
+        
         self.editpopup.open()
+        buttonB.bind(on_press = lambda *args: screen.UpdateItem(self.editpopup))
     
     items = []
     selectedItem = -1
@@ -124,9 +164,3 @@ class ShoppingList(Screen):
         
         self.selectedItem = index
         self.popup.open()
-
-    def UpdateItem(self):
-        
-        self.items[self.selectedItem]['quantity'] = self.quantity
-        self.items[self.selectedItem]['measurement'] = self.measurement
-        self.popup.close()
