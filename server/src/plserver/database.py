@@ -354,7 +354,7 @@ class Database():
 
         inventoryID = result[0][0]
 
-        sql = "SELECT id, useID, itemname, expiration, quantity, measurement, location FROM Items WHERE inventoryID = %s ORDER BY itemname"
+        sql = "SELECT id, useID, itemname, expiration, quantity, measurement, location FROM Items WHERE inventoryID = %s ORDER BY expiration"
         val = (inventoryID, )
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
