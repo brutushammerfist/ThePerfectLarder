@@ -303,6 +303,9 @@ class Database():
                 
             useID = result[0][5]
             
+            self.cursor.execute(sql, val)
+            self.connector.commit()
+            
             sql = "SELECT `usage` FROM FoodUse WHERE id = %s"
             val= (useID, )
             self.cursor.execute(sql, val)
@@ -310,7 +313,7 @@ class Database():
             
             useData = json.loads(result[0][0])
             
-            if content['Used'] == 'used':
+            if content['useType'] == 'used':
                 used = {
                     "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
                     "quantity" : content["quantity"]
