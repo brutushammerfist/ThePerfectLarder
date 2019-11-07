@@ -37,15 +37,10 @@ class ShoppingList(Screen):
         
     def CancelUpdate(self):
         
-        #screen = self.manager.get_screen('shoppinglist')
-        #screen.popup.close()
         self.parent.parent.parent.parent.dismiss()
     
     def UpdateItem(self, popup):
         
-        #self.items[self.selectedItem]['quantity'] = quantity
-        #self.items[self.selectedItem]['measurement'] = measurement
-        print(str(popup.children[0].children[0].children[0].children[0].children))
         for x in (popup.children[0].children[0].children[0].children[0].children):
             if "TextInput" in str(type(x)):
                 quantity = float(x.text)
@@ -68,22 +63,35 @@ class ShoppingList(Screen):
         
     def CancelAdd(self):
         
-        self.addpopup.close()
+        screen = App.get_running_app().sm.get_screen('shoppinglist')
+        screen.addpopup.dismiss()
         
     def AddItem(self):
         
-        self.items.append({
-            'itemname' : self.addpopup.itemName,
-            'quantity' : self.addpopup.quantity,
-            'measurement' : self.addpopup.measurement
+        screen = App.get_running_app().sm.get_screen('shoppinglist')
+        for index, x in enumerate(screen.addpopup.children[0].children[0].children[0].children):
+            if x.text == "Item Name":
+                name = screen.addpopup.children[0].children[0].children[0].children[index - 1].text
+            if x.text == "Quantity":
+                quantity = screen.addpopup.children[0].children[0].children[0].children[index - 1].text
+            if x.text == "Measurement":
+                measurement = screen.addpopup.children[0].children[0].children[0].children[index - 1].text
+        screen.items.append({
+            'itemname' : name,
+            'need' : quantity,
+            'measurement' : measurement
         })
-        
-        self.addpopup.close()
+        button = Button(text = name + " - " + quantity + " " + measurement)
+        n = len(screen.ids.inventoryID.children)
+        callback = lambda n:screen.EditOrRemoveItem(n)
+        button.itemToDel = n
+        button.bind(on_press = callback)
+
+        screen.ids.inventoryID.add_widget(button)
+        screen.addpopup.dismiss()
         
     def EditItem(self):
         
-        #screen = self.manager.get_screen('shoppinglist')
-        print(str(type(self.parent.parent.parent.parent)))
         screen = App.get_running_app().sm.get_screen('shoppinglist')
         editcontent = GridLayout(cols = 1)
         editcontent.add_widget(Label(text = screen.items[screen.selectedItem.itemToDel]['itemname']))
@@ -100,7 +108,6 @@ class ShoppingList(Screen):
         editcontent.add_widget(editcontent2)
         self.editpopup = Popup(title = 'Edit Item', content = editcontent, auto_dismiss = False)
         buttonA.bind(on_press = self.editpopup.dismiss)
-        #buttonB.bind(on_press = screen.UpdateItem)
         
         self.editpopup.open()
         buttonB.bind(on_press = lambda *args: screen.UpdateItem(self.editpopup))
@@ -145,8 +152,6 @@ class ShoppingList(Screen):
         
         self.ids.inventoryID.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getShoppingList', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
-        
-        print(response['data'])
         
         if response['data'] != 'Shopping List Empty.':
             self.items = response['data']

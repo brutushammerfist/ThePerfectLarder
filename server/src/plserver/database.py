@@ -123,7 +123,7 @@ class Database():
             self.cursor.execute(sql, val)
             itemExpData = self.cursor.fetchall()
             
-            if content['location'] == 'Dry':
+            if content['location'] == 'Pantry':
                 if 'DOP_Pantry_Metric' != None:
                     min = itemExpData[0][0]['DOP_Pantry_Min']
                     metric = itemExpData[0][0]['DOP_Pantry_Metric']
@@ -146,7 +146,7 @@ class Database():
                         content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
                     elif metric.lower() == 'years':
                         content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
-            elif content['location'] == 'Fridge':
+            elif content['location'] == 'Refrigerator':
                 if 'DOP_Refrigerate_Metric' != None:
                     min = itemExpData[0][0]['DOP_Refrigerate_Min']
                     metric = itemExpData[0][0]['DOP_Refrigerate_Metric']
