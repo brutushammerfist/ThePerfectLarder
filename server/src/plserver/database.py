@@ -730,5 +730,15 @@ class Database():
         return (json.dumps(dict(data='Successfully Updated.')), 200)
         
     def getItemsAboutToExpire(self,content):
-        
-        return (json.dumps(dict(data='0')), 200)
+        self.ensureConnected()
+        currentDate = content["currentDate"]
+        currentUserId = content['userID']
+        oneWeekAheadDate = content["currentWeekAhead"]
+        sql = "SELECT * FROM `Items` WHERE `Items`.`inventoryID` = %s AND `Items`.`expiration` >= %s AND `Items`.`expiration` < %s ORDER BY `userID` ASC"
+        val = (currentUserId,currentDate,oneWeekAheadDate)
+        self.cursor.execute(sql,val)
+        result = self.cursor.fetchall()
+        if(len(result) == 0):
+             return (json.dumps(dict(data='empty')), 401)
+        else:
+            return (json.dumps(dict(data=result)), 200)
