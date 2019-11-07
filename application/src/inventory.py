@@ -127,8 +127,9 @@ class DeleteItem(Screen):        #part of inventory
         self.ids.loc.text = item['location']
         
     def deleteItems(self):
- 
-        item = self.manager.get_screen('inventory').items[self.index]
+        
+        invScreen = self.manager.get_screen('inventory')
+        item = invScreen.items[invScreen.itemToDel.itemToDel]
     
         headers = {'Content-Type' : 'application/json'}
             
