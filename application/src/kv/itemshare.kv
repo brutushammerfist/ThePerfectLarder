@@ -1,15 +1,77 @@
 <ItemShare>:
 
-	#itemName:itemName                #for python code : for kivy code
-	#shareWith:shareWith        		 #for python code : for kivy code
+	itemName:itemName                #for python code : for kivy code
+	quantity:quantity                #for python code : for kivy code
+	shareWith:shareWith        		 #for python code : for kivy code
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
 
+    Button:
+        text: " "
+        size_hint: (0.2, 0.07)
+        pos_hint:{'x': 0.01, 'top': .99}
+        on_press: root.manager.current =  'homescreen'
+        Image:
+            source:"graphics/back.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+
+    Label:
+        text: "Share Items"
+        font_size: 67
+        size_hint: (0.58, 0.05)
+        pos_hint:{'x': .22, 'top': .99}
+        halign: 'center'
 
 	GridLayout:
 		cols:1
-		rows:1
-		row_force_default: True
-		row_default_height: 40
-		
-		Button:
-            text: 'Back To Home'
-            on_press: root.manager.current = 'homescreen'
+		size_hint: (.98, 0.8)
+        pos_hint:{'top': .85}
+		halign: 'left'
+
+        GridLayout:
+            cols:2
+            size_hint: (.5, .12)
+
+            Label:
+                text: "Item:"
+                font_size: 67
+
+            Spinner:
+                id: itemName
+                font_size: 65
+                values: root.populateItemSpinner()
+
+        GridLayout:
+            cols:2
+            size_hint: (.5, .12)
+            Label:
+                text: "Quantity:"
+                font_size: 67
+
+            TextInput:
+                id: quantity
+                multiline: False
+                font_size: 65
+
+        GridLayout:
+            cols:2
+            size_hint: (.5, .12)
+            Label:
+                text: "User/Group:"
+                font_size: 67
+
+            Spinner:
+                id: shareWith
+                font_size: 65
+                values: root.populateGroupSpinner()
+
+        Button:
+            text: "Send Notification"
+            valign: 'middle'
+            halign: 'center'
+            pos_hint_y: .9
+            size_hint: (.5, .12)
+            font_size: 65
+            on_press: root.shareItems()

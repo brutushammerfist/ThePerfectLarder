@@ -60,7 +60,7 @@ class AddRecipe(Screen):
     recipeContent.add_widget(Label(text='Recipe successfully added'))
     recipeButton = Button(text='OK')
     recipeContent.add_widget(recipeButton)
-    recipePopup = Popup(title='Added Recipe', content=recipeContent, auto_dismiss=False)
+    recipePopup = Popup(title='Added Recipe', content=recipeContent, auto_dismiss=False, size_hint=(.8, .2))
     recipeButton.bind(on_press=recipePopup.dismiss)
 
     def on_pre_enter(self):
@@ -180,7 +180,7 @@ class ViewPersonalRecipe(Screen):
         delContent.add_widget(Label(text= 'Recipe Deleted'))
         delButton = Button(text='OK')
         delContent.add_widget(delButton)
-        self.delRecipePopup = Popup(title='Recipe Deleted', content=delContent, auto_dismiss=False)
+        self.delRecipePopup = Popup(title='Recipe Deleted', content=delContent, auto_dismiss=False, size_hint=(.8, .2))
         delButton.bind(on_press=self.delPopupDismiss)
         
         reScreen = self.manager.get_screen('personalrecipe')
