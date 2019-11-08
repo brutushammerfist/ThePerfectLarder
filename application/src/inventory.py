@@ -106,13 +106,16 @@ class AddItem(Screen):            #part of inventory
         
         if response['data'] == 'Item added.':
             addItemPopup.open()
-            self.ids.itemName.text = ""
-            self.ids.quantity.text = ""
-            self.ids.measurement.text = ""
-            self.ids.expirationDate.text = ""
-            self.ids.storageLocation.text = ""
+            self.clearFieldsAdd()
         else:
             self.itemNotaddedPopup.open()
+
+    def clearFieldsAdd(self):
+        self.ids.itemName.text = ""
+        self.ids.quantity.text = ""
+        self.ids.measurement.text = ""
+        self.ids.expirationDate.text = ""
+        self.ids.storageLocation.text = ""
     
 class DeleteItem(Screen):        #part of inventory
     
@@ -142,7 +145,12 @@ class DeleteItem(Screen):        #part of inventory
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delItem', headers=headers, data=json.dumps(payload)).json()
 
         if response['data'] == "Item deleted.":
+            self.clearFieldsDel()
             self.manager.current = "inventory"
+
+    def clearFieldsDel(self):
+        self.ids.used.text = ""
+        self.ids.useType.text = ""
 
 """  
 class PerfectLarder(Screen):

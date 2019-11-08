@@ -9,6 +9,7 @@
 		size_hint: (0.2, 0.05)
 		pos_hint:{'x': 0.01, 'top': .99}
 		on_press: root.manager.current =  'personalrecipe'
+		on_press: root.clearFieldsAdd()
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x

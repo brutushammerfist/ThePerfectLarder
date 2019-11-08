@@ -85,10 +85,7 @@ class AddRecipe(Screen):
         result = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addRecipe', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
         
         if result['data'] == "Recipe Added.":
-            self.ids.name.text = ""
-            self.ids.servings.text = ""
-            self.ids.description.text = ""
-            self.ids.ingredients.clear_widgets()
+            self.clearFieldsAdd()
             self.addIngredient()
             self.recipePopup.open()
         else:
@@ -109,6 +106,12 @@ class AddRecipe(Screen):
             ingredients.append(temp)
             
         return ingredients
+
+    def clearFieldsAdd(self):
+        self.ids.name.text = ""
+        self.ids.servings.text = ""
+        self.ids.description.text = ""
+        self.ids.ingredients.clear_widgets()
     
 class Recipe(Screen):
     pass
