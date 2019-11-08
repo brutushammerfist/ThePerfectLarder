@@ -577,10 +577,10 @@ class Database():
             for x in useData:
                 for i in x['used']:
                     if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
-                        usedSegmentTotal += i['quantity']
+                        usedSegmentTotal += float(i['quantity'])
                 for j in x['wasted']:
                     if datetime.date.fromisoformat(j['date']) > segmentBeginDate and datetime.date.fromisoformat(j['date']) <= segmentStopDate:
-                        wastedSegmentTotal += j['quantity']
+                        wastedSegmentTotal += float(j['quantity'])
                         
             usedPoints.append((xValue, usedSegmentTotal))
             wastedPoints.append((xValue, wastedSegmentTotal))
