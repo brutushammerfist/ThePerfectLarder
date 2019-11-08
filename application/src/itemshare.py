@@ -57,7 +57,7 @@ class ItemShare(Screen):
 		if(response['data'] == "empty"):
 			print("There is nothing currently about to expire")
 		else:		
-			print(response['data'] == "empty")
+			print(response['data'])
 
 	#Gather items from the user's inventory to put onto the spinner. This will require a database request.
 	def populateItemSpinner(self):
