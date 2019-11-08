@@ -6,6 +6,7 @@ import requests
 import math
 import json
 import os
+import collections
 
 class Database():
     def __init__(self):
@@ -744,7 +745,19 @@ class Database():
         val = (currentUserId,currentDate,oneWeekAheadDate)
         self.cursor.execute(sql,val)
         result = self.cursor.fetchall()
-        if(len(result) == 0):
-             return (json.dumps(dict(data='empty')), 401)
+        objects_list = []
+        if(len(result) ==0):
+            return (json.dumps(objects_list),401)
         else:
-            return (json.dumps(dict(data=result)), 200)
+            for row in result:
+                d = collections.OrderedDict()
+                d['id'] = row.id
+                d['inventoryID'] = row.inventoryID
+                d['userID'] = row.userID
+                d['itemname'] = row.itemname
+                d['expiration'] = row.expiration
+                d['quantity'] = row.quantity
+                d['measurement'] = row.measurement
+                d['location'] = row.location
+                objects_list.append(d)
+            return  (json.dumps(objects_list),200)
