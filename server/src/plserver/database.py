@@ -751,13 +751,13 @@ class Database():
         else:
             for row in result:
                 d = collections.OrderedDict()
-                d['id'] = row.id
-                d['inventoryID'] = row.inventoryID
-                d['userID'] = row.userID
-                d['itemname'] = row.itemname
-                d['expiration'] = row.expiration
-                d['quantity'] = row.quantity
-                d['measurement'] = row.measurement
-                d['location'] = row.location
+                d['id'] = row[0]
+                d['inventoryID'] = row[1]
+                d['userID'] = row[2]
+                d['itemname'] = row[3]
+                d['expiration'] = row[4]
+                d['quantity'] = row[5]
+                d['measurement'] = row[6]
+                d['location'] = row[7]
                 objects_list.append(d)
             return  (json.dumps(dict(data = objects_list)),200)            
