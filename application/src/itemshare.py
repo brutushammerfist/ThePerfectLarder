@@ -51,11 +51,11 @@ class ItemShare(Screen):
 			'currentWeekAhead' : string_weekAhead
 		}
 		print(App.get_running_app().userID)
-		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()
-
-		resEmptyCheck = not response
-		print(resEmptyCheck)
-		#if(resEmptyCheck == False):
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload))
+		print(response.status_code)
+		#resEmptyCheck = not response
+		#print(resEmptyCheck)
+		#if(resEmptyCheck == True):
 		#	print("There is nothing currently about to expire")
 		#else:		
 		#	print(response)

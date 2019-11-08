@@ -743,21 +743,31 @@ class Database():
         oneWeekAheadDate = content["currentWeekAhead"]
         sql = "SELECT * FROM `Items` WHERE `Items`.`inventoryID` = %s AND `Items`.`expiration` >= %s AND `Items`.`expiration` < %s ORDER BY `userID` ASC"
         val = (currentUserId,currentDate,oneWeekAheadDate)
-        self.cursor.execute(sql,val)
-        result = self.cursor.fetchall()
-        objects_list = []
-        if(len(result) ==0):
-            return (json.dumps(objects_list),401)
-        else:
-            for row in result:
-                d = collections.OrderedDict()
-                d['id'] = row.id
-                d['inventoryID'] = row.inventoryID
-                d['userID'] = row.userID
-                d['itemname'] = row.itemname
-                d['expiration'] = row.expiration
-                d['quantity'] = row.quantity
-                d['measurement'] = row.measurement
-                d['location'] = row.location
-                objects_list.append(d)
-            return  (json.dumps(objects_list),200)
+        
+        try:
+            self.cursor.execute(sql,val)
+            result = self.cursor.fetchall()
+            objects_list = []
+            if(len(result) ==0):
+                return (json.dumps(objects_list),401)
+            else:
+                for row in result:
+                    d = collections.OrderedDict()
+                    d['id'] = row.id
+                    d['inventoryID'] = row.inventoryID
+                    d['userID'] = row.userID
+                    d['itemname'] = row.itemname
+                    d['expiration'] = row.expiration
+                    d['quantity'] = row.quantity
+                    d['measurement'] = row.measurement
+                    d['location'] = row.location
+                    objects_list.append(d)
+                return  (json.dumps(objects_list),200)
+        except mysql.connector.Error as e:
+            print ("Error code:", e.errno)        # error number
+            print ("SQLSTATE value:", e.sqlstate) # SQLSTATE value
+            print ("Error message:", e.msg)       # error message
+            print ("Error:", e )                  # errno, sqlstate, msg values
+            s = str(e)
+            print ("Error:", s)                   # errno, sqlstate, msg values
+            
