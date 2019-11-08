@@ -50,15 +50,14 @@ class ItemShare(Screen):
 			'currentDate' : stringCurrent,
 			'currentWeekAhead' : string_weekAhead
 		}
-		print(App.get_running_app().userID)
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload))
 		print(response.status_code)
-		#resEmptyCheck = not response
-		#print(resEmptyCheck)
-		#if(resEmptyCheck == True):
-		#	print("There is nothing currently about to expire")
-		#else:		
-		#	print(response)
+		
+		print(response['data'] == "empty")
+		if(response['data'] == "empty"):
+			print("There is nothing currently about to expire")
+		else:		
+			print(response['data'] == "empty")
 
 	#Gather items from the user's inventory to put onto the spinner. This will require a database request.
 	def populateItemSpinner(self):

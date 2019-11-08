@@ -749,7 +749,7 @@ class Database():
             result = self.cursor.fetchall()
             objects_list = []
             if(len(result) ==0):
-                return (json.dumps(objects_list),401)
+                return (json.dumps(dict(data = "empty")),401)
             else:
                 for row in result:
                     d = collections.OrderedDict()
@@ -762,12 +762,4 @@ class Database():
                     d['measurement'] = row.measurement
                     d['location'] = row.location
                     objects_list.append(d)
-                return  (json.dumps(objects_list),200)
-        except mysql.connector.Error as e:
-            print ("Error code:", e.errno)        # error number
-            print ("SQLSTATE value:", e.sqlstate) # SQLSTATE value
-            print ("Error message:", e.msg)       # error message
-            print ("Error:", e )                  # errno, sqlstate, msg values
-            s = str(e)
-            print ("Error:", s)                   # errno, sqlstate, msg values
-            
+                return  (json.dumps(dict(data = objects_list)),200)            
