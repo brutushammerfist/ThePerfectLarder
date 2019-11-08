@@ -47,9 +47,10 @@ class ItemShare(Screen):
 		API_ENDPOINT = "http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire"
 		payload = {
 			'userID' : App.get_running_app().userID,
-			'currentDate': stringCurrent,
-			'currentWeekAhead': string_weekAhead
+			'currentDate' : stringCurrent,
+			'currentWeekAhead' : string_weekAhead
 		}
+		print(App.get_running_app().userID)
 		response = requests.post(url = API_ENDPOINT, headers=headers, data=json.dumps(payload)).json()
 		
 		resEmptyCheck = not response
