@@ -743,23 +743,21 @@ class Database():
         oneWeekAheadDate = content["currentWeekAhead"]
         sql = "SELECT * FROM `Items` WHERE `Items`.`inventoryID` = %s AND `Items`.`expiration` >= %s AND `Items`.`expiration` < %s ORDER BY `userID` ASC"
         val = (currentUserId,currentDate,oneWeekAheadDate)
-        
-        try:
-            self.cursor.execute(sql,val)
-            result = self.cursor.fetchall()
-            objects_list = []
-            if(len(result) ==0):
-                return (json.dumps(dict(data = "empty")),401)
-            else:
-                for row in result:
-                    d = collections.OrderedDict()
-                    d['id'] = row.id
-                    d['inventoryID'] = row.inventoryID
-                    d['userID'] = row.userID
-                    d['itemname'] = row.itemname
-                    d['expiration'] = row.expiration
-                    d['quantity'] = row.quantity
-                    d['measurement'] = row.measurement
-                    d['location'] = row.location
-                    objects_list.append(d)
-                return  (json.dumps(dict(data = objects_list)),200)            
+        self.cursor.execute(sql,val)
+        result = self.cursor.fetchall()
+        objects_list = []
+        if(len(result) ==0):
+            return (json.dumps(dict(data = "empty")),401)
+        else:
+            for row in result:
+                d = collections.OrderedDict()
+                d['id'] = row.id
+                d['inventoryID'] = row.inventoryID
+                d['userID'] = row.userID
+                d['itemname'] = row.itemname
+                d['expiration'] = row.expiration
+                d['quantity'] = row.quantity
+                d['measurement'] = row.measurement
+                d['location'] = row.location
+                objects_list.append(d)
+            return  (json.dumps(dict(data = objects_list)),200)            
