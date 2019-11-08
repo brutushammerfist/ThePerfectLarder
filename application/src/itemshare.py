@@ -44,13 +44,13 @@ class ItemShare(Screen):
 		string_weekAhead =  week_ahead.strftime("%Y") + "-" + week_ahead.strftime("%m") + "-" + week_ahead.strftime("%d")
 
 		headers = {'Content-Type' : 'application/json'}
-
+		API_ENDPOINT = "http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire"
 		payload = {
 			'userID' : App.get_running_app().userID,
 			'currentDate': stringCurrent,
 			'currentWeekAhead': string_weekAhead
 		}
-		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()
+		response = requests.post(url = API_ENDPOINT, headers=headers, data=json.dumps(payload)).json()
 		
 		resEmptyCheck = not response
 		print(resEmptyCheck)
