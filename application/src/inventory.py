@@ -141,8 +141,8 @@ class DeleteItem(Screen):        #part of inventory
             
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/delItem', headers=headers, data=json.dumps(payload)).json()
 
-	if response['data'] == "Item deleted.":
-		self.manager.current = "inventory"
+        if response['data'] == "Item deleted.":
+            self.manager.current = "inventory"
 
 """  
 class PerfectLarder(Screen):
