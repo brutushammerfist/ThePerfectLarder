@@ -741,7 +741,7 @@ class Database():
         currentDate = content["currentDate"]
         currentUserId = content['userID']
         oneWeekAheadDate = content["currentWeekAhead"]
-        sql = "SELECT * FROM `Items` WHERE `Items`.`inventoryID` = %s AND `Items`.`expiration` >= %s AND `Items`.`expiration` < %s ORDER BY `userID` ASC"
+        sql = "SELECT * FROM `Items` T WHERE T.`inventoryID` = %s AND T.`expiration` >= %s AND T.`expiration` < %s ORDER BY T.`userID` ASC"
         val = (currentUserId,currentDate,oneWeekAheadDate)
         self.cursor.execute(sql,val)
         result = self.cursor.fetchall()
