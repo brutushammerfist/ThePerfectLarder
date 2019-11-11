@@ -224,7 +224,7 @@
             id: instructions
             size_hint_y: None
             height: self.minimum_height
-            row_default_height: 45
+            #row_default_height: 45
 
     ## Haven't been able to get instructions to display properly yet
     #GridLayout:
@@ -245,6 +245,17 @@
             id: cooktime
             font_size: 55
             size_hint:(0.50,0.1)
+
+##
+#   Taken from https://stackoverflow.com/questions/50416284/kivy-sizing-buttons-to-fit-wrapped-text-within-dropdown
+##
+<WrapButton>:
+    halign: "center"
+    valign: "center"
+    font_size: 20
+    size_hint_y: None
+    text_size : self.width, None
+    height: self.texture_size[1]
 
 <Recipe>:
     FloatLayout:

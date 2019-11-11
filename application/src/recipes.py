@@ -19,6 +19,8 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.popup import Popup
 from kivy.core.window import WindowBase
 
+class WrapButton(Button):
+    pass
 
 class GetRecipe(Screen):
     recipes = []
@@ -128,11 +130,11 @@ class ViewRecipe(Screen):
         recipe = reScreen.recipes[reScreen.viewrecipe.viewrecipe]
         self.ids.name.text = recipe['name']
         for i in recipe['recipeIngredient']:
-            label = Label(text = str(i)) 
+            label = Button(text = str(i)) 
             self.ids.ingredients.add_widget(label)
         for i in recipe['recipeInstructions']:
             steptext = i['text']
-            label = Label(text = steptext, text_size=(700, None))
+            label = WrapButton(text = steptext, text_size=(700, None))
             self.ids.instructions.add_widget(label)
         self.ids.cooktime.text = recipe['cookTime']
         
