@@ -7,6 +7,7 @@ import math
 import json
 import os
 import collections
+from email.policy import default
 
 class Database():
     def __init__(self):
@@ -761,8 +762,4 @@ class Database():
                 d['measurement'] = row[6]
                 d['location'] = row[7]
                 objects_list.append(d)
-                print(type(objects_list))
-                print(objects_list)
-                r = json.dumps(dict(data = objects_list))
-                print(r)
-            return  (json.dumps(dict(data = objects_list)),200)            
+            return  (json.dumps(dict(data = objects_list,default=str)),200)            
