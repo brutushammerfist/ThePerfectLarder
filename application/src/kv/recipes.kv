@@ -204,36 +204,24 @@
             height: self.minimum_height
             row_default_height: 45
 
-    #GridLayout:
-    #    cols:1
-    #    pos_hint:{'x': 0.01, 'top': 1.03}
-    #    Label:
-    #        text:"Instructions"
-    #        font_size: 55
-    #        size_hint:(0.98,0.1)
+    Label:
+        text: "Instructions"
+        font_size: 55
+        size_hint:(0.98,0.07)
+        pos_hint:{'x': 0.01, 'top': 0.57}
 
-    #This does not work and breaks the other scroll
     ScrollView:
         do_scroll_x: False
         do_scroll_y: True
-        pos_hint:{'x': 0.01, 'top': 0.43}
-        size_hint: (.98,.3)
+        pos_hint:{'x': 0.01, 'top': 0.51}
+        size_hint: (.98,.45)
 
         GridLayout:
             cols:1
             id: instructions
             size_hint_y: None
             height: self.minimum_height
-            #row_default_height: 45
 
-    ## Haven't been able to get instructions to display properly yet
-    #GridLayout:
-    #    cols:1
-    #    pos_hint:{'x':0.01, 'top': 1.05}
-    #    Label:
-    #        id: instructions
-    #        text_size: self.size
-    #        size_hint:(0.98,0.5)
     GridLayout:
         cols:2
         pos_hint:{'x': 0.01, 'top': .53}
@@ -252,7 +240,7 @@
 <WrapButton>:
     halign: "center"
     valign: "center"
-    font_size: 20
+    font_size: 50
     size_hint_y: None
     text_size : self.width, None
     height: self.texture_size[1]
@@ -352,39 +340,27 @@
             height: self.minimum_height
             row_default_height: 45
 
-    GridLayout:
-        cols:1
-        pos_hint:{'x': 0.01, 'top': 1.03}
-        Label:
-            text:"Instructions"
-            font_size: 55
-            size_hint:(0.98,0.1)
+    Label:
+        text: "Instructions"
+        font_size: 55
+        size_hint:(0.98,0.07)
+        pos_hint:{'x': 0.01, 'top': 0.6}
 
-    ## This does not work and breaks the other scroll
-    #ScrollView:
-        #do_scroll_x: False
-        #do_scroll_y: True
-        #pos_hint:{'x': 0.01, 'top': 0.86}
-        #size_hint: (.98,.3)
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        pos_hint:{'x': 0.01, 'top': 0.51}
+        size_hint: (.98,.45)
 
-        #GridLayout:
-            #cols:1
-            #id: instructions
-            #size_hint_y: None
-            #height: self.minimum_height
-            #row_default_height: 45
-
-    ## Haven't been able to get instructions or servings to display properly yet
-    GridLayout:
-        cols:1
-        pos_hint:{'x':0.01, 'top': 1.05}
-        Label:
+        GridLayout:
+            cols:1
             id: instructions
-            text_size: self.size
-            size_hint:(0.98,0.5)
+            size_hint_y: None
+            height: self.minimum_height
+
     GridLayout:
         cols:2
-        pos_hint:{'x': 0.01, 'top': .55}
+        pos_hint:{'x': 0.01, 'top': .53}
         Label:
             text:"Servings:"
             font_size: 55

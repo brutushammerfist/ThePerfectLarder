@@ -174,7 +174,7 @@ class ViewPersonalRecipe(Screen):
         self.ids.name.text = recipe['name']
         ingred = json.loads(recipe['ingredients'])
         for n in ingred['ingredients']:
-            label = Label(text = n['name']+ " - " + n['quantity'] + " " + n['measurement'])
+            label = Button(text = n['name']+ " - " + n['quantity'] + " " + n['measurement'])
             self.ids.ingredients.add_widget(label)
         self.ids.instructions.text = recipe['description']
         self.ids.servings.text = str(recipe['servings'])
