@@ -760,13 +760,9 @@ class Database():
                 d['quantity'] = row[5]
                 d['measurement'] = row[6]
                 d['location'] = row[7]
-                #d['id'] = row.id
-                #d['inventoryID'] = row.inventoryID
-                #d['useID'] = row.useID
-                #d['itemname'] = row.itemname
-                #d['expiration'] = row.expiration
-                #d['quantity'] = row.quantity
-                #d['measurement'] = row.measurement
-                #d['location'] = row.location
                 objects_list.append(d)
+                print(type(objects_list))
+                print(objects_list)
+                r = json.dumps(dict(data = objects_list))
+                print(r)
             return  (json.dumps(dict(data = objects_list)),200)            
