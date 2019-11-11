@@ -762,4 +762,5 @@ class Database():
                 d['measurement'] = row[6]
                 d['location'] = row[7]
                 objects_list.append(d)
+                
             return  (json.dumps(dict(data = objects_list,default=str)),200)            
