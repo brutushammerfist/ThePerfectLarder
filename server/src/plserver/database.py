@@ -748,7 +748,7 @@ class Database():
         result = self.cursor.fetchall()
         objects_list = []
         if(len(result) ==0):
-            return (json.dumps(dict(data = "empty")),401)
+            return (json.dumps(dict(data = "empty"), default=str), 400)
         else:
             for row in result:
                 d = collections.OrderedDict()
@@ -762,5 +762,4 @@ class Database():
                 d['measurement'] = row[6]
                 d['location'] = row[7]
                 objects_list.append(d)
-                
-            return  (json.dumps(dict(data = objects_list,default=str)),200)            
+            return (json.dumps(dict(data = objects_list), default=str), 200)
