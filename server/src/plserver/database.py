@@ -847,7 +847,7 @@ class Database():
         if(tempData['data'][0]['empty'] == "No"):   #empty name found in the users table
             if(tempData['data'][0]['userId'] != userID):
                 if(tempData['data'][0]['duplicate'] == "Yes"):
-                    sql = "DELETE FROM PermittedSharedUSer userId = %s AND permitedUserId = %s"
+                    sql = "DELETE FROM PermittedSharedUSer WHERE userId = %s AND permitedUserId = %s"
                     val = (userID, tempData['data'][0]['userId'], )
                     self.cursor.execute(sql, val)
                     result = self.connector.commit()
