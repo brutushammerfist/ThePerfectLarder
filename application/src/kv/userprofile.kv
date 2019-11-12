@@ -133,7 +133,58 @@
 		    source:"graphics/back.png"
 		    center_x: self.parent.center_x
 		    center_y: self.parent.center_y
+	GridLayout:
+		cols: 2
+		size_hint: (1, .12)
+	    Button:
+			text: "Add User"
+			font_size: 65
+			color: 0, 0, 255, 1
+			on_press: 
+				root.manager.transition.direction = 'left' 
+				root.manager.current = 'addusertosharelist'
 	
+		Button:
+			text: "Delete User"
+			font_size: 65
+			color: 0, 0, 255, 1
+			on_press: 
+				root.manager.transition.direction = 'left' 
+				root.manager.current = 'deleteshareduser'
+    
+<AddUserToShareList>:
+    FloatLayout:
+		Image:
+			source: "graphics/generalbackground.png"
+    Button:
+	    text: ""
+	    font_size: 15
+	    color: 1,0,0,1
+	    size_hint: (0.2, 0.05)
+	    pos_hint:{'x': 0.01, 'top': .99}
+	    on_press: root.manager.current = 'shareduser'
+	    Image:
+		    source:"graphics/back.png"
+		    center_x: self.parent.center_x
+		    center_y: self.parent.center_y
+
+
+<DeleteSharedUser>:
+    FloatLayout:
+		Image:
+			source: "graphics/generalbackground.png"
+    Button:
+	    text: ""
+	    font_size: 15
+	    color: 1,0,0,1
+	    size_hint: (0.2, 0.05)
+	    pos_hint:{'x': 0.01, 'top': .99}
+	    on_press: root.manager.current = 'shareduser'
+	    Image:
+		    source:"graphics/back.png"
+		    center_x: self.parent.center_x
+		    center_y: self.parent.center_y
+
 <ManagePL>:                                                            
 	BoxLayout:
         orientation: 'vertical'

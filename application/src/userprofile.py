@@ -144,3 +144,11 @@ class SharedUser(Screen):
         'userID': App.get_running_app().userID
         }
         r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/displayAllSharedUser', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+        if(r['data'] =="empty"):
+            print("No other user is currently in your share List")
+        else:
+            print(r['data'])
+class AddUserToShareList(Screen):
+    pass
+class DeleteSharedUser(Screen):
+    pass
