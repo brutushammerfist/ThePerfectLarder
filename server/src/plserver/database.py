@@ -763,13 +763,13 @@ class Database():
                 d['location'] = row[7]
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)
-    def displayAllSharedUser(self,content):
+    def displayAllSharedUser(self,content):        
         self.ensureConnected()
-        applicationUser = content['userID']
+        applicationUser = (content['userID'], )
         sql = "SELECT permitedUserId FROM PermittedSharedUSer WHERE PermittedSharedUSer.userId = %s"
-        val = (applicationUser)
-        self.cursor.execute(sql, val)
+        self.cursor.execute(sql, applicationUser)
         result = self.cursor.fetchall()
+        
         if(len(result) ==0 ):
             return (json.dumps(dict(data = "empty")), 200)
         else:
@@ -777,7 +777,7 @@ class Database():
             objects_list = []
             for row in result:
                 sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
-                valname = (row[0])
+                valname = (row[0],)
                 self.cursor.execute(sqlname,valname)
                 resultName = sefl.cursor.fetchone()
                 d['name'] = resultName[0]
