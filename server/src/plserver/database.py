@@ -810,7 +810,7 @@ class Database():
                 d['username'] = result[1]
                 d['userId'] = result[0]
                 d['duplicate'] = "Yes"
-            elif(row == None):
+            elif(rows == None):
                 d['empty'] = "No"
                 d['username'] = result[1]
                 d['userId'] = result[0]
