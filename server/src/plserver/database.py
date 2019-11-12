@@ -766,8 +766,8 @@ class Database():
     def displayAllSharedUser(self,content):
         self.ensureConnected()
         applicationUser = content['userID']
-        sql = "SELECT permitedUserId from PermittedSharedUSer WHERE userId = %s"
-        val = (content['userID'])
+        sql = "SELECT permitedUserId FROM PermittedSharedUSer WHERE PermittedSharedUSer.userId = %s"
+        val = (applicationUser)
         self.cursor.execute(sql, val)
         result = self.cursor.fetchall()
         if(len(result) ==0 ):
@@ -776,7 +776,7 @@ class Database():
             d = collections.OrderedDict()
             objects_list = []
             for row in result:
-                sqlname = "SELECT name , username Users WHERE id = %s"
+                sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
                 valname = (row[0])
                 self.cursor.execute(sqlname,valname)
                 resultName = sefl.cursor.fetchone()
