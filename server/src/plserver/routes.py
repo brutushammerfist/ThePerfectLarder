@@ -79,3 +79,14 @@ def updateMeasurementSetting():
 @app.route('/updateStorageLocations', methods = ['POST'])
 def updateStorageLocations():
     return db.updateStorageLocations(request.get_json())
+   
+@app.route("/displayAllSharedUser",method = ["POST"])
+def displayAllSharedUser():
+	return db.displayAllSharedUser(request.get_json())
+
+@app.route("/addToShareList",method = ["POST"])
+def addToShareList():
+	return db.addToShareList(request.get_json())
+
+
+

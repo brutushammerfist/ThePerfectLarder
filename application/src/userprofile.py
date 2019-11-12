@@ -143,4 +143,4 @@ class SharedUser(Screen):
         payload = {
         'userID': App.get_running_app().userID
         }
-    #requests
+    r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/displayAllSharedUser', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()

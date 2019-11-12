@@ -763,3 +763,27 @@ class Database():
                 d['location'] = row[7]
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)
+    def displayAllSharedUser(self,content):
+        self.ensureConnected()
+        applicationUser = content['userID']
+        sql = "SELECT permitedUserId from PermittedSharedUSer WHERE userId = %s"
+        val = (content['userID'])
+        self.cursor.execute(sql, val)
+        result = self.cursor.fetchall()
+        if(len(result) ==0 ):
+            return (json.dumps(dict(data = "empty")), 200)
+        else:
+            d = collections.OrderedDict()
+            objects_list = []
+            for row in result:
+                sqlname = "SELECT name , username Users WHERE id = %s"
+                valname = (row[0])
+                self.cursor.execute(sqlname,valname)
+                resultName = sefl.cursor.fetchone()
+                d['name'] = resultName[0]
+                d['username'] = resultName[1]
+                objects_list.append(d)
+            return (json.dumps(dict(data = objects_list), default=str), 200)    
+        
+    def addToShareList(self,content):
+        self.ensureConnected()
