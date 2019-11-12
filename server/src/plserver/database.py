@@ -788,7 +788,7 @@ class Database():
         self.ensureConnected()
         sql = 'SELECT id, username FROM Users WHERE Users.username = %s'
         valname = (tempName,)
-        self.cursor.execute(sqlname,valname)
+        self.cursor.execute(sql,valname)
         result = self.cursor.fetchone()
         buildobjects_list = []
         d = collelctions.OrderedDict()
