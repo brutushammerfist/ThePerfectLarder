@@ -802,7 +802,7 @@ class Database():
         else:
             sqlAvoidDuplicates = 'SELECT * FROM PermittedSharedUSer WHERE PermittedSharedUSer.userId = %s AND PermittedSharedUSer.permitedUserId =%s'
             valDuplicate= (currentUserId,result[0])
-            rows = self.cursor.execute(sql,valDuplicate)
+            rows = self.cursor.execute(sqlAvoidDuplicates,valDuplicate)
             result2 = self.cursor.fetchall()
 
             if(rows == 1):
