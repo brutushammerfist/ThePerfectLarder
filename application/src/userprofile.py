@@ -169,11 +169,11 @@ class AddUserToShareList(Screen):
             }
             r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addToShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
             print(r['data'])
-            if(r['data'] == 1):
+            if(r['data'] == "1"):
                 print("That username does not exist")
-            elif(r['data'] == 2):
+            elif(r['data'] == "2"):
                 print("You can not add yourself to the shared List")
-            elif(r['data'] == 3):
+            elif(r['data'] == "3"):
                 print("The username " + userName +" has already been added to the shared List")
             else:
                 print("Successfully added " + usersName +" to your shared List")
@@ -189,11 +189,11 @@ class DeleteSharedUser(Screen):
             }
             r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
             print(r['data'])
-            if(r['data'] ==1):
+            if(r['data'] =="1"):
                 print("That username does not exist")
-            elif(r['data'] ==2):
+            elif(r['data'] =="2"):
                 print("Invalid input your username " + usersName +" can not be in the shared list. Why delete nothing ?!")
-            elif(r['data'] ==3 ):
+            elif(r['data'] =="3" ):
                 print("User name " + usersName + "Is  not on the list. Why delete nothing?!")
             else:
                 print("Successfully deleted " + usersName +" from your shared List")
