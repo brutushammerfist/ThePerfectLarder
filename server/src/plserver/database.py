@@ -805,7 +805,7 @@ class Database():
             rows = self.cursor.execute(sqlAvoidDuplicates,valDuplicate)
             result2 = self.cursor.fetchall()
 
-            if(rows == 1):
+            if(rows >= 1):
                 d['empty'] = "No"
                 d['username'] = result[1]
                 d['userId'] = result[0]
