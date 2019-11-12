@@ -787,3 +787,5 @@ class Database():
         
     def addToShareList(self,content):
         self.ensureConnected()
+    def removeFromShareList(self,content):
+        self.ensureConnected()

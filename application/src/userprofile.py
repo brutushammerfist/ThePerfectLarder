@@ -15,12 +15,23 @@ from kivy.properties import ObjectProperty
 from kivy.app import App
 from kivy.uix.behaviors import ToggleButtonBehavior
 from kivy.uix.button import Button
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
 
 import requests
 import json
 
+
+nameEmptyContent = GridLayout(cols=1)
+nameEmptyContent.add_widget(Label(text='The username field  cannot be empty.'))
+nameEmptyButton = Button(text='OK')
+nameEmptyContent.add_widget(nameEmptyButton)
+nameEmptyPopup = Popup(title='Empty input in Username', content=nameEmptyContent, auto_dismiss=False, size_hint=(.8, .2))
+nameEmptyButton.bind(on_press=nameEmptyPopup.dismiss)
 # `Profile`: Allows for account creation, editing, and deletion in the TPL server.
 class Profile(Screen):
+
     def on_enter(self):
         pass
 
@@ -149,6 +160,25 @@ class SharedUser(Screen):
         else:
             print(r['data'])
 class AddUserToShareList(Screen):
-    pass
+    def submitUser(self):
+        usersName = self.ids.usernameRecieved.text
+        if(usersName != ""):
+            payload ={
+            'userName': usersName
+            }
+            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addToShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+            print(usersName)
+        else:
+            nameEmptyPopup.open()
 class DeleteSharedUser(Screen):
-    pass
+    def deleteUser(self):
+        usersName = self.ids.usernameRecieved.text
+        if(usersName != ""):
+            payload ={
+            'userName': usersName
+            }
+            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+            
+            print(usersName)
+        else:
+            nameEmptyPopup.open()

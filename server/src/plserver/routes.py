@@ -88,5 +88,7 @@ def displayAllSharedUser():
 def addToShareList():
 	return db.addToShareList(request.get_json())
 
-
+@app.route("/removeFromShareList",methods = ["POST"])
+def removeFromShareList():
+	return db.removeFromShareList(request.get_json())
 

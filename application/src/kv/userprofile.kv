@@ -156,6 +156,28 @@
     FloatLayout:
 		Image:
 			source: "graphics/generalbackground.png"
+    Label:
+	    text: "Add User to Share list By Username"
+	    font_size: 67
+	    size_hint: (0.58, 0.2)
+	    pos_hint:{'x': .22, 'top': .99}
+	    halign: 'center'
+	    
+	GridLayout:
+		cols:1
+		size_hint: (.98,.815)
+		pos_hint:{'top': 0.75}
+
+	    TextInput:
+			id: usernameRecieved
+			multiline: False
+			font_size: 50
+			halign: "center"
+			hint_text: "username"
+			size_hint: (.2, None)
+    		height: 100
+			
+		
     Button:
 	    text: ""
 	    font_size: 15
@@ -167,12 +189,39 @@
 		    source:"graphics/back.png"
 		    center_x: self.parent.center_x
 		    center_y: self.parent.center_y
-
+	    
+	Button:
+		text: 'Submit'
+		font_size: 65
+		size_hint: (.98, 0.1)
+		pos_hint:{'x': .01, 'top': .11}
+		on_press: root.submitUser()
 
 <DeleteSharedUser>:
     FloatLayout:
 		Image:
 			source: "graphics/generalbackground.png"
+    Label:
+	    text: "Delete an exiting User in Share list By Username"
+	    font_size: 67
+	    size_hint: (0.58, 0.2)
+	    pos_hint:{'x': .22, 'top': .99}
+	    halign: 'center'
+	    
+	GridLayout:
+		cols:1
+		size_hint: (.98,.815)
+		pos_hint:{'top': 0.75}
+
+	    TextInput:
+			id: usernameRecieved
+			multiline: False
+			font_size: 50
+			halign: "center"
+			hint_text: "username"
+			size_hint: (.2, None)
+    		height: 100
+			
     Button:
 	    text: ""
 	    font_size: 15
@@ -184,7 +233,12 @@
 		    source:"graphics/back.png"
 		    center_x: self.parent.center_x
 		    center_y: self.parent.center_y
-
+	Button:
+		text: 'Delete'
+		font_size: 65
+		size_hint: (.98, 0.1)
+		pos_hint:{'x': .01, 'top': .11}
+		on_press: root.deleteUser()
 <ManagePL>:                                                            
 	BoxLayout:
         orientation: 'vertical'
