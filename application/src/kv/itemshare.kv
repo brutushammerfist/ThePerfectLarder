@@ -1,8 +1,8 @@
 <ItemShare>:
 
-	itemName:itemName                #for python code : for kivy code
-	quantity:quantity                #for python code : for kivy code
-	shareWith:shareWith        		 #for python code : for kivy code
+	#itemName:itemName                #for python code : for kivy code
+	#quantity:quantity                #for python code : for kivy code
+	#shareWith:shareWith        		 #for python code : for kivy code
     FloatLayout:
         Image:
             source: "graphics/generalbackground.png"
@@ -12,6 +12,7 @@
         size_hint: (0.2, 0.07)
         pos_hint:{'x': 0.01, 'top': .99}
         on_press: root.manager.current =  'homescreen'
+        on_press: root.ids.shareFoodItems.clear_widgets()
         Image:
             source:"graphics/back.png"
             center_x: self.parent.center_x
@@ -24,54 +25,66 @@
         pos_hint:{'x': .22, 'top': .99}
         halign: 'center'
 
-	GridLayout:
-		cols:1
-		size_hint: (.98, 0.8)
-        pos_hint:{'top': .85}
-		halign: 'left'
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: (.98,.815)
+		pos_hint: {'x': 0.01, 'top': 0.92}
 
         GridLayout:
-            cols:2
-            size_hint: (.5, .12)
+            id: shareFoodItems
+            cols: 1
+            row_default_height: 100
+            row_force_default: True
 
-            Label:
-                text: "Item:"
-                font_size: 67
-
-            Spinner:
-                id: itemName
-                font_size: 65
-                values: root.populateItemSpinner()
-
-        GridLayout:
-            cols:2
-            size_hint: (.5, .12)
-            Label:
-                text: "Quantity:"
-                font_size: 67
-
-            TextInput:
-                id: quantity
-                multiline: False
-                font_size: 65
-
-        GridLayout:
-            cols:2
-            size_hint: (.5, .12)
-            Label:
-                text: "User/Group:"
-                font_size: 67
-
-            Spinner:
-                id: shareWith
-                font_size: 65
-                values: root.populateGroupSpinner()
-
-        Button:
-            text: "Send Notification"
-            valign: 'middle'
-            halign: 'center'
-            pos_hint_y: .9
-            size_hint: (.5, .12)
-            font_size: 65
-            on_press: root.shareItems()
+#	GridLayout:
+#		cols:1
+#		size_hint: (.98, 0.8)
+#        pos_hint:{'top': .85}
+#		halign: 'left'
+#
+#        GridLayout:
+#            cols:2
+#            size_hint: (.5, .12)
+#
+#            Label:
+#                text: "Item:"
+#                font_size: 67
+#
+#            Spinner:
+#                id: itemName
+#                font_size: 65
+#                values: root.populateItemSpinner()
+#
+#        GridLayout:
+#            cols:2
+#            size_hint: (.5, .12)
+#            Label:
+#                text: "Quantity:"
+#                font_size: 67
+#
+#            TextInput:
+#                id: quantity
+#                multiline: False
+#                font_size: 65
+#
+#        GridLayout:
+#            cols:2
+#            size_hint: (.5, .12)
+#            Label:
+#                text: "User/Group:"
+#                font_size: 67
+#
+#            Spinner:
+#                id: shareWith
+#                font_size: 65
+#                values: root.populateGroupSpinner()
+#
+#        Button:
+#            text: "Send Notification"
+#            valign: 'middle'
+#            halign: 'center'
+#            pos_hint_y: .9
+#            size_hint: (.5, .12)
+#            font_size: 65
+#            on_press: root.shareItems()

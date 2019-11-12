@@ -9,6 +9,7 @@
 
 import kivy
 import datetime
+
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.app import App
@@ -17,6 +18,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
 import json
 import requests
 
@@ -24,7 +26,9 @@ class ItemShare(Screen):
 	itemName = ObjectProperty(None)
 	quantity = ObjectProperty(None)
 	shareWith = ObjectProperty(None)
-	
+	foodItems = []
+	itemToShare = -1
+
 	notiContent = GridLayout(cols=1)
 	notiContent.add_widget(Label(text='Notification sent!'))
 	notiButton = Button(text='OK')
@@ -42,6 +46,7 @@ class ItemShare(Screen):
 		week_ahead = current + datetime.timedelta(days=7)
 		stringCurrent = current.strftime("%Y") + "-" + current.strftime("%m") + "-" + current.strftime("%d")
 		string_weekAhead =  week_ahead.strftime("%Y") + "-" + week_ahead.strftime("%m") + "-" + week_ahead.strftime("%d")
+		self.foodItems = []
 
 		headers = {'Content-Type' : 'application/json'}
 		#API_ENDPOINT = 'http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire'
@@ -51,28 +56,55 @@ class ItemShare(Screen):
 			'currentWeekAhead' : string_weekAhead
 		}
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()
-		print(response['data'])
+		if response['data'] != 'empty':
+			for i in response['data']:
+				if i['quantity'] != 0:
+					self.foodItems.append(i)
+			if self.foodItems:
+				for a in range(0, len(self.foodItems)):
+					button = Button(text=self.foodItems[a]['itemname'] + " - " + str(self.foodItems[a]['quantity'])
+										 + " " + self.foodItems[a]['measurement'] + "\n" + "Expires "
+										 + self.foodItems[a]['expiration'], halign='center')
+					callback = lambda n: self.setItemToShare(n)
+					button.itemToShare = a
+					button.bind(on_press=callback)
+					self.ids.shareFoodItems.add_widget(button)
+			else:
+				self.ids.shareFoodItems.add_widget(Button(text='No items near expiration.'))
+		else:
+			self.ids.shareFoodItems.add_widget(Button(text='No items near expiration.'))
 		#if(response['data'] == "empty"):
 		#	print("There is nothing currently about to expire")
 		#else:		
 		#	print(response['data'])
 
-	#Gather items from the user's inventory to put onto the spinner. This will require a database request.
-	def populateItemSpinner(self):
-		return 'Fake', 'Items', 'Haha'
+	#Sets the global variable and calls the function to open the popup
+	def setItemToShare(self, item):
+		self.itemToShare = item.itemToShare
+		self.itemPopupShow(self.itemToShare)
 
-	# Gather users/groups from the user's profile to put onto the spinner. This will require a database request.
-	def populateGroupSpinner(self):
-		return 'Fun Group', 'Unfun group', 'Cool kids'
+	#Creates a new popup and displays item information.
+	#Cancel closes the popup
+	#Share Item will share the item via the shareItem function
+	def itemPopupShow(self, index):
+		itemContent = GridLayout(cols=2, spacing=[0, 20])
+		itemContent.add_widget(Label(text='Item Name: '))
+		itemContent.add_widget(Label(text=self.foodItems[index]['itemname']))
+		itemContent.add_widget(Label(text='Quantity (max ' + str(self.foodItems[index]['quantity']) + '): '))
+		self.quanTxt = TextInput(multiline=False, font_size=65)
+		itemContent.add_widget(self.quanTxt)
+		cancelButton = Button(text='Cancel')
+		shareButton = Button(text='Share Item')
+		itemContent.add_widget(cancelButton)
+		itemContent.add_widget(shareButton)
+		itemPopup = Popup(title='Share Item', content=itemContent, auto_dismiss=False, size_hint=(.6, .4))
+		cancelButton.bind(on_press=itemPopup.dismiss)
+		shareButton.bind(on_press=self.shareItem)
+		itemPopup.open()
+		return
 
-	#Send (self.itemName.text, self.shareWith.text) to database
-	def shareItems(self):
-
-		#If successful, with whatever validation or logic will be implemented later on
-		if (True):
-			self.notiPopup.open()
-			self.itemName.text = ""
-			self.quantity.text = ""
-			self.shareWith.text = ""
-		else:
-			print('Notification failed!')
+	#Shares the specified item to users/groups; needs global variables foodItems and itemToShare
+	def shareItem(self, btn):
+		quantity = self.quanTxt.text
+		print(quantity)
+		return

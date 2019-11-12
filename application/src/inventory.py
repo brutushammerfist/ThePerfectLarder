@@ -80,7 +80,7 @@ class AddItem(Screen):            #part of inventory
         nameContent.add_widget(Label(text= self.itemName.text + ' added to your inventory'))
         nameButton = Button(text='OK')
         nameContent.add_widget(nameButton)
-        addItemPopup = Popup(title='Added Item', content=nameContent, auto_dismiss=False)
+        addItemPopup = Popup(title='Added Item', content=nameContent, auto_dismiss=False, size_hint=(.85, .2))
         nameButton.bind(on_press=addItemPopup.dismiss)
             
         #popup to let the user know the item was not added 
@@ -88,7 +88,7 @@ class AddItem(Screen):            #part of inventory
         nameContent.add_widget(Label(text= self.itemName.text + ' not added to your inventory'))
         nameButton = Button(text='OK')
         nameContent.add_widget(nameButton)
-        itemNotaddedPopup = Popup(title='Item Not Added', content=nameContent, auto_dismiss=False)
+        itemNotaddedPopup = Popup(title='Item Not Added', content=nameContent, auto_dismiss=False, size_hint=(.85, .2))
         nameButton.bind(on_press=itemNotaddedPopup.dismiss)
             
         headers = {'Content-Type' : 'application/json'}
