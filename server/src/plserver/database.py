@@ -805,17 +805,21 @@ class Database():
             rows = self.cursor.execute(sqlAvoidDuplicates,valDuplicate)
             result2 = self.cursor.fetchall()
 
-            if(rows >= 1):
+            if(rows == 1):
                 d['empty'] = "No"
                 d['username'] = result[1]
                 d['userId'] = result[0]
                 d['duplicate'] = "Yes"
-            else:
+            elif(row == None):
                 d['empty'] = "No"
                 d['username'] = result[1]
                 d['userId'] = result[0]
                 d['duplicate'] = "No"
-
+            else:
+                d['empty'] = "No"
+                d['username'] = result[1]
+                d['userId'] = result[0]
+                d['duplicate'] = "Yes"
             
         buildobjects_list.append(d)
         return dict(data = buildobjects_list)
@@ -844,8 +848,7 @@ class Database():
         self.ensureConnected()
         usernameRecieved  = (content['userName'])
         userID = (content['userID'])
-        tempData = self.checkIfUserAddsThemself(usernameRecieved)
-        
+        tempData = self.checkIfUserAddsThemself(usernameRecieved,userID)        
         if(tempData['data'][0]['empty'] == "No"):   #empty name found in the users table
             if(tempData['data'][0]['userId'] != userID):
                 if(tempData['data'][0]['duplicate'] == "Yes"):
