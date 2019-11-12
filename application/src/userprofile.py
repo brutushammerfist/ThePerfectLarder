@@ -29,6 +29,8 @@ nameEmptyButton = Button(text='OK')
 nameEmptyContent.add_widget(nameEmptyButton)
 nameEmptyPopup = Popup(title='Empty input in Username', content=nameEmptyContent, auto_dismiss=False, size_hint=(.8, .2))
 nameEmptyButton.bind(on_press=nameEmptyPopup.dismiss)
+
+
 # `Profile`: Allows for account creation, editing, and deletion in the TPL server.
 class Profile(Screen):
 
@@ -162,6 +164,35 @@ class SharedUser(Screen):
 class AddUserToShareList(Screen):
     def submitUser(self):
         usersName = self.ids.usernameRecieved.text
+        
+        passAContent = GridLayout(cols=1)
+        passAContent.add_widget(Label(text="Successfully Added " + usersName +" to your shared List"))
+        psButton = Button(text='OK')
+        passAContent.add_widget(psButton)
+        userAPassPopup = Popup(title="User Added Successfully", content=passAContent, auto_dismiss=False, size_hint=(.8, .2))
+        psButton.bind(on_press=userAPassPopup.dismiss) 
+        
+        fail3AContent = GridLayout(cols=1)
+        fail3AContent.add_widget(Label(text="The username " + usersName +" has already been added to the shared List"))
+        fail3AButton = Button(text='OK')
+        fail3AContent.add_widget(fail3DButton)
+        userAfail3Popup = Popup(title="Not logical to do", content=fail3DContent, auto_dismiss=False, size_hint=(.8, .2))
+        fail3AButton.bind(on_press=userAfail3Popup.dismiss)
+        
+        fail2AContent = GridLayout(cols=1)
+        fail2AContent.add_widget(Label(text="You can not add yourself to the shared List"))
+        fail2AButton = Button(text='OK')
+        fail2AContent.add_widget(fail2AButton)
+        userAfail2Popup = Popup(title="Not logical to do", content=fail2AContent, auto_dismiss=False, size_hint=(.8, .2))
+        fail2AButton.bind(on_press=userAfail2Popup.dismiss)
+        
+        fail1AContent = GridLayout(cols=1)
+        fail1AContent.add_widget(Label(text="The username " + usersName +" does not exist in the database"))
+        fail1AButton = Button(text='OK')
+        fail1AContent.add_widget(fail1AButton)
+        userAfail1Popup = Popup(title="Not logical to do", content=fail1AContent, auto_dismiss=False, size_hint=(.8, .2))
+        fail1AButton.bind(on_press=userAfail1Popup.dismiss)
+        
         if(usersName != ""):
             payload ={
             'userID': App.get_running_app().userID,
@@ -170,18 +201,52 @@ class AddUserToShareList(Screen):
             r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addToShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
             print(r['data'])
             if(r['data'] == "1"):
-                print("That username does not exist")
+                userAfail1Popup.open()
+                self.ids.usernameRecieved.text =""
             elif(r['data'] == "2"):
-                print("You can not add yourself to the shared List")
+                userAfail2Popup.open()
+                self.ids.usernameRecieved.text =""
             elif(r['data'] == "3"):
-                print("The username " + usersName +" has already been added to the shared List")
+                userAfail3Popup.open()
+                self.ids.usernameRecieved.text =""
             else:
-                print("Successfully added " + usersName +" to your shared List")
+                userAPassPopup.open()
+                self.ids.usernameRecieved.text =""
         else:
             nameEmptyPopup.open()
 class DeleteSharedUser(Screen):
     def deleteUser(self):
         usersName = self.ids.usernameRecieved.text
+        
+        passDContent = GridLayout(cols=1)
+        passDContent.add_widget(Label(text="Successfully deleted " + usersName +" from your shared List"))
+        passDButton = Button(text='OK')
+        passDContent.add_widget(passDButton)
+        userDPassPopup = Popup(title="User Deleted Successfully", content=passDContent, auto_dismiss=False, size_hint=(.8, .2))
+        passDButton.bind(on_press=userDPassPopup.dismiss)    
+        
+        fail3DContent = GridLayout(cols=1)
+        fail3DContent.add_widget(Label(text="User name " + usersName + " is  not on the list. Why delete nothing?!"))
+        fail3DButton = Button(text='OK')
+        fail3DContent.add_widget(fail3DButton)
+        userDfail3Popup = Popup(title="Not logical to do", content=fail3DContent, auto_dismiss=False, size_hint=(.8, .2))
+        fail3DButton.bind(on_press=userDfail3Popup.dismiss)
+        
+        
+        fail2DContent = GridLayout(cols=1)
+        fail2DContent.add_widget(Label(text="Invalid input your username " + usersName +" can not be in the shared list. Why delete nothing ?!"))
+        fail2DButton = Button(text='OK')
+        fail2DContent.add_widget(fail2DButton)
+        userDfail2Popup = Popup(title="Not logical to do", content=fail2DContent, auto_dismiss=False, size_hint=(.8, .2))
+        fail2DButton.bind(on_press=userDfail2Popup.dismiss)
+        
+        fail1DContent = GridLayout(cols=1)
+        fail1DContent.add_widget(Label(text="The username " + usersName +" does not exist in the database"))
+        fail1DButton = Button(text='OK')
+        fail1DContent.add_widget(fail1DButton)
+        userDfail2Popup = Popup(title="Not logical to do", content=fail1DContent, auto_dismiss=False, size_hint=(.8, .2))
+        fail1DButton.bind(on_press=userDfail2Popup.dismiss)
+        
         if(usersName != ""):
             payload ={
             'userID': App.get_running_app().userID,
@@ -190,12 +255,16 @@ class DeleteSharedUser(Screen):
             r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
             print(r['data'])
             if(r['data'] =="1"):
-                print("That username does not exist")
+                userDfail2Popup.open()
+                self.ids.usernameRecieved.text =""
             elif(r['data'] =="2"):
-                print("Invalid input your username " + usersName +" can not be in the shared list. Why delete nothing ?!")
+                userDfail2Popup.open()
+                self.ids.usernameRecieved.text =""
             elif(r['data'] =="3" ):
-                print("User name " + usersName + "Is  not on the list. Why delete nothing?!")
+                userDfail3Popup.open()
+                self.ids.usernameRecieved.text =""
             else:
-                print("Successfully deleted " + usersName +" from your shared List")
+                userDPassPopup.open()
+                self.ids.usernameRecieved.text =""
         else:
             nameEmptyPopup.open()
