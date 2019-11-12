@@ -791,7 +791,8 @@ class Database():
         self.cursor.execute(sql,valname)
         result = self.cursor.fetchone()
         buildobjects_list = []
-        d = collelctions.OrderedDict()
+        d = collections.OrderedDict()
+        
         if(len(result) == 0):         
             d['empty'] = "Yes"
             d['username'] = None
