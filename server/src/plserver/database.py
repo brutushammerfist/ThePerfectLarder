@@ -767,12 +767,10 @@ class Database():
         self.ensureConnected()
         applicationUser = (content['userID'], )
         sql = "SELECT permitedUserId FROM PermittedSharedUSer WHERE PermittedSharedUSer.userId = %s"
-        self.cursor.execute(sql, applicationUser)
+        crows = self.cursor.execute(sql, applicationUser)
         result = self.cursor.fetchall()
         
-        if(len(result) ==0 ):
-            return (json.dumps(dict(data = "empty")), 200)
-        else:
+        if(len(result) > 0 ):
             d = collections.OrderedDict()
             objects_list = []
             for row in result:
@@ -783,7 +781,9 @@ class Database():
                 d['name'] = resultName[0]
                 d['username'] = resultName[1]
                 objects_list.append(d)
-            return (json.dumps(dict(data = objects_list), default=str), 200)    
+            return (json.dumps(dict(data = objects_list), default=str), 200)   
+        elif(crows ==None):
+            return (json.dumps(dict(data = "empty")), 200)
     def checkIfUserAddsThemself(self, tempName,currentUserId):
         self.ensureConnected()
         sql = 'SELECT id, username FROM Users WHERE Users.username = %s'

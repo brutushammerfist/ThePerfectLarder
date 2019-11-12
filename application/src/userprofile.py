@@ -176,7 +176,7 @@ class AddUserToShareList(Screen):
         fail3AContent.add_widget(Label(text="The username " + usersName +" has already been added to the shared List"))
         fail3AButton = Button(text='OK')
         fail3AContent.add_widget(fail3AButton)
-        userAfail3Popup = Popup(title="Not logical to do", content=fail3DContent, auto_dismiss=False, size_hint=(.8, .2))
+        userAfail3Popup = Popup(title="Not logical to do", content=fail3AContent, auto_dismiss=False, size_hint=(.8, .2))
         fail3AButton.bind(on_press=userAfail3Popup.dismiss)
         
         fail2AContent = GridLayout(cols=1)
