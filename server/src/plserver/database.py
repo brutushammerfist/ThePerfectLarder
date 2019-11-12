@@ -784,8 +784,57 @@ class Database():
                 d['username'] = resultName[1]
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)    
+    def checkIfUserAddsThemself(self, tempName):
+        self.ensureConnected()
+        sql = 'SELECT id, username FROM Users WHERE Users.username = %s'
+        valname = (tempName,)
+        self.cursor.execute(sqlname,valname)
+        result = self.cursor.fetchone()
+        buildobjects_list = []
+        d = collelctions.OrderedDict()
+        if(len(result) == 0):         
+            d['empty'] = "Yes"
+            d['username'] = None
+            d['userId'] = None
+        else:
+            d['empty'] = "No"
+            d['username'] = result[1]
+            d['userId'] = result[0]
         
+        return dict(data = buildobjects_list)
     def addToShareList(self,content):
         self.ensureConnected()
+        #check if user is not adding themselves return 
+        usernameRecieved  = (content['userName'])
+        userID = (content['userID'])
+        tempData = self.checkIfUserAddsThemself(usernameRecieved)
+        
+        if(tempData['data'][0]['empty'] == "No"):
+            if(tempData['data'][0]['userId'] != userID):
+                sql = "INSERT INTO PermittedSharedUSer (userId, permitedUserId) VALUES (%s, %s)"
+                val = (userID, tempData['data'][0]['userId'], )
+                self.cursor.execute(sql, val)
+                result = self.connector.commit()
+                return (json.dumps(dict(data='0')), 200)
+            else:
+                return (json.dumps(dict(data='2')), 401)
+        else:
+            return (json.dumps(dict(data='1')), 401)
     def removeFromShareList(self,content):
         self.ensureConnected()
+        usernameRecieved  = (content['userName'])
+        userID = (content['userID'])
+        tempData = self.checkIfUserAddsThemself(usernameRecieved)
+        
+        if(tempData['data'][0]['empty'] == "No"):
+            if(tempData['data'][0]['userId'] != userID):
+                sql = "DELETE FROM PermittedSharedUSer userId = %s AND permitedUserId = %s"
+                val = (userID, tempData['data'][0]['userId'], )
+                self.cursor.execute(sql, val)
+                result = self.connector.commit()
+                
+                return (json.dumps(dict(data='0')), 200)
+            else:
+                return (json.dumps(dict(data='2')), 401)
+        else:
+            return (json.dumps(dict(data='1')), 401)

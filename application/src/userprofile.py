@@ -164,10 +164,11 @@ class AddUserToShareList(Screen):
         usersName = self.ids.usernameRecieved.text
         if(usersName != ""):
             payload ={
+            'userID': App.get_running_app().userID,
             'userName': usersName
             }
             r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addToShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
-            print(usersName)
+            print(r['data'])
         else:
             nameEmptyPopup.open()
 class DeleteSharedUser(Screen):
@@ -175,10 +176,11 @@ class DeleteSharedUser(Screen):
         usersName = self.ids.usernameRecieved.text
         if(usersName != ""):
             payload ={
+            'userID': App.get_running_app().userID,
             'userName': usersName
             }
             r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
             
-            print(usersName)
+            print(r['data'])
         else:
             nameEmptyPopup.open()
