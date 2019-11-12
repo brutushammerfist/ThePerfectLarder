@@ -136,3 +136,11 @@ class EditCreateProfile(Screen):  # part of the user profile
 
 class SetupEditNotification(Screen):  # part of the user profile
     pass
+
+class SharedUser(Screen):
+    def on_pre_enter(self):
+    
+        payload = {
+        'userID': App.get_running_app().userID
+        }
+    #requests

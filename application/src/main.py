@@ -35,7 +35,7 @@ from notification import Notification
 from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe, PersonalRecipe, ViewPersonalRecipe
 from shoppinglist import ShoppingList
 from trends import Trends
-from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification, Settings
+from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification, Settings, SharedUser
 
 Builder.load_file('kv/feedback.kv')
 Builder.load_file('kv/inventory.kv')
@@ -49,6 +49,7 @@ Builder.load_file('kv/settings.kv')
 Builder.load_file('kv/shoppinglist.kv')
 Builder.load_file('kv/trends.kv')
 Builder.load_file('kv/userprofile.kv')
+
 
 class HomeScreen(Screen):    # Main screen after login
     pass
@@ -96,6 +97,8 @@ screenManager.add_widget(AddItem(name="additem"))
 screenManager.add_widget(DeleteItem(name="deleteitem"))
 
 screenManager.add_widget(Settings(name="settings"))
+
+screenManager.add_widget(SharedUser(name="shareduser"))
 
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 

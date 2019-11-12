@@ -17,11 +17,17 @@
             text: 'Profile Settings'
             font_size: 65
             on_press: root.manager.current = 'settings'
-            
+        Button:
+            text: 'Share Settings'
+            font_size: 65
+            on_press: root.manager.current = 'shareduser'
+                
 		Button:
             text: 'Back To Home'
             font_size: 65
             on_press: root.manager.current = 'homescreen'
+            
+        
        
 <Settings>:
     FloatLayout:
@@ -112,7 +118,22 @@
 			size_hint_y: None
             height: self.minimum_height
             row_default_height: 150
-           
+<SharedUser>:
+    FloatLayout:
+		Image:
+			source: "graphics/generalbackground.png"
+    Button:
+	    text: ""
+	    font_size: 15
+	    color: 1,0,0,1
+	    size_hint: (0.2, 0.05)
+	    pos_hint:{'x': 0.01, 'top': .99}
+	    on_press: root.manager.current = 'profile'
+	    Image:
+		    source:"graphics/back.png"
+		    center_x: self.parent.center_x
+		    center_y: self.parent.center_y
+	
 <ManagePL>:                                                            
 	BoxLayout:
         orientation: 'vertical'

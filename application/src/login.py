@@ -22,6 +22,7 @@ from kivy.app import App
 # Must have to do requests/work with json data
 import json
 import requests
+#import socketio
 
 
 class Login(Screen):
@@ -97,6 +98,9 @@ class Login(Screen):
                     self.ids.userName.text = ""
                     self.ids.userPassword.text = ""
                     self.manager.current = 'homescreen'
+                    
+                    #sio = socketio.Client()
+
                 elif response['data'] == 'Invalid username.':
                     self.ids.userPassword.text = ""
                     self.userNamePopup.open()
