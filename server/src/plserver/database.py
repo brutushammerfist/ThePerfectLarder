@@ -805,7 +805,7 @@ class Database():
             rows = self.cursor.execute(sqlAvoidDuplicates,valDuplicate)
             result2 = self.cursor.fetchall()
 
-            if(rows == 1):
+            if(rows == 1 or len(result2) > 1 ):
                 d['empty'] = "No"
                 d['username'] = result[1]
                 d['userId'] = result[0]
@@ -815,11 +815,6 @@ class Database():
                 d['username'] = result[1]
                 d['userId'] = result[0]
                 d['duplicate'] = "No"
-            else:
-                d['empty'] = "No"
-                d['username'] = result[1]
-                d['userId'] = result[0]
-                d['duplicate'] = "Yes"
             
         buildobjects_list.append(d)
         return dict(data = buildobjects_list)
