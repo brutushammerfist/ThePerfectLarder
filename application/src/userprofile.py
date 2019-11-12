@@ -174,7 +174,7 @@ class AddUserToShareList(Screen):
             elif(r['data'] == "2"):
                 print("You can not add yourself to the shared List")
             elif(r['data'] == "3"):
-                print("The username " + userName +" has already been added to the shared List")
+                print("The username " + usersName +" has already been added to the shared List")
             else:
                 print("Successfully added " + usersName +" to your shared List")
         else:
