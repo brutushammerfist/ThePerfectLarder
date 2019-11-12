@@ -793,7 +793,7 @@ class Database():
         buildobjects_list = []
         d = collections.OrderedDict()
         
-        if(len(result) == None):         
+        if(result == None):         
             d['empty'] = "Yes"
             d['username'] = None
             d['userId'] = None
