@@ -800,7 +800,7 @@ class Database():
             d['empty'] = "No"
             d['username'] = result[1]
             d['userId'] = result[0]
-        
+        buildobjects_list.append(d)
         return dict(data = buildobjects_list)
     def addToShareList(self,content):
         self.ensureConnected()
