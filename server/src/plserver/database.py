@@ -784,7 +784,7 @@ class Database():
                 d['username'] = resultName[1]
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)    
-    def checkIfUserAddsThemself(self, tempName):
+    def checkIfUserAddsThemself(self, tempName,currentUserId):
         self.ensureConnected()
         sql = 'SELECT id, username FROM Users WHERE Users.username = %s'
         valname = (tempName,)
@@ -797,10 +797,26 @@ class Database():
             d['empty'] = "Yes"
             d['username'] = None
             d['userId'] = None
+            d['userId'] = None
+            d['duplicate'] = None
         else:
-            d['empty'] = "No"
-            d['username'] = result[1]
-            d['userId'] = result[0]
+            sqlAvoidDuplicates = 'SELECT * FROM PermittedSharedUSer WHERE PermittedSharedUSer.userId = %s AND PermittedSharedUSer.permitedUserId =%s'
+            valDuplicate= (currentUserId,result[0])
+            rows = self.cursor.execute(sql,valDuplicate)
+            result2 = self.cursor.fetchall()
+
+            if(rows == 1):
+                d['empty'] = "No"
+                d['username'] = result[1]
+                d['userId'] = result[0]
+                d['duplicate'] = "Yes"
+            else:
+                d['empty'] = "No"
+                d['username'] = result[1]
+                d['userId'] = result[0]
+                d['duplicate'] = "No"
+
+            
         buildobjects_list.append(d)
         return dict(data = buildobjects_list)
     def addToShareList(self,content):
@@ -808,33 +824,38 @@ class Database():
         #check if user is not adding themselves return 
         usernameRecieved  = (content['userName'])
         userID = (content['userID'])
-        tempData = self.checkIfUserAddsThemself(usernameRecieved)
+        tempData = self.checkIfUserAddsThemself(usernameRecieved,userID)
         
         if(tempData['data'][0]['empty'] == "No"):
             if(tempData['data'][0]['userId'] != userID):
-                sql = "INSERT INTO PermittedSharedUSer (userId, permitedUserId) VALUES (%s, %s)"
-                val = (userID, tempData['data'][0]['userId'], )
-                self.cursor.execute(sql, val)
-                result = self.connector.commit()
-                return (json.dumps(dict(data='0')), 200)
+                if(tempData['data'][0]['duplicate'] == "No"):
+                    sql = "INSERT INTO PermittedSharedUSer (userId, permitedUserId) VALUES (%s, %s)"
+                    val = (userID, tempData['data'][0]['userId'], )
+                    self.cursor.execute(sql, val)
+                    result = self.connector.commit()
+                    return (json.dumps(dict(data='0')), 200)
+                else:
+                    return (json.dumps(dict(data='3')), 401) # That username has been added before
             else:
-                return (json.dumps(dict(data='2')), 401)
+                return (json.dumps(dict(data='2')), 401) # You can not add yourself
         else:
-            return (json.dumps(dict(data='1')), 401)
+            return (json.dumps(dict(data='1')), 401) # Yiu can not add a user that is not on the application 
     def removeFromShareList(self,content):
         self.ensureConnected()
         usernameRecieved  = (content['userName'])
         userID = (content['userID'])
         tempData = self.checkIfUserAddsThemself(usernameRecieved)
         
-        if(tempData['data'][0]['empty'] == "No"):
+        if(tempData['data'][0]['empty'] == "No"):   #empty name found in the users table
             if(tempData['data'][0]['userId'] != userID):
-                sql = "DELETE FROM PermittedSharedUSer userId = %s AND permitedUserId = %s"
-                val = (userID, tempData['data'][0]['userId'], )
-                self.cursor.execute(sql, val)
-                result = self.connector.commit()
-                
-                return (json.dumps(dict(data='0')), 200)
+                if(tempData['data'][0]['duplicate'] == "Yes"):
+                    sql = "DELETE FROM PermittedSharedUSer userId = %s AND permitedUserId = %s"
+                    val = (userID, tempData['data'][0]['userId'], )
+                    self.cursor.execute(sql, val)
+                    result = self.connector.commit()
+                    return (json.dumps(dict(data='0')), 200)
+                else:
+                    return (json.dumps(dict(data='3')), 401) # You can not delete remove nothing
             else:
                 return (json.dumps(dict(data='2')), 401)
         else:
