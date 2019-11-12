@@ -779,7 +779,7 @@ class Database():
                 sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
                 valname = (row[0],)
                 self.cursor.execute(sqlname,valname)
-                resultName = sefl.cursor.fetchone()
+                resultName = self.cursor.fetchone()
                 d['name'] = resultName[0]
                 d['username'] = resultName[1]
                 objects_list.append(d)
