@@ -771,18 +771,20 @@ class Database():
         result = self.cursor.fetchall()
         
         if(len(result) > 0 ):
-            d = collections.OrderedDict()
+            
             objects_list = []
             for row in result:
-                d['num'] = row[0]
-                #sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
-                #valname = (row[0],)
-                #self.cursor.execute(sqlname,valname)
-                #resultName = self.cursor.fetchall()
-                #for row2 in resultName:
-                #    d['name'] = row2[0]
-                #    d['username'] = row2[1]
-                objects_list.append(d)
+                d = collections.OrderedDict()
+                sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
+                valname = (row[0],)
+                self.cursor.execute(sqlname,valname)
+                resultName = self.cursor.fetchall()
+                for row2 in resultName:
+                    d['name'] = row2[0]
+                    d['username'] = row2[1]
+                objects_list.append(d['num'])
+                with open('/home/aadeniran/debug.log', 'w') as debug:
+                    debug.write(str(row[0]))
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
             return (json.dumps(dict(data = "empty")), 200)
