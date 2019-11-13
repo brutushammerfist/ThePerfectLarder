@@ -742,8 +742,9 @@ class Database():
         currentDate = content["currentDate"]
         currentUserId = content['userID']
         oneWeekAheadDate = content["currentWeekAhead"]
-        sql = "SELECT id, inventoryID,useID,itemname,expiration,quantity,measurement,location FROM Items WHERE Items.inventoryID = %s AND Items.expiration >= %s AND Items.expiration < %s ORDER BY Items.id ASC"
-        val = (currentUserId,currentDate,oneWeekAheadDate)
+        zero = 0
+        sql = "SELECT id, inventoryID,useID,itemname,expiration,quantity,measurement,location FROM Items WHERE Items.inventoryID = %s AND Items.expiration >= %s AND Items.expiration < %s AND Items.quantity > %s ORDER BY Items.id ASC"
+        val = (currentUserId,currentDate,oneWeekAheadDate,zero)
         self.cursor.execute(sql,val)
         result = self.cursor.fetchall()
         objects_list = []
@@ -761,6 +762,7 @@ class Database():
                     'measurement':row[6],
                     'location':row[7]
                 }
+
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)
     def displayAllSharedUser(self,content):        
