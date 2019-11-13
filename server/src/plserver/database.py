@@ -774,13 +774,14 @@ class Database():
             d = collections.OrderedDict()
             objects_list = []
             for row in result:
-                sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
-                valname = (row[0],)
-                self.cursor.execute(sqlname,valname)
-                resultName = self.cursor.fetchall()
-                for row2 in resultName:
-                    d['name'] = row2[0]
-                    d['username'] = row2[1]
+                d['num'] = row[0]
+                #sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
+                #valname = (row[0],)
+                #self.cursor.execute(sqlname,valname)
+                #resultName = self.cursor.fetchall()
+                #for row2 in resultName:
+                #    d['name'] = row2[0]
+                #    d['username'] = row2[1]
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
