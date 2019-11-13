@@ -6,7 +6,6 @@ import requests
 import math
 import json
 import os
-import collections
 from email.policy import default
 
 class Database():
@@ -751,16 +750,16 @@ class Database():
             return (json.dumps(dict(data = "empty"), default=str), 400)
         else:
             for row in result:
-                d = collections.OrderedDict()
-                             
-                d['id'] = row[0]
-                d['inventoryID'] = row[1]
-                d['useID'] = row[2]
-                d['itemname'] = row[3]
-                d['expiration'] = row[4]
-                d['quantity'] = row[5]
-                d['measurement'] = row[6]
-                d['location'] = row[7]
+                d = {
+                    'id' : row[0],
+                    'inventoryID' : row[1],
+                    'useID': row[2],
+                    'itemname':row[3],
+                    'expiration':row[4],
+                    'quantity':row[5],
+                    'measurement':row[6],
+                    'location':row[7]
+                }
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)
     def displayAllSharedUser(self,content):        
