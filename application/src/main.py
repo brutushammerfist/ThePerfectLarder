@@ -104,6 +104,8 @@ screenManager.add_widget(AddUserToShareList(name="addusertosharelist"))
 
 screenManager.add_widget(DeleteSharedUser(name = "deleteshareduser"))
 
+screenManager.add_widget(Feedback(name="feedback"))
+
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
