@@ -775,7 +775,7 @@ class Database():
             objects_list = []
             for row in result:
                 sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
-                valname = (row,)
+                valname = (row[0]['permitedUserId'],)
                 self.cursor.execute(sqlname,valname)
                 resultName = self.cursor.fetchone()
                 d['name'] = resultName[0]
