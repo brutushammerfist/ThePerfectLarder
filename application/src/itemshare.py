@@ -88,14 +88,15 @@ class ItemShare(Screen):
 	#Cancel closes the popup
 	#Share Item will share the item via the shareItem function
 	def itemPopupShow(self, index):
+		shareButton = Button(text='Share Item')
 		itemContent = GridLayout(cols=2, spacing=[0, 20])
 		itemContent.add_widget(Label(text='Item Name: '))
-		itemContent.add_widget(Label(text=self.foodItems[index]['itemname']))
+		shareButton.foodName = self.foodItems[index]['itemname']
+		itemContent.add_widget(Label(text=shareButton.foodName))
 		itemContent.add_widget(Label(text='Quantity (max ' + str(self.foodItems[index]['quantity']) + '): '))
-		self.quanTxt = TextInput(multiline=False, font_size=65)
-		itemContent.add_widget(self.quanTxt)
+		shareButton.quanTxt = TextInput(multiline=False, font_size=65)
+		itemContent.add_widget(shareButton.quanTxt)
 		cancelButton = Button(text='Cancel')
-		shareButton = Button(text='Share Item')
 		itemContent.add_widget(cancelButton)
 		itemContent.add_widget(shareButton)
 		itemPopup = Popup(title='Share Item', content=itemContent, auto_dismiss=False, size_hint=(.6, .4))
@@ -106,6 +107,8 @@ class ItemShare(Screen):
 
 	#Shares the specified item to users/groups; needs global variables foodItems and itemToShare
 	def shareItem(self, btn):
-		quantity = self.quanTxt.text
-		print(quantity)
+		quantity = btn.quanTxt.text
+		print("User ID: " + str(App.get_running_app().userID))
+		print("Food Name: " + btn.foodName)
+		print("Quantity: " + quantity)
 		return
