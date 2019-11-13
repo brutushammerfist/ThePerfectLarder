@@ -769,23 +769,15 @@ class Database():
         sqlJoin = "SELECT Users.name, Users.username FROM PermittedSharedUSer INNER JOIN Users ON PermittedSharedUSer.permitedUserId = Users.id WHERE  PermittedSharedUSer.userId = %s"  
         crows = self.cursor.execute(sqlJoin, applicationUser)
         result = self.cursor.fetchall()
-        
-        d = collections.OrderedDict()
         if(len(result) > 0 ):         
             objects_list = []
             for row in result:
-                d['name'] = row[0]
-                d['username'] = row[1]
-                objects_list.append(d)
-                p = json.dumps(row)
-                with open('/home/aadeniran/debug1.log', 'w') as debug:
-                    debug.write(p)
+                p = {
+                    'name': row[0],
+                    'username': row[1]
+                }
                 
-            j = json.dumps(dict(data = objects_list), default=str)
-            with open('/home/aadeniran/debug.log', 'w') as debug:
-                debug.write(j)
-                
-            
+                objects_list.append(p)            
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
             return (json.dumps(dict(data = "empty")), 200)
