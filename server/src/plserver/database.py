@@ -766,25 +766,16 @@ class Database():
     def displayAllSharedUser(self,content):        
         self.ensureConnected()
         applicationUser = (content['userID'], )
-        sql = "SELECT permitedUserId FROM PermittedSharedUSer WHERE PermittedSharedUSer.userId = %s"
-        crows = self.cursor.execute(sql, applicationUser)
+        sqlJoin = "SELECT Users.name, Users.username FROM PermittedSharedUSer INNER JOIN Users ON PermittedSharedUSer.permitedUserId = Users.id WHERE  PermittedSharedUSer.userId = %s"  
+        crows = self.cursor.execute(sqlJoin, applicationUser)
         result = self.cursor.fetchall()
-        
-        if(len(result) > 0 ):
-            
+        d = collections.OrderedDict()
+        if(len(result) > 0 ):         
             objects_list = []
             for row in result:
-                d = collections.OrderedDict()
-                sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
-                valname = (row[0],)
-                self.cursor.execute(sqlname,valname)
-                resultName = self.cursor.fetchall()
-                for row2 in resultName:
-                    d['name'] = row2[0]
-                    d['username'] = row2[1]
+                d['name'] = row[0]
+                d['username'] = row[1]
                 objects_list.append(d['num'])
-                with open('/home/aadeniran/debug.log', 'w') as debug:
-                    debug.write(str(row[0]))
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
             return (json.dumps(dict(data = "empty")), 200)
