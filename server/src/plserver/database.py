@@ -769,6 +769,7 @@ class Database():
         sqlJoin = "SELECT Users.name, Users.username FROM PermittedSharedUSer INNER JOIN Users ON PermittedSharedUSer.permitedUserId = Users.id WHERE  PermittedSharedUSer.userId = %s"  
         crows = self.cursor.execute(sqlJoin, applicationUser)
         result = self.cursor.fetchall()
+        
         d = collections.OrderedDict()
         if(len(result) > 0 ):         
             objects_list = []
