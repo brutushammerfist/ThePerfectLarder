@@ -776,7 +776,7 @@ class Database():
             for row in result:
                 d['name'] = row[0]
                 d['username'] = row[1]
-                objects_list.append(d['num'])
+                objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
             return (json.dumps(dict(data = "empty")), 200)
