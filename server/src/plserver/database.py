@@ -777,9 +777,10 @@ class Database():
                 sqlname = "SELECT name , username FROM Users WHERE Users.id = %s"
                 valname = (row[0],)
                 self.cursor.execute(sqlname,valname)
-                resultName = self.cursor.fetchone()
-                d['name'] = resultName[0]
-                d['username'] = resultName[1]
+                resultName = self.cursor.fetchall()
+                for row2 in resultName:
+                    d['name'] = row2[0]
+                    d['username'] = row2[1]
                 objects_list.append(d)
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
