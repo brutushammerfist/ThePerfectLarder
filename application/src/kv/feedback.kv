@@ -1,0 +1,70 @@
+<Feedback>:
+
+	FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	GridLayout:
+		cols:1
+		size_hint: 1,1
+		padding: [20]
+		spacing: [10,20]
+
+		GridLayout:
+			cols:1
+		
+		Label:
+			text: "Please Provide Some Feedback"
+			font_size: 50
+			
+		Label:
+			text: "Rating:"
+			font_size: 50
+			
+		ToggleButton:
+			text: '1'
+			font_size: 50
+			group: 'rating'
+			
+		ToggleButton:
+			text: '2'
+			font_size: 50
+			group: 'rating'
+			
+		ToggleButton:
+			text: '3'
+			font_size: 50
+			group: 'rating'
+			
+		ToggleButton:
+			text: '4'
+			font_size: 50
+			group: 'rating'
+			
+		ToggleButton:
+			text: '5'
+			font_size: 50
+			group: 'rating'
+	
+		TextInput:
+			id: message
+			hint_text: "Comment"
+			max_lines: 10
+            halign: 'center'
+            font_size: 50
+			multiline: True
+			size_hint: (0.4, None)
+			size_hint_y: 10
+			write_tab: True
+			
+		Button:
+			text: "Submit Your Feeback"
+			font_size: 50
+			on_press:
+				root.manager.current = root.submitFeeback()	
+			
+		Button:
+			text: "Back"
+			font_size: 50
+			on_press:
+				root.manager.transition.direction = 'right' 
+				root.manager.current ='homescreen'	

@@ -9,6 +9,11 @@
 import kivy
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
+from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.button import Button
 
 class Feedback(Screen):
 	pass
