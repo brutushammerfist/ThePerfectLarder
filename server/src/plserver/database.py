@@ -777,6 +777,14 @@ class Database():
                 d['name'] = row[0]
                 d['username'] = row[1]
                 objects_list.append(d)
+                with open('/home/aadeniran/debug1.log', 'w') as debug:
+                    debug.write(row)
+                
+            j = json.dumps(dict(data = objects_list), default=str)
+            with open('/home/aadeniran/debug.log', 'w') as debug:
+                debug.write(j)
+                
+            
             return (json.dumps(dict(data = objects_list), default=str), 200)   
         elif(crows ==None):
             return (json.dumps(dict(data = "empty")), 200)
