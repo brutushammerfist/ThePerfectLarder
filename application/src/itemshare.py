@@ -56,6 +56,7 @@ class ItemShare(Screen):
 			'currentWeekAhead' : string_weekAhead
 		}
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()
+		print(response['data'])
 		if response['data'] != 'empty':
 			for i in response['data']:
 				if i['quantity'] != 0:

@@ -6,6 +6,7 @@ import requests
 import math
 import json
 import os
+import collections
 from email.policy import default
 
 class Database():
