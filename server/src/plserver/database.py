@@ -777,8 +777,9 @@ class Database():
                 d['name'] = row[0]
                 d['username'] = row[1]
                 objects_list.append(d)
+                p = json.dumps(row)
                 with open('/home/aadeniran/debug1.log', 'w') as debug:
-                    debug.write(row)
+                    debug.write(p)
                 
             j = json.dumps(dict(data = objects_list), default=str)
             with open('/home/aadeniran/debug.log', 'w') as debug:
