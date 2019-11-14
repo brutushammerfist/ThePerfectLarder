@@ -55,9 +55,13 @@ class ItemShare(Screen):
 			'currentDate' : stringCurrent,
 			'currentWeekAhead' : string_weekAhead
 		}
-		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()
-		print(response['data'])
-		if response['data'] != 'empty':
+		response = None
+		try:
+			response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire', headers=headers, data=json.dumps(payload)).json()
+		except Exception as e:
+			App.get_running_app().server_error(e)
+			self.manager.current = 'homescreen'
+		if response is not None and response['data'] != 'empty':
 			for i in response['data']:
 				if i['quantity'] != 0:
 					self.foodItems.append(i)
@@ -74,10 +78,6 @@ class ItemShare(Screen):
 				self.ids.shareFoodItems.add_widget(Button(text='No items near expiration.'))
 		else:
 			self.ids.shareFoodItems.add_widget(Button(text='No items near expiration.'))
-		#if(response['data'] == "empty"):
-		#	print("There is nothing currently about to expire")
-		#else:		
-		#	print(response['data'])
 
 	#Sets the global variable and calls the function to open the popup
 	def setItemToShare(self, item):
@@ -115,27 +115,24 @@ class ItemShare(Screen):
 		print("User ID: " + str(App.get_running_app().userID))
 		print("Food Name: " + btn.foodName)
 		print("Quantity: " + quantity)
-		print("Item ID: " +str( btn.foodId))
+		print("Item ID: " + str(btn.foodId))
 		print("Max Food Quantity" + str(btn.maxFoodQuantity))
-		intMaxQaun = float(str( btn.foodId))
+		intMaxQaun = float(str(btn.foodId))
 		
 		fquantity = float(quantity)
-		
-		if(intMaxQaun == quantity):
+		if intMaxQaun == quantity:
 			max = "yes"
-		elif(fquantity < intMaxQaun):
+		elif fquantity < intMaxQaun:
 			max = "no"
-		else:
-			
+		if fquantity > intMaxQaun:
 			print("You can not enter a number greater than item quantity")
-		headers = {'Content-Type' : 'application/json'}
-		payload = {
-			'userID': App.get_running_app().userID,
-			'itemID': btn.foodId,
-			'quantity':fquantity,
-			'max': max
-		}	
-		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
-		print(response)
-		
-		return
+		else:
+			headers = {'Content-Type' : 'application/json'}
+			payload = {
+				'userID': App.get_running_app().userID,
+				'itemID': btn.foodId,
+				'quantity': fquantity,
+				'max': max
+			}
+			response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
+			print(response)

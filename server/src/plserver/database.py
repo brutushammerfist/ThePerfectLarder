@@ -538,25 +538,30 @@ class Database():
         
         # Get usage information from FoodUse
         for x in userItems:
-            sql = "SELECT `usage` FROM FoodUse WHERE id = %s"
+            sql = "SELECT itemname, measurement, `usage` FROM FoodUse WHERE id = %s"
             val = (x[3], )
             self.cursor.execute(sql, val)
             result = self.cursor.fetchone()
-            useData.append(json.loads(result[0]))
+            temp = {
+                "itemname" : result[0],
+                "measurement" : result[1],
+                "usage" : json.loads(result[2])
+            }
+            useData.append(temp)
         
         # Trim items from usage history that are older than 6 months(technically 24 weeks)
         cutOffDate = datetime.date.today() - datetime.timedelta(days=168)
         
         for x in useData:
             index = 0
-            for i in x['used']:
+            for i in x['usage']['used']:
                 if datetime.date.fromisoformat(i['date']) < cutOffDate:
-                    x['used'].pop(index)
+                    x['usage']['used'].pop(index)
                 index += 1
             indexToo = 0
-            for j in x['wasted']:
+            for j in x['usage']['wasted']:
                 if datetime.date.fromisoformat(j['date']) < cutOffDate:
-                    x['wasted'].pop(indexToo)
+                    x['usage']['wasted'].pop(indexToo)
                 indexToo += 1
                 
         # Calculate (x,y) values to send to mobile application
@@ -564,26 +569,37 @@ class Database():
         usedPoints.append((0, 0))
         wastedPoints = []
         wastedPoints.append((0, 0))
-        
+        itemPoints = []
+
         segmentBeginDate = cutOffDate
         segmentStopDate = cutOffDate + datetime.timedelta(days=14)
         xValue = 1
 
         largestYval = 0
 
+        for x in useData:
+            temp = {
+                'used' : [],
+                'wasted' : [],
+                'itemname' : x['itemname'],
+                'measurement' : x['measurement']
+            }
+            itemPoints.append(temp)
+
         while(segmentStopDate <= datetime.date.today()):
             
             usedSegmentTotal = 0
             wastedSegmentTotal = 0
 
-            for x in useData:
-                for i in x['used']:
+            for index, x in enumerate(useData):
+                for i in x['usage']['used']:
                     if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
                         usedSegmentTotal += float(i['quantity'])
-                for j in x['wasted']:
+                
+                for j in x['usage']['wasted']:
                     if datetime.date.fromisoformat(j['date']) > segmentBeginDate and datetime.date.fromisoformat(j['date']) <= segmentStopDate:
                         wastedSegmentTotal += float(j['quantity'])
-                        
+
             usedPoints.append((xValue, usedSegmentTotal))
             wastedPoints.append((xValue, wastedSegmentTotal))
             
@@ -595,12 +611,54 @@ class Database():
             xValue += 1
             segmentBeginDate = segmentBeginDate + datetime.timedelta(days=14)
             segmentStopDate = segmentStopDate + datetime.timedelta(days=14)
-        
+
+        segmentBeginDate = cutOffDate
+        segmentStopDate = cutOffDate + datetime.timedelta(days=14)
+        xValue = 0
+
+        while(segmentStopDate <= datetime.date.today()):
+            for index, x in enumerate(useData):
+                itemUsedSegmentTotal = 0
+                itemWastedSegmentTotal = 0
+                for i in x['usage']['used']:
+                    if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
+                        itemUsedSegmentTotal += float(i['quantity'])
+                itemPoints[index]['used'].append((xValue, itemUsedSegmentTotal))
+                for i in x['usage']['wasted']:
+                    if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
+                        itemWastedSegmentTotal += float(i['quantity'])
+                itemPoints[index]['wasted'].append((xValue, itemWastedSegmentTotal))
+
+            xValue += 1
+            segmentBeginDate = segmentBeginDate + datetime.timedelta(days=14)
+            segmentStopDate = segmentStopDate + datetime.timedelta(days=14)
+
+        wasted = []
+        for index, x in enumerate(itemPoints):
+            total = 0
+            largestY = -1
+            for i in x['used']:
+                if i[1] > largestY:
+                    largestY = i[1]
+            for i in x['wasted']:
+                if i[1] > largestY:
+                    largestY = i[1]
+                total += i[1]
+            wasted.append((index, total))
+            itemPoints[index]['largest'] = largestY
+
+        wasted.sort(reverse=True, key=lambda x:x[1])
+
+        sortedItemPoints = []
+        for x in wasted:
+            sortedItemPoints.append(itemPoints[x[0]])
+
         # Return values to application
         payload = {
             'used' : usedPoints,
             'wasted' : wastedPoints,
-            'largest' : largestYval
+            'largest' : largestYval,
+            'items' : sortedItemPoints
         }
         
         return (json.dumps(payload), 200)

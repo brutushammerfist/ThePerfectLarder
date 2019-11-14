@@ -81,34 +81,36 @@ class Login(Screen):
                     'username': usersName,
                     'password': passWord
                 }
+                response = None
                 try:
                     response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/login', headers=headers,
                                              data=json.dumps(payload)).json()
-                except:
-                    response = {'data': 'Unable to Connect.'}
+                except Exception as e:
+                    App.get_running_app().server_error(e)
         
                 # response = {'data' : 'Incorrect password.'}
-        
-                # if incorrect, clear password and have them try again
-                if response['data'] == 'Successful login.':
-                    App.get_running_app().userID = response['userID']
-                    App.get_running_app().userMeasurement = response['measureType']
-                    App.get_running_app().userNotif = response['notifPref']
-                    App.get_running_app().storageLocations = json.loads(response['locations'])['locations']
-                    self.ids.userName.text = ""
-                    self.ids.userPassword.text = ""
-                    self.manager.current = 'homescreen'
-                    
-                    #sio = socketio.Client()
 
-                elif response['data'] == 'Invalid username.':
-                    self.ids.userPassword.text = ""
-                    self.userNamePopup.open()
-                elif response['data'] == 'Incorrect password.':
-                    self.ids.userPassword.text = ""
-                    self.userPassPopup.open()
-                elif response['data'] == 'Unable to Connect.':
-                    self.svrPopup.open()
+                # if incorrect, clear password and have them try again
+                if response is not None:
+                    if response['data'] == 'Successful login.':
+                        App.get_running_app().userID = response['userID']
+                        App.get_running_app().userMeasurement = response['measureType']
+                        App.get_running_app().userNotif = response['notifPref']
+                        App.get_running_app().storageLocations = json.loads(response['locations'])['locations']
+                        self.ids.userName.text = ""
+                        self.ids.userPassword.text = ""
+                        self.manager.current = 'homescreen'
+
+                        #sio = socketio.Client()
+
+                    elif response['data'] == 'Invalid username.':
+                        self.ids.userPassword.text = ""
+                        self.userNamePopup.open()
+                    elif response['data'] == 'Incorrect password.':
+                        self.ids.userPassword.text = ""
+                        self.userPassPopup.open()
+                    elif response['data'] == 'Unable to Connect.':
+                        self.svrPopup.open()
             else:
                 self.passWordEmptyPopup.open()
         else:
