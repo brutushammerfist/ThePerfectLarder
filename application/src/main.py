@@ -19,10 +19,12 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.uix.spinner import Spinner
 from kivy.core.window import Window
+import requests
 Window.softinput_mode = 'below_target'
 # This stops the kivy virtual keyboard not showing erorr
 
@@ -126,6 +128,17 @@ class testApp(App):
         Clock.schedule_interval(self.update, 1)
         self.sm = screenManager
         return screenManager
-        
+
+    def server_error(self, response):
+        s_e = GridLayout(cols=1)
+        s_e.add_widget(Label(text="Server Error!"))
+        s_eb = Button(text='OK')
+        s_e.add_widget(s_eb)
+        s_ep = Popup(title='Server Error', content=s_e, auto_dismiss=False, size_hint=(.8, .2))
+        s_eb.bind(on_press=s_ep.dismiss)
+        s_ep.open()
+        print(response)
+        return
+
 if __name__ == "__main__":
     testApp().run()
