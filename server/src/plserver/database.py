@@ -871,7 +871,7 @@ class Database():
         result = self.cursor.fetchall()
         if(len(result) > 0):
             for row in result:
-                sqlInsertIterm = "INSERT INTO SharedItem(userId,shareditemId,maxItem,quantity, response,seen) VALUES(%s,%s,%s,%s) "
+                sqlInsertIterm = "INSERT INTO SharedItem(userId,shareditemId,maxItem,quantity) VALUES(%s,%s,%s,%s) "
                 val = (row[0],sharedItemId,isMaxQuantity,quantityToShare,)
                 self.cursor.execute(sqlInsertIterm, val)
                 result2 = self.connector.commit()
