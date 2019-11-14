@@ -136,6 +136,6 @@ class ItemShare(Screen):
 			'max': max
 		}	
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
-		print(intMaxQaun)
+		print(response)
 		
 		return
