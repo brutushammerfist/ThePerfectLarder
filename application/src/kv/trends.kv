@@ -17,7 +17,20 @@
 			cols:1
 			id: graph
 			size: root.width, root.height
+	#new 	
+		ScrollView:
+			do_scroll_x: False
+			do_scroll_y: True
+			size_hint: (.98,.815)
+			pos_hint:{'x': 0.01, 'top': 0.92}
 
+			GridLayout:
+				id: itemTrend
+				cols: 1
+				size_hint_y: None
+				height: self.minimum_height
+				row_default_height: 175
+			
 		Button:
 			text: 'Back To Home'
 			font_size: 65
