@@ -1,49 +1,63 @@
 <Feedback>:
-
+	current_value: 0
 	FloatLayout:
         Image:
             source: "graphics/generalbackground.png"
 	GridLayout:
 		cols:1
 		size_hint: 1,1
-		#padding: [20]
 		spacing: [10,20]
 
 		GridLayout:
 			cols:1
 		
 		Label:
-			text: "Please Provide Some Feedback"
+			text: "Rate the Perfect Larder!"
 			font_size: 60
 			
 		Label:
 			text: "Rating:"
 			font_size: 50
-			
+
 		ToggleButton:
 			text: '1'
+			id: one
 			font_size: 50
 			group: 'rating'
+			on_press: root.current_value = 1
 			
 		ToggleButton:
 			text: '2'
+			id: two
 			font_size: 50
 			group: 'rating'
+			on_press: root.current_value = 2
 			
 		ToggleButton:
 			text: '3'
+			id: three
 			font_size: 50
 			group: 'rating'
+			on_press: root.current_value = 3
 			
 		ToggleButton:
 			text: '4'
+			id: four
 			font_size: 50
 			group: 'rating'
+			on_press: root.current_value = 4
 			
 		ToggleButton:
 			text: '5'
+			id: five
 			font_size: 50
 			group: 'rating'
+			on_press: root.current_value = 5
+			
+		Label:
+			id: toggleValue
+			opacity: 0		#make the label invisible
+			text: str(root.current_value)
 	
 		TextInput:
 			id: message
@@ -60,7 +74,7 @@
 			text: "Submit Your Feeback"
 			font_size: 50
 			on_press:
-				root.manager.current = root.submitFeeback()	
+				root.manager.current = root.submitFeedback()	
 			
 		Button:
 			text: "Back"
