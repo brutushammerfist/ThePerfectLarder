@@ -857,3 +857,18 @@ class Database():
                 return (json.dumps(dict(data='2')), 401)
         else:
             return (json.dumps(dict(data='1')), 401)
+    def shareFoodItemToUser(self,content):
+        self.ensureConnected()
+        fromUserId = content['userID']
+        quantityToShare = content['quantity']
+        isMaxQuantity = content['max']
+        
+        # to lis of users gotten from the query of permittedShare user
+        sqlGetPermittedShareUserId = "SELECT permitedUserId FROM PermittedSharedUSer WHERE userId = %s "
+        valname = (fromUserId,)
+        self.cursor.execute(sqlGetPermittedShareUserId,valname)
+        result = self.cursor.fetchall()
+        for row in result:
+            toUserIds = {
+                'userIds':row[0] 
+            }

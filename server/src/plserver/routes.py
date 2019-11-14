@@ -92,3 +92,7 @@ def addToShareList():
 def removeFromShareList():
 	return db.removeFromShareList(request.get_json())
 
+@app.route("/shareFoodItemToUser",methods= ["POST"])
+def shareFoodItemToUser():
+	return db.shareFoodItemToUser(request.get_json())
+

@@ -91,7 +91,11 @@ class ItemShare(Screen):
 		shareButton = Button(text='Share Item')
 		itemContent = GridLayout(cols=2, spacing=[0, 20])
 		itemContent.add_widget(Label(text='Item Name: '))
+		
+		shareButton.maxFoodQuantity = self.foodItems[index]['quantity']
 		shareButton.foodName = self.foodItems[index]['itemname']
+		shareButton.foodId = self.foodItems[index]['id']
+		
 		itemContent.add_widget(Label(text=shareButton.foodName))
 		itemContent.add_widget(Label(text='Quantity (max ' + str(self.foodItems[index]['quantity']) + '): '))
 		shareButton.quanTxt = TextInput(multiline=False, font_size=65)
@@ -111,4 +115,27 @@ class ItemShare(Screen):
 		print("User ID: " + str(App.get_running_app().userID))
 		print("Food Name: " + btn.foodName)
 		print("Quantity: " + quantity)
+		print("Item ID: " +str( btn.foodId))
+		print("Max Food Quantity" + str(btn.maxFoodQuantity))
+		intMaxQaun = float(str( btn.foodId))
+		
+		
+		
+		if(intMaxQaun == quantity):
+			max = "yes"
+		elif(quantity < intMaxQaun):
+			max = "no"
+		else:
+			
+			print("You can not enter a number greater than item quantity")
+		headers = {'Content-Type' : 'application/json'}
+		payload = {
+			'userID': App.get_running_app().userID,
+			'itemID': btn.foodId,
+			'quantity':quantity,
+			'max': max
+		}	
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
+		print(intMaxQaun)
+		
 		return
