@@ -869,9 +869,12 @@ class Database():
         valname = (fromUserId,)
         self.cursor.execute(sqlGetPermittedShareUserId,valname)
         result = self.cursor.fetchall()
-        for row in result:
-            sqlInsertIterm = "INSERT INTO SharedItem(userId,shareditemId,maxItem,quantity, response,seen) VALUES(%s,%s,%s,%s) "
-            val = (row[0],sharedItermId,isMaxQuantity,quantityToShare,)
-            self.cursor.execute(sqlInsertIterm, val)
-            result2 = self.connector.commit()
-        return (json.dumps(dict(data='1')), 200) 
+        if(len(result) > 0):
+            for row in result:
+                sqlInsertIterm = "INSERT INTO SharedItem(userId,shareditemId,maxItem,quantity, response,seen) VALUES(%s,%s,%s,%s) "
+                val = (row[0],sharedItermId,isMaxQuantity,quantityToShare,)
+                self.cursor.execute(sqlInsertIterm, val)
+                result2 = self.connector.commit()
+            return (json.dumps(dict(data='1')), 200)
+        else:
+            return(json.dumps(dict(data='2')), 401)#nothing to do go add users to your shared list
