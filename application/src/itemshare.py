@@ -119,11 +119,11 @@ class ItemShare(Screen):
 		print("Max Food Quantity" + str(btn.maxFoodQuantity))
 		intMaxQaun = float(str( btn.foodId))
 		
-		
+		fquantity = float(quantity)
 		
 		if(intMaxQaun == quantity):
 			max = "yes"
-		elif(quantity < intMaxQaun):
+		elif(fquantity < intMaxQaun):
 			max = "no"
 		else:
 			
@@ -132,7 +132,7 @@ class ItemShare(Screen):
 		payload = {
 			'userID': App.get_running_app().userID,
 			'itemID': btn.foodId,
-			'quantity':quantity,
+			'quantity':fquantity,
 			'max': max
 		}	
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
