@@ -8,7 +8,8 @@
 
 import kivy, smtplib, ssl, email
 from _ast import Or
-from pip._vendor.distlib.util import OR
+# This line does not work with SDK
+#from pip._vendor.distlib.util import OR
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
 from kivy.app import App

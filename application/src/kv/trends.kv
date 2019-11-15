@@ -3,15 +3,27 @@
 		Image:
 			source: "graphics/generalbackground.png"
 
+    Button:
+        text: " "
+        size_hint: (0.2, 0.07)
+        pos_hint:{'x': 0.01, 'top': .99}
+        on_press: root.manager.current =  'homescreen'
+        on_press: root.ids.shareFoodItems.clear_widgets()
+        Image:
+            source:"graphics/back.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+
 	GridLayout:
 		cols:1
 		#size: root.width, root.height
-		
+
 		Label:
-			text: "Trends"
-			font_size: 67
-			size_hint: (0.98, 0.05)
-			pos_hint:{'x': 0.98, 'top': .99}
+        	text: "Trends"
+        	font_size: 67
+        	size_hint: (0.58, 0.05)
+        	pos_hint:{'x': .33, 'top': .90}
+        	halign: 'center'
 
 		GridLayout:
 			cols:1
@@ -21,7 +33,7 @@
 		ScrollView:
 			do_scroll_x: False
 			do_scroll_y: True
-			size_hint: (.98,.815)
+			size_hint: (.98,.75)
 			pos_hint:{'x': 0.01, 'top': 0.92}
 
 			GridLayout:
@@ -30,10 +42,3 @@
 				size_hint_y: None
 				height: self.minimum_height
 				row_default_height: 175
-			
-		Button:
-			text: 'Back To Home'
-			font_size: 65
-			size_hint: (.98, 0.1)
-			pos_hint:{'x': .01, 'top': .11}
-			on_press: root.manager.current = 'homescreen'
