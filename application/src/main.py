@@ -33,7 +33,7 @@ from inventory import Inventory, AddItem, DeleteItem #, ViewInventory, SearchIte
 from itemshare import ItemShare
 from login import Login
 from signup import SignUp
-from notification import Notification
+from notification import Notification, NewNotification
 from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe, PersonalRecipe, ViewPersonalRecipe
 from shoppinglist import ShoppingList
 from trends import Trends
@@ -108,6 +108,9 @@ screenManager.add_widget(DeleteSharedUser(name = "deleteshareduser"))
 
 screenManager.add_widget(Feedback(name="feedback"))
 
+screenManager.add_widget(Notification(name="notification"))
+
+screenManager.add_widget(NewNotification(name="newnotification"))
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build

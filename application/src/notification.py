@@ -20,3 +20,5 @@ class Notification(Screen):
 	
 	#def expiringItems(self):
 		#display notification to user of the item that is about to expire
+class NewNotification(Screen):
+	pass
