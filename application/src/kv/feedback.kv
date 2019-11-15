@@ -73,12 +73,19 @@
 		Button:
 			text: "Submit Your Feeback"
 			font_size: 50
-			on_press:
-				root.manager.current = root.submitFeedback()	
+			on_press: root.submitFeedback()
 			
 		Button:
 			text: "Back"
 			font_size: 50
 			on_press:
-				root.manager.transition.direction = 'right' 
-				root.manager.current ='homescreen'	
+				root.ids.toggleValue.text = ""
+				root.ids.current_value = 0
+				root.ids.message.text = ""
+				root.ids.one.state = 'normal'
+				root.ids.two.state = 'normal'
+				root.ids.three.state = 'normal'
+				root.ids.four.state = 'normal'
+				root.ids.five.state = 'normal'
+				#root.manager.transition.direction = 'right' 
+				root.manager.current = 'homescreen'	
