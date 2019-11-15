@@ -131,4 +131,3 @@ class Feedback(Screen):
 
 		else:
 			print('feedback invalid')
-			

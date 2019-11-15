@@ -37,7 +37,7 @@ from notification import Notification, NewNotification
 from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe, PersonalRecipe, ViewPersonalRecipe
 from shoppinglist import ShoppingList
 from trends import Trends
-from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification, Settings, SharedUser, AddUserToShareList, DeleteSharedUser
+from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification, Settings, SharedUser#, AddUserToShareList, DeleteSharedUser
 
 Builder.load_file('kv/feedback.kv')
 Builder.load_file('kv/inventory.kv')
@@ -102,9 +102,9 @@ screenManager.add_widget(Settings(name="settings"))
 
 screenManager.add_widget(SharedUser(name="shareduser"))
 
-screenManager.add_widget(AddUserToShareList(name="addusertosharelist"))
+#screenManager.add_widget(AddUserToShareList(name="addusertosharelist"))
 
-screenManager.add_widget(DeleteSharedUser(name = "deleteshareduser"))
+#screenManager.add_widget(DeleteSharedUser(name = "deleteshareduser"))
 
 screenManager.add_widget(Feedback(name="feedback"))
 

@@ -37,7 +37,6 @@ class ItemShare(Screen):
 	notiButton.bind(on_press=notiPopup.dismiss)
 
 	def on_pre_enter(self):
-
 		todaysDate = datetime.datetime.now()
 		year = todaysDate.year
 		day = todaysDate.strftime("%d")
