@@ -82,7 +82,7 @@ class Feedback(Screen):
 			( fiveState.find('down') != -1 ) ):
 			ratingValid = 1
 		else:
-			ratingValid = 0
+			ratingValid = 0 
 		
 		if ( not messageValid and not ratingValid ):
 			print ('invalid message and rating')
