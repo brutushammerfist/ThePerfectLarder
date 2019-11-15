@@ -156,12 +156,131 @@ class SharedUser(Screen):
         payload = {
         'userID': App.get_running_app().userID
         }
-        r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/displayAllSharedUser', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
-        if(r['data'] =="empty"):
+        r = None
+        try:
+            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/displayAllSharedUser',
+                              headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+        except Exception as e:
+            App.get_running_app().server_error(e)
+            self.manager.current = 'profile'
+        if r is not None and r['data'] == "empty":
+            self.ids.shareList.add_widget(Button(text='No users in share list.'))
             print("No other user is currently in your share List")
         else:
+            for a in range(0, len(r['data'])):
+                button = Button(text=r['data'][a]['name'] + '\n(' + r['data'][a]['username'] + ')', halign='center')
+                callback = lambda n: self.delShareUserPopup(n)
+                button.nameOfUser = r['data'][a]['name']
+                button.username = r['data'][a]['username']
+                button.bind(on_press=callback)
+                self.ids.shareList.add_widget(button)
             print(r['data'])
-class AddUserToShareList(Screen):
+
+    def submitUser(self):
+        usersName = self.ids.usernameReceived.text
+
+        passAContent = GridLayout(cols=1)
+        passAContent.add_widget(Label(text="Successfully Added " + usersName + " to your shared List"))
+        psButton = Button(text='OK')
+        passAContent.add_widget(psButton)
+        userAPassPopup = Popup(title="User Added Successfully", content=passAContent, auto_dismiss=False,
+                               size_hint=(.8, .2))
+        psButton.bind(on_press=userAPassPopup.dismiss)
+
+        fail3AContent = GridLayout(cols=1)
+        fail3AContent.add_widget(Label(text="The username " + usersName + " has already been added to the shared List"))
+        fail3AButton = Button(text='OK')
+        fail3AContent.add_widget(fail3AButton)
+        userAfail3Popup = Popup(title="Not logical to do", content=fail3AContent, auto_dismiss=False,
+                                size_hint=(.8, .2))
+        fail3AButton.bind(on_press=userAfail3Popup.dismiss)
+
+        fail2AContent = GridLayout(cols=1)
+        fail2AContent.add_widget(Label(text="You can not add yourself to the shared List"))
+        fail2AButton = Button(text='OK')
+        fail2AContent.add_widget(fail2AButton)
+        userAfail2Popup = Popup(title="Not logical to do", content=fail2AContent, auto_dismiss=False,
+                                size_hint=(.8, .2))
+        fail2AButton.bind(on_press=userAfail2Popup.dismiss)
+
+        fail1AContent = GridLayout(cols=1)
+        fail1AContent.add_widget(Label(text="The username " + usersName + " does not exist in the database"))
+        fail1AButton = Button(text='OK')
+        fail1AContent.add_widget(fail1AButton)
+        userAfail1Popup = Popup(title="Not logical to do", content=fail1AContent, auto_dismiss=False,
+                                size_hint=(.8, .2))
+        fail1AButton.bind(on_press=userAfail1Popup.dismiss)
+
+        if (usersName != ""):
+            payload = {
+                'userID': App.get_running_app().userID,
+                'userName': usersName
+            }
+            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/addToShareList',
+                              headers={'Content-Type': 'application/json'}, data=json.dumps(payload)).json()
+            print(r['data'])
+            if (r['data'] == "1"):
+                userAfail1Popup.open()
+                self.ids.usernameReceived.text = ""
+            elif (r['data'] == "2"):
+                userAfail2Popup.open()
+                self.ids.usernameReceived.text = ""
+            elif (r['data'] == "3"):
+                userAfail3Popup.open()
+                self.ids.usernameReceived.text = ""
+            else:
+                userAPassPopup.open()
+                self.ids.usernameReceived.text = ""
+                self.ids.shareList.clear_widgets()
+                self.on_pre_enter()
+        else:
+            nameEmptyPopup.open()
+
+
+    def delShareUserPopup(self, btn):
+        itemContent = GridLayout(cols=1, spacing=[0, 20])
+        itemContent.add_widget(Label(text='Are you sure you want to delete ' + btn.nameOfUser + '(' + btn.username +
+                                     ')?'))
+        buttonContent = GridLayout(cols=2, spacing=[10, 0])
+        delButton = Button(text='Delete User')
+        delButton.username = btn.username
+        cancelButton = Button(text='Cancel')
+        buttonContent.add_widget(cancelButton)
+        buttonContent.add_widget(delButton)
+        itemContent.add_widget(buttonContent)
+        delPopup = Popup(title='Delete User', content=itemContent, auto_dismiss=False, size_hint=(.6, .4))
+        cancelButton.bind(on_press=delPopup.dismiss)
+        delButton.bind(on_press=self.delShareUser)
+        delPopup.open()
+        return
+
+    def delShareUser(self, btn):
+        passDContent = GridLayout(cols=1)
+        passDContent.add_widget(Label(text="Successfully deleted " + btn.username + " from your shared List"))
+        passDButton = Button(text='OK')
+        passDContent.add_widget(passDButton)
+        userDPassPopup = Popup(title="User Deleted Successfully", content=passDContent, auto_dismiss=False, size_hint=(.8, .2))
+        passDButton.bind(on_press=userDPassPopup.dismiss)
+
+        payload = {
+            'userID': App.get_running_app().userID,
+            'userName': btn.username
+        }
+        r = None
+        try:
+            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList',
+                              headers={'Content-Type': 'application/json'}, data=json.dumps(payload)).json()
+        except Exception as e:
+            App.get_running_app().server_error(e)
+
+        if r is not None:
+            btn.parent.parent.parent.parent.parent.dismiss()
+            userDPassPopup.open()
+            self.ids.shareList.clear_widgets()
+            self.on_pre_enter()
+        return
+
+'''class AddUserToShareList(Screen):
     def submitUser(self):
         usersName = self.ids.usernameRecieved.text
         
@@ -252,7 +371,8 @@ class DeleteSharedUser(Screen):
             'userID': App.get_running_app().userID,
             'userName': usersName
             }
-            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+            r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/removeFromShareList',
+                              headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
             print(r['data'])
             if(r['data'] =="1"):
                 userDfail2Popup.open()
@@ -267,4 +387,4 @@ class DeleteSharedUser(Screen):
                 userDPassPopup.open()
                 self.ids.usernameRecieved.text =""
         else:
-            nameEmptyPopup.open()
+            nameEmptyPopup.open()'''

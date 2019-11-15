@@ -118,134 +118,185 @@
 			size_hint_y: None
             height: self.minimum_height
             row_default_height: 150
+
 <SharedUser>:
     FloatLayout:
-		Image:
-			source: "graphics/generalbackground.png"
+        Image:
+            source: "graphics/generalbackground.png"
+
     Button:
-	    text: ""
-	    font_size: 15
-	    color: 1,0,0,1
-	    size_hint: (0.2, 0.05)
-	    pos_hint:{'x': 0.01, 'top': .99}
-	    on_press: root.manager.current = 'profile'
-	    Image:
-		    source:"graphics/back.png"
-		    center_x: self.parent.center_x
-		    center_y: self.parent.center_y
+        text: " "
+        size_hint: (0.2, 0.07)
+        pos_hint:{'x': 0.01, 'top': .99}
+        on_press: root.manager.current =  'profile'
+        on_press: root.ids.shareList.clear_widgets()
+        Image:
+            source:"graphics/back.png"
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
 
-	Label:
-		text: "Share Settings"
-		font_size: 67
-		size_hint: (0.58, 0.05)
-		pos_hint:{'x': 0.30, 'top': .99}
+    Label:
+        text: "Share Settings"
+        font_size: 67
+        size_hint: (0.58, 0.05)
+        pos_hint:{'x': .22, 'top': .99}
+        halign: 'center'
 
-	GridLayout:
-		cols: 2
-		size_hint: (1, .12)
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: (.98,.815)
+		pos_hint: {'x': 0.01, 'top': 0.92}
+
+        GridLayout:
+            id: shareList
+            cols: 1
+            row_default_height: 100
+            row_force_default: True
+
+    GridLayout:
+        cols: 2
+        size_hint: (1, .12)
 	    Button:
 			text: "Add User"
 			font_size: 65
 			color: 0, 0, 255, 1
-			on_press: 
-				root.manager.transition.direction = 'left' 
-				root.manager.current = 'addusertosharelist'
-	
-		Button:
-			text: "Delete User"
-			font_size: 65
-			color: 0, 0, 255, 1
-			on_press: 
-				root.manager.transition.direction = 'left' 
-				root.manager.current = 'deleteshareduser'
-    
-<AddUserToShareList>:
-    FloatLayout:
-		Image:
-			source: "graphics/generalbackground.png"
-    Label:
-	    text: "Add User to Share list By Username"
-	    font_size: 67
-	    size_hint: (0.58, 0.2)
-	    pos_hint:{'x': .22, 'top': .99}
-	    halign: 'center'
-	    
-	GridLayout:
-		cols:1
-		size_hint: (.98,.815)
-		pos_hint:{'top': 0.75}
+			on_press: root.submitUser()
+        TextInput:
+            id: usernameReceived
+            hint_text: "username"
+            multiline: False
+            halign: 'center'
+            font_size: 65
+            write_tab: False
 
-	    TextInput:
-			id: usernameRecieved
-			multiline: False
-			font_size: 50
-			halign: "center"
-			hint_text: "username"
-			size_hint: (.2, None)
-    		height: 100
-			
-		
-    Button:
-	    text: ""
-	    font_size: 15
-	    color: 1,0,0,1
-	    size_hint: (0.2, 0.05)
-	    pos_hint:{'x': 0.01, 'top': .99}
-	    on_press: root.manager.current = 'shareduser'
-	    Image:
-		    source:"graphics/back.png"
-		    center_x: self.parent.center_x
-		    center_y: self.parent.center_y
-	    
-	Button:
-		text: 'Submit'
-		font_size: 65
-		size_hint: (.98, 0.1)
-		pos_hint:{'x': .01, 'top': .11}
-		on_press: root.submitUser()
+#    FloatLayout:
+#		Image:
+#			source: "graphics/generalbackground.png"
+#    Button:
+#	    text: ""
+#	    font_size: 15
+#	    color: 1,0,0,1
+#	    size_hint: (0.2, 0.05)
+#	    pos_hint:{'x': 0.01, 'top': .99}
+#	    on_press: root.manager.current = 'profile'
+#	    Image:
+#		    source:"graphics/back.png"
+#		    center_x: self.parent.center_x
+#		    center_y: self.parent.center_y
+#
+#	Label:
+#		text: "Share Settings"
+#		font_size: 67
+#		size_hint: (0.58, 0.05)
+#		pos_hint:{'x': 0.30, 'top': .99}
+#
+#	GridLayout:
+#		cols: 2
+#		size_hint: (1, .12)
+#	    Button:
+#			text: "Add User"
+#			font_size: 65
+#			color: 0, 0, 255, 1
+#			on_press:
+#				root.manager.transition.direction = 'left'
+#				root.manager.current = 'addusertosharelist'
+#
+#		Button:
+#			text: "Delete User"
+#			font_size: 65
+#			color: 0, 0, 255, 1
+#			on_press:
+#				root.manager.transition.direction = 'left'
+#				root.manager.current = 'deleteshareduser'
+#<AddUserToShareList>:
+#    FloatLayout:
+#		Image:
+#			source: "graphics/generalbackground.png"
+#    Label:
+#	    text: "Add User to Share list By Username"
+#	    font_size: 67
+#	    size_hint: (0.58, 0.2)
+#	    pos_hint:{'x': .22, 'top': .99}
+#	    halign: 'center'
+#
+#	GridLayout:
+#		cols:1
+#		size_hint: (.98,.815)
+#		pos_hint:{'top': 0.75}
+#
+#	    TextInput:
+#			id: usernameRecieved
+#			multiline: False
+#			font_size: 50
+#			halign: "center"
+#			hint_text: "username"
+#			size_hint: (.2, None)
+#    		height: 100
+#
+#
+#    Button:
+#	    text: ""
+#	    font_size: 15
+#	    color: 1,0,0,1
+#	    size_hint: (0.2, 0.05)
+#	    pos_hint:{'x': 0.01, 'top': .99}
+#	    on_press: root.manager.current = 'shareduser'
+#	    Image:
+#		    source:"graphics/back.png"
+#		    center_x: self.parent.center_x
+#		    center_y: self.parent.center_y
+#
+#	Button:
+#		text: 'Submit'
+#		font_size: 65
+#		size_hint: (.98, 0.1)
+#		pos_hint:{'x': .01, 'top': .11}
+#		on_press: root.submitUser()
+#
+#<DeleteSharedUser>:
+#    FloatLayout:
+#		Image:
+#			source: "graphics/generalbackground.png"
+#    Label:
+#	    text: "Delete an exiting User in Share list By Username"
+#	    font_size: 67
+#	    size_hint: (0.58, 0.2)
+#	    pos_hint:{'x': .22, 'top': .99}
+#	    halign: 'center'
+#
+#	GridLayout:
+#		cols:1
+#		size_hint: (.98,.815)
+#		pos_hint:{'top': 0.75}
+#
+#	    TextInput:
+#			id: usernameRecieved
+#			multiline: False
+#			font_size: 50
+#			halign: "center"
+#			hint_text: "username"
+#			size_hint: (.2, None)
+#    		height: 100
+#
+#    Button:
+#	    text: ""
+#	    font_size: 15
+#	    color: 1,0,0,1
+#	    size_hint: (0.2, 0.05)
+#	    pos_hint:{'x': 0.01, 'top': .99}
+#	    on_press: root.manager.current = 'shareduser'
+#	    Image:
+#		    source:"graphics/back.png"
+#		    center_x: self.parent.center_x
+#		    center_y: self.parent.center_y
+#	Button:
+#		text: 'Delete'
+#		font_size: 65
+#		size_hint: (.98, 0.1)
+#		pos_hint:{'x': .01, 'top': .11}
+#		on_press: root.deleteUser()
 
-<DeleteSharedUser>:
-    FloatLayout:
-		Image:
-			source: "graphics/generalbackground.png"
-    Label:
-	    text: "Delete an exiting User in Share list By Username"
-	    font_size: 67
-	    size_hint: (0.58, 0.2)
-	    pos_hint:{'x': .22, 'top': .99}
-	    halign: 'center'
-	    
-	GridLayout:
-		cols:1
-		size_hint: (.98,.815)
-		pos_hint:{'top': 0.75}
-
-	    TextInput:
-			id: usernameRecieved
-			multiline: False
-			font_size: 50
-			halign: "center"
-			hint_text: "username"
-			size_hint: (.2, None)
-    		height: 100
-			
-    Button:
-	    text: ""
-	    font_size: 15
-	    color: 1,0,0,1
-	    size_hint: (0.2, 0.05)
-	    pos_hint:{'x': 0.01, 'top': .99}
-	    on_press: root.manager.current = 'shareduser'
-	    Image:
-		    source:"graphics/back.png"
-		    center_x: self.parent.center_x
-		    center_y: self.parent.center_y
-	Button:
-		text: 'Delete'
-		font_size: 65
-		size_hint: (.98, 0.1)
-		pos_hint:{'x': .01, 'top': .11}
-		on_press: root.deleteUser()
 <ManagePL>:                                                            
 	BoxLayout:
         orientation: 'vertical'
