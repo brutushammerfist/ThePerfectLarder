@@ -152,8 +152,19 @@ class ShoppingList(Screen):
         
         self.ids.inventoryID.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getShoppingList', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
-        
+
         if response['data'] != 'Shopping List Empty.':
+
+            ingredList = App.get_running_app().recipeIngredientsForShoppingList
+
+            for i in range(0, len(ingredList)):
+                button = Button(text = ingredList[i]['name'] + " - " + str(ingredList[i]['quantity']) + " " + ingredList[i]['measurement'])
+                callback = lambda i:self.EditOrRemoveItem(i)
+                button.itemToDel = i
+                button.bind(on_press = callback)
+                self.ids.inventoryID.add_widget(button)
+
+
             self.items = response['data']
             for n in range(0, len(response['data'])):
                 if response['data'][n]['need'] > 0:

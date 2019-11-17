@@ -120,6 +120,7 @@ class testApp(App):
     userMeasurement = 0
     userNotif = 0
     storageLocations = 0
+    recipeIngredientsForShoppingList = []
     
     def update(self, dt):
         pass

@@ -163,6 +163,7 @@ class PersonalRecipe(Screen):
     
 class ViewPersonalRecipe(Screen):
     delRecipePopup = None
+    ingred = []
     
     def on_pre_enter(self):
         self.ids.name.text = ""
@@ -202,7 +203,26 @@ class ViewPersonalRecipe(Screen):
         if response['data'] == 'Recipe Deleted.':
             self.delRecipePopup.open()
             
-        
+    def addRecipeIngredientsToShoppingList(self):
+
+        reScreen = self.manager.get_screen('personalrecipe')
+        recipe = reScreen.recipes[reScreen.view.recipe]
+
+        ingred = json.loads(recipe['ingredients'])
+        for n in ingred['ingredients']:
+            name = n['name']
+            quantity = n['quantity']
+            measurement = n['measurement']
+
+            temp = {
+                'name' : name,
+                'quantity' : quantity,
+                'measurement' : measurement
+            }
+
+            App.get_running_app().recipeIngredientsForShoppingList.append(temp)
+
+
     def delPopupDismiss(self, index):
         self.delRecipePopup.dismiss()
         self.manager.current = 'personalrecipe'
