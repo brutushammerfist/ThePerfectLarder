@@ -177,7 +177,9 @@ class ViewPersonalRecipe(Screen):
         for n in ingred['ingredients']:
             label = Button(text = n['name']+ " - " + n['quantity'] + " " + n['measurement'])
             self.ids.ingredients.add_widget(label)
-        self.ids.instructions.text = recipe['description']
+        #self.ids.instructions.text = recipe['description']
+        label = WrapButton(text = recipe['description'])
+        self.ids.instructions.add_widget(label)
         self.ids.servings.text = str(recipe['servings'])
         
     def deleteRecipe(self):
