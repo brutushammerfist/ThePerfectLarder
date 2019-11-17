@@ -120,81 +120,81 @@ class Database():
         result = self.cursor.fetchall()
         
         if content['expDate'] == "":
-            sql = "SELECT expiration FROM ShelfLife WHERE name = %s"
-            val = (content['itemname'], )
+            sql = "SELECT expiration FROM ShelfLife WHERE name LIKE %s"
+            val = ("%" + content['itemname'] + "%", )
             self.cursor.execute(sql, val)
             itemExpData = self.cursor.fetchall()
 
             if len(itemExpData) != 0:
                 if content['location'] == 'Pantry':
-                    if 'DOP_Pantry_Metric' != None:
-                        min = itemExpData[0][0]['DOP_Pantry_Min']
-                        metric = itemExpData[0][0]['DOP_Pantry_Metric']
+                    if json.loads(itemExpData[0][0])['DOP_Pantry_Metric'] != None:
+                        min = json.loads(itemExpData[0][0])['DOP_Pantry_Min']
+                        metric = json.loads(itemExpData[0][0])['DOP_Pantry_Metric']
                         if metric.lower() == 'days':
-                            content['expDate'] = datetime.date.today() + timedelta(days=min)
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=min)
                         elif metric.lower() == 'weeks':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 7))
                         elif metric.lower() == 'months':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
-                    elif 'Pantry_Metric' != None:
-                        min = itemExpData[0][0]['Pantry_Min']
-                        metric = itemExpData[0][0]['Pantry_Metric']
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
+                    elif json.loads(itemExpData[0][0])['Pantry_Metric'] != None:
+                        min = json.loads(itemExpData[0][0])['Pantry_Min']
+                        metric = json.loads(itemExpData[0][0])['Pantry_Metric']
                         if metric.lower() == 'days':
-                            content['expDate'] = datetime.date.today() + timedelta(days=min)
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=min)
                         elif metric.lower() == 'weeks':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 7))
                         elif metric.lower() == 'months':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
                 elif content['location'] == 'Refrigerator':
-                    if 'DOP_Refrigerate_Metric' != None:
-                        min = itemExpData[0][0]['DOP_Refrigerate_Min']
-                        metric = itemExpData[0][0]['DOP_Refrigerate_Metric']
+                    if json.loads(itemExpData[0][0])['DOP_Refrigerate_Metric'] != None:
+                        min = json.loads(itemExpData[0][0])['DOP_Refrigerate_Min']
+                        metric = json.loads(itemExpData[0][0])['DOP_Refrigerate_Metric']
                         if metric.lower() == 'days':
-                            content['expDate'] = datetime.date.today() + timedelta(days=min)
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=min)
                         elif metric.lower() == 'weeks':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 7))
                         elif metric.lower() == 'months':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
-                    elif 'Refrigerate_Metric' != None:
-                        min = itemExpData[0][0]['Refrigerate_Min']
-                        metric = itemExpData[0][0]['Refrigerate_Metric']
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
+                    elif json.loads(itemExpData[0][0])['Refrigerate_Metric'] != None:
+                        min = json.loads(itemExpData[0][0])['Refrigerate_Min']
+                        metric = json.loads(itemExpData[0][0])['Refrigerate_Metric']
                         if metric.lower() == 'days':
-                            content['expDate'] = datetime.date.today() + timedelta(days=min)
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=min)
                         elif metric.lower() == 'weeks':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 7))
                         elif metric.lower() == 'months':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
                 elif content['location'] == 'Freezer':
-                    if 'DOP_Freeze_Metric' != None:
-                        min = itemExpData[0][0]['DOP_Freeze_Min']
-                        metric = itemExpData[0][0]['DOP_Freeze_Metric']
+                    if json.loads(itemExpData[0][0])['DOP_Freeze_Metric'] != None:
+                        min = json.loads(itemExpData[0][0])['DOP_Freeze_Min']
+                        metric = json.loads(itemExpData[0][0])['DOP_Freeze_Metric']
                         if metric.lower() == 'days':
-                            content['expDate'] = datetime.date.today() + timedelta(days=min)
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=min)
                         elif metric.lower() == 'weeks':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 7))
                         elif metric.lower() == 'months':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
-                    elif 'Freeze_Metric' != None:
-                        min = itemExpData[0][0]['Freeze_Min']
-                        metric = itemExpData[0][0]['Freeze_Metric']
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
+                    elif json.loads(itemExpData[0][0])['Freeze_Metric'] != None:
+                        min = json.loads(itemExpData[0][0])['Freeze_Min']
+                        metric = json.loads(itemExpData[0][0])['Freeze_Metric']
                         if metric.lower() == 'days':
-                            content['expDate'] = datetime.date.today() + timedelta(days=min)
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=min)
                         elif metric.lower() == 'weeks':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 7))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 7))
                         elif metric.lower() == 'months':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 30))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
-                            content['expDate'] = datetime.date.today() + timedelta(days=(min * 365))
+                            content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
             else:
                 content['expDate'] = datetime.date.today() + datetime.timedelta(days=3)
 
