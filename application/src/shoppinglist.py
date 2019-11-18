@@ -98,7 +98,7 @@ class ShoppingList(Screen):
         editcontent2 = GridLayout(cols = 2)
         editcontent2.add_widget(TextInput(text = str(screen.items[screen.selectedItem.itemToDel]['need']), id = 'quantity'))
         
-        editcontent2.add_widget(Spinner(text = screen.items[screen.selectedItem.itemToDel]['measurement'], values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)'), id = 'measurement'))
+        editcontent2.add_widget(Spinner(text = screen.items[screen.selectedItem.itemToDel]['measurement'], values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit'), id = 'measurement'))
         buttonA = Button(text = 'Cancel')
         buttonB = Button(text = 'Submit')
         
@@ -133,7 +133,7 @@ class ShoppingList(Screen):
     label2 = Label(text = "Quantity")
     text2 = TextInput(multiline = False, id = 'quantity')
     label3 = Label(text = "Measurement")
-    spinner3 = Spinner(values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)'), id = 'measurement')
+    spinner3 = Spinner(values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit'), id = 'measurement')
     button4 = Button(text = "Cancel")
     button5 = Button(text = "Submit")
     addcontent.add_widget(label1)
