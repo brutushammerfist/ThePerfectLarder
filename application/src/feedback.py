@@ -117,7 +117,7 @@ class Feedback(Screen):
  
 	def submitFeedback(self):
 		
-		if ( self.validateFeedback() ):
+		if ( self.validateFeedback() ): 
 			rating = int(self.ids.toggleValue.text) 
 			message = self.ids.message.text
 			
