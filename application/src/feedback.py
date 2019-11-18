@@ -114,7 +114,7 @@ class Feedback(Screen):
 			self.popUpMessage("Success!", "Thank you for submitting your feedback!")
 		
 		return ( messageValid and ratingValid )
-
+ 
 	def submitFeedback(self):
 		
 		if ( self.validateFeedback() ):
