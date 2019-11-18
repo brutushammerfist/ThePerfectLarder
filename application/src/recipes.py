@@ -52,7 +52,7 @@ class Ingredient(GridLayout):
         self.cols = 3
         self.add_widget(TextInput())
         self.add_widget(TextInput())
-        self.add_widget(Spinner(text = 'Choose', values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs), unit')))
+        self.add_widget(Spinner(text = 'Choose', values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit')))
         
     def deleteSelf(self):
         self.parent.remove_widget(self)
@@ -207,6 +207,10 @@ class ViewPersonalRecipe(Screen):
             
     def addRecipeIngredientsToShoppingList(self):
 
+        addIngredientContent = GridLayout(cols=1)
+        addIngredientContent.add_widget(Label(text= 'Ingredients added to Shopping List'))
+        self.addIngredientPopup = Popup(title='Success!', content=addIngredientContent, auto_dismiss=True, size_hint=(.8, .2))
+
         reScreen = self.manager.get_screen('personalrecipe')
         recipe = reScreen.recipes[reScreen.view.recipe]
 
@@ -223,6 +227,9 @@ class ViewPersonalRecipe(Screen):
             }
 
             App.get_running_app().recipeIngredientsForShoppingList.append(temp)
+        self.addIngredientPopup.open()
+
+
 
 
     def delPopupDismiss(self, index):
