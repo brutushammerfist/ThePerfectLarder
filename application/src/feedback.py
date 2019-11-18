@@ -62,55 +62,65 @@ class Feedback(Screen):
 			ok_button.bind(on_press=popup.dismiss)
 			popup.open()
 	
-	def validateFeedback(self, message, rating):
+	def validateFeedback(self):
 		messageValid = 0
 		ratingValid = 0
 		self.remove_widget(self.errorMsg)
 		
+		message = self.ids.message.text
+		
 		#validate the message is not length 0
-		messageValid = len(message) > 0
+		try:
+			messageValid = len(message) > 0
+		except:
+			messageValid = 0
 		
 		#validate a radio button is depressed
-		oneState = str(self.ids.one.state)
-		twoState = str(self.ids.two.state)
-		threeState = str(self.ids.three.state)
-		fourState = str(self.ids.four.state)
-		fiveState = str(self.ids.five.state)
-		
-		if( ( oneState.find('down') != -1 ) or ( twoState.find('down') != -1 ) or 
-			( threeState.find('down') != -1 ) or ( fourState.find('down') != -1 ) or 
-			( fiveState.find('down') != -1 ) ):
-			ratingValid = 1
-		else:
-			ratingValid = 0 
+		try:
+			oneState = str(self.ids.one.state)
+			twoState = str(self.ids.two.state)
+			threeState = str(self.ids.three.state)
+			fourState = str(self.ids.four.state)
+			fiveState = str(self.ids.five.state)
+			
+			if( ( oneState.find('down') != -1 ) or ( twoState.find('down') != -1 ) or 
+				( threeState.find('down') != -1 ) or ( fourState.find('down') != -1 ) or 
+				( fiveState.find('down') != -1 ) ):
+				ratingValid = 1
+			else:
+				ratingValid = 0 
+		except:
+			ratingValid = 0
 		
 		if ( not messageValid and not ratingValid ):
 			print ('invalid message and rating')
-			self.errorMsg = self.errorWidget( 'Please leave a rating and a comment :-)' )
-			self.add_widget( self.errorMsg )
+			#self.errorMsg = self.errorWidget( 'Please leave a rating and a comment :-)' )
+			#self.add_widget( self.errorMsg )
+			self.popUpMessage("Error", "Please leave a rating and a comment :-)")
 		elif ( not messageValid ):
 			print ('invalid message')
-			self.errorMsg = self.errorWidget( 'Please leave a comment :-)' )
-			self.add_widget( self.errorMsg )
+			#self.errorMsg = self.errorWidget( 'Please leave a comment :-)' )
+			#self.add_widget( self.errorMsg )
+			self.popUpMessage("Error", "Please leave us a comment :-)")
 		elif ( not ratingValid ):
 			print ('invalid rating')
-			self.errorMsg = self.errorWidget( 'Please leave a rating :-)' )
-			self.add_widget( self.errorMsg )
-			#self.popUpMessage("Error", "Please leave a rating :-)")
-
-
+			#self.errorMsg = self.errorWidget( 'Please leave a rating :-)' )
+			#self.add_widget( self.errorMsg )
+			self.popUpMessage("Error", "Please leave a rating :-)")
 		else:
 			print ('feedback valid')
-			self.successMsg = self.successWidget( 'Thank you for submitting feedback :-)' )
-			self.add_widget( self.successMsg )
+			#self.successMsg = self.successWidget( 'Thank you for submitting feedback :-)' )
+			#self.add_widget( self.successMsg )
+			self.popUpMessage("Success!", "Thank you for submitting your feedback!")
 		
 		return ( messageValid and ratingValid )
 
 	def submitFeedback(self):
-		message = self.ids.message.text
-		rating = int(self.ids.toggleValue.text)
 		
-		if ( self.validateFeedback(message, rating) ):
+		if ( self.validateFeedback() ):
+			rating = int(self.ids.toggleValue.text)
+			message = self.ids.message.text
+			
 			password = 'plfeedback'
 			sender_email = 'perfect.larder.feedback@gmail.com'
 			receiver_email = "perfect.larder@gmail.com"
