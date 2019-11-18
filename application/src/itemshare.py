@@ -22,19 +22,59 @@ from kivy.uix.textinput import TextInput
 import json
 import requests
 
+shareEmptyContent = GridLayout(cols=1)
+shareEmptyContent.add_widget(Label(text='The share input field  cannot be empty.'))
+shareEmptyButton = Button(text='OK')
+shareEmptyContent.add_widget(shareEmptyButton)
+shareEmptyPopup = Popup(title='Empty input Error', content=shareEmptyContent, auto_dismiss=False, size_hint=(.8, .2))
+shareEmptyButton.bind(on_press=shareEmptyPopup.dismiss)
+
+
+maxContent = GridLayout(cols=1)
+maxContent.add_widget(Label(text='You have gone beyond the max quantity to share this item'))
+maxButton = Button(text='OK')
+maxContent.add_widget(maxButton)
+maxPopup = Popup(title='Exceeded max input Error', content=maxContent, auto_dismiss=False, size_hint=(.8, .2))
+maxButton.bind(on_press=maxPopup.dismiss)
+
+typeContent = GridLayout(cols=1)
+typeContent.add_widget(Label(text='The share input field must be an integer or a float.'))
+typeButton = Button(text='OK')
+typeContent.add_widget(typeButton)
+typePopup = Popup(title='Input Type Error', content=typeContent, auto_dismiss=False, size_hint=(.8, .2))
+typeButton.bind(on_press=typePopup.dismiss)
+
+
+notiContent = GridLayout(cols=1)
+notiContent.add_widget(Label(text='Notification sent!'))
+notiButton = Button(text='OK')
+notiContent.add_widget(notiButton)
+notiPopup = Popup(title='Notification alert', content=notiContent, auto_dismiss=False, size_hint=(.8, .2))
+notiButton.bind(on_press=notiPopup.dismiss)
+
+
+notiFailContent = GridLayout(cols=1)
+notiFailContent.add_widget(Label(text='Notification Not sent, you don\'t have any user in your sharing list. Go add users to use this feature.'))
+notiFailButton = Button(text='OK')
+notiFailContent.add_widget(notiFailButton)
+notiFailPopup = Popup(title='Notification alert', content=notiFailContent, auto_dismiss=False, size_hint=(.8, .2))
+notiFailButton.bind(on_press=notiFailPopup.dismiss)
+
 class ItemShare(Screen):
+	def validateQuanumber(self,phoneTemp):
+		try:
+			float(phoneTemp)
+			return True
+		except ValueError:
+			return False
+	
 	itemName = ObjectProperty(None)
 	quantity = ObjectProperty(None)
 	shareWith = ObjectProperty(None)
 	foodItems = []
 	itemToShare = -1
 
-	notiContent = GridLayout(cols=1)
-	notiContent.add_widget(Label(text='Notification sent!'))
-	notiButton = Button(text='OK')
-	notiContent.add_widget(notiButton)
-	notiPopup = Popup(title='Notification', content=notiContent, auto_dismiss=False, size_hint=(.8, .2))
-	notiButton.bind(on_press=notiPopup.dismiss)
+	
 
 	def on_pre_enter(self):
 		todaysDate = datetime.datetime.now()
@@ -111,27 +151,42 @@ class ItemShare(Screen):
 	#Shares the specified item to users/groups; needs global variables foodItems and itemToShare
 	def shareItem(self, btn):
 		quantity = btn.quanTxt.text
-		print("User ID: " + str(App.get_running_app().userID))
-		print("Food Name: " + btn.foodName)
-		print("Quantity: " + quantity)
-		print("Item ID: " + str(btn.foodId))
-		print("Max Food Quantity" + str(btn.maxFoodQuantity))
-		intMaxQaun = float(str(btn.foodId))
 		
-		fquantity = float(quantity)
-		if intMaxQaun == quantity:
-			max = "yes"
-		elif fquantity < intMaxQaun:
-			max = "no"
-		if fquantity > intMaxQaun:
-			print("You can not enter a number greater than item quantity")
+		intMaxQaun = float(str(btn.maxFoodQuantity))
+		
+		if(quantity != ""):
+			if(self.validateQuanumber(quantity)  == True):
+				fquantity = float(quantity)
+				
+				if intMaxQaun == fquantity:
+					max = "yes"
+				elif fquantity < intMaxQaun:
+					max = "no"
+					
+					
+				if fquantity > intMaxQaun:
+					print("You can not enter a number greater than item quantity")
+					maxPopup.open()
+					
+				else:
+					headers = {'Content-Type' : 'application/json'}
+					payload = {
+						'userID': App.get_running_app().userID,
+						'itemID': btn.foodId,
+						'quantity': fquantity,
+						'max': max
+					}
+					response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
+					print(response)
+					if(response['data'] =='2'):
+						notiFailPopup.open()
+					elif(response['data'] =='1'):
+						notiPopup.open()
+			else: 
+				print('must be an interger or float')
+				typePopup.open()
 		else:
-			headers = {'Content-Type' : 'application/json'}
-			payload = {
-				'userID': App.get_running_app().userID,
-				'itemID': btn.foodId,
-				'quantity': fquantity,
-				'max': max
-			}
-			response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
-			print(response)
+			print("can not be empty.")		
+			shareEmptyPopup.open()
+		
+		return
