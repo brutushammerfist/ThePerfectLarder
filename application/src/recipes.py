@@ -52,7 +52,7 @@ class Ingredient(GridLayout):
         self.cols = 3
         self.add_widget(TextInput())
         self.add_widget(TextInput())
-        self.add_widget(Spinner(text = 'Choose', values = ('lbs', 'oz', 'bag', 'box')))
+        self.add_widget(Spinner(text = 'Choose', values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs), unit')))
         
     def deleteSelf(self):
         self.parent.remove_widget(self)
