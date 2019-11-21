@@ -36,6 +36,13 @@ class SignUp(Screen):
     passContent.add_widget(passButton)
     userPassPopup = Popup(title='Check your Password', content=passContent, auto_dismiss=False)
     passButton.bind(on_press=userPassPopup.dismiss)
+    
+    shelfLifeContent = GridLayout(cols=1)
+    shelfLifeContent.add_widget(Label(text='Shelf life recommendations may \nvary in accuracy depending on \nstorage location or environmental \n factors.'))
+    shelfLifeButton = Button(text='OK')
+    shelfLifeContent.add_widget(shelfLifeButton)
+    shelfLifePopup = Popup(title='Warning', content=shelfLifeContent, auto_dismiss=False)
+    shelfLifeButton.bind(on_press=shelfLifePopup.dismiss)
 
     # Popup to notify the user the registration was successful and to redirect them to the login page
     regContent = GridLayout(cols=1)
@@ -44,6 +51,7 @@ class SignUp(Screen):
     regContent.add_widget(regButton)
     regPopup = Popup(title='Registration Confirmation Status', content=regContent, auto_dismiss=False, size_hint=(.85, .2))
     regButton.bind(on_press=regPopup.dismiss)
+    regButton.bind(on_press=shelfLifePopup.open)
 
     # Popup to prompt for email re-input
     emailContent = GridLayout(cols=1)
@@ -160,7 +168,7 @@ class SignUp(Screen):
                                     # data successfully registered
                                     self.SRC = self.widgetWithSuccessMessage("successfully registered")
                                     self.add_widget(self.SRC)
-                                    self.regPopup.open()
+                                    self.regPopup.open()                                    
                                     self.manager.current = 'userlogin'
                                     #sm = ScreenManager()
                                     #sm.add_widget(Screen(name = ''))
