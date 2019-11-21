@@ -38,10 +38,10 @@ class SignUp(Screen):
     passButton.bind(on_press=userPassPopup.dismiss)
     
     shelfLifeContent = GridLayout(cols=1)
-    shelfLifeContent.add_widget(Label(text='Shelf life recommendations may \nvary in accuracy depending on \nstorage location or environmental \n factors.'))
-    shelfLifeButton = Button(text='OK')
+    shelfLifeContent.add_widget(Label(text='Shelf life recommendations may \nvary in accuracy depending on \nstorage location and environmental \nfactors.'))
+    shelfLifeButton = Button(text='OK', size_hint=(.4, .2))
     shelfLifeContent.add_widget(shelfLifeButton)
-    shelfLifePopup = Popup(title='Warning', content=shelfLifeContent, auto_dismiss=False)
+    shelfLifePopup = Popup(title='Warning', content=shelfLifeContent, auto_dismiss=False, size_hint=(.85, .4))
     shelfLifeButton.bind(on_press=shelfLifePopup.dismiss)
 
     # Popup to notify the user the registration was successful and to redirect them to the login page
