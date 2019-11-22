@@ -945,7 +945,7 @@ class Database():
         #accept or reject
         userId = content['userID']
         
-        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemiId = Items.id WHERE  SharedItem.userId = %s"
+        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemiId = Items.id WHERE SharedItem.userId =%s"
         crows = self.cursor.execute(sql, userId)
         result = self.cursor.fetchall()
         if(len(result) > 0 ):         
