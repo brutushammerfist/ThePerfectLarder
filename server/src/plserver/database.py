@@ -938,4 +938,29 @@ class Database():
             return(json.dumps(dict(data='2')), 401)#nothing to do go add users to your shared list
     def viewAllNotification(self, content):
         self.ensureConnected()
+        #username is sharing 
+        #Itemname of 
+        #quantity
+        #click to 
+        #accept or reject
+        userId = content['userID']
+        
+        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemiId = Items.id WHERE  SharedItem.userId = %s "
+        crows = self.cursor.execute(sql, userId)
+        result = self.cursor.fetchall()
+        if(len(result) > 0 ):         
+            objects_list = []
+            for row in result:
+                p = {
+                    'username': row[0],
+                    'itemname': row[1],
+                    'quantity': row[2],
+                    'maxItem': row[3],
+                    'seen': row[4]
+                }
+                
+                objects_list.append(p)            
+            return (json.dumps(dict(data = objects_list), default=str), 200)   
+        elif(crows ==None):
+            return (json.dumps(dict(data = "empty")), 200)
         
