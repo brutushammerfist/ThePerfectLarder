@@ -929,10 +929,13 @@ class Database():
         result = self.cursor.fetchall()
         if(len(result) > 0):
             for row in result:
-                sqlInsertIterm = "INSERT INTO SharedItem(userId,shareditemId,maxItem,quantity) VALUES(%s,%s,%s,%s) "
-                val = (row[0],sharedItemId,isMaxQuantity,quantityToShare,)
+                sqlInsertIterm = "INSERT INTO SharedItem(ownerId,userId,shareditemId,maxItem,quantity) VALUES(%s,%s,%s,%s) "
+                val = (fromUserId,row[0],sharedItemId,isMaxQuantity,quantityToShare,)
                 self.cursor.execute(sqlInsertIterm, val)
                 result2 = self.connector.commit()
             return (json.dumps(dict(data='1')), 200)
         else:
             return(json.dumps(dict(data='2')), 401)#nothing to do go add users to your shared list
+    def viewAllNotification(self, content):
+        self.ensureConnected()
+        
