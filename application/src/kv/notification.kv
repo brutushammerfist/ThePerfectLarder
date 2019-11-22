@@ -4,7 +4,7 @@
 			source: "graphics/generalbackground.png"
 			
 	Label:
-	    text: "Old Notifications"
+	    text: "All Sharing Notifications"
 	    font_size: 67
 	    size_hint: (0.58, 0.2)
 	    pos_hint:{'x': .22, 'top': .99}
@@ -27,40 +27,11 @@
 	GridLayout:
 		cols: 2
 		size_hint: (1, .12)
-	    Button:
-			text: "New Notification"
-			font_size: 65
-			color: 0, 0, 255, 1
-			on_press: 
-				root.manager.transition.direction = 'left' 
-				root.manager.current = 'newnotification'
-	
+	    
 		Button:
 			text: "Items About to expire"
 			font_size: 65
 			color: 0, 0, 255, 1
 			on_press: 
 				root.manager.transition.direction = 'left' 
-				root.manager.current = 'shareitems'
-<NewNotification>:
-	FloatLayout:
-		Image:
-			source: "graphics/generalbackground.png"
-	GridLayout:
-		cols:1
-		size_hint: (.98, 0.2)
-        pos_hint:{'x': 0.01, 'top': .92}
-		halign: 'left'
-        spacing: [10,10]
-	Button:
-	    text: ""
-	    font_size: 15
-	    color: 1,0,0,1
-	    size_hint: (0.2, 0.05)
-	    pos_hint:{'x': 0.01, 'top': .99}
-	    on_press: root.manager.current = 'notification'
-	    Image:
-		    source:"graphics/back.png"
-		    center_x: self.parent.center_x
-		    center_y: self.parent.center_y
-	
+				root.manager.current = 'shareitems'	

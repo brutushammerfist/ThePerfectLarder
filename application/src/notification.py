@@ -25,6 +25,4 @@ class Notification(Screen):
 		}
 		
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/viewAllNotification', headers=headers, data=json.dumps(payload)).json()
-		print(reponse['data'])
-class NewNotification(Screen):
-	pass
+		print(response['data'])
