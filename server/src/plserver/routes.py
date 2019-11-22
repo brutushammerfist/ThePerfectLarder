@@ -96,6 +96,6 @@ def removeFromShareList():
 def shareFoodItemToUser():
 	return db.shareFoodItemToUser(request.get_json())
 
-@app.route("/viewAllNotification", method=["POST"])
+@app.route("/viewAllNotification", methods=["POST"])
 def viewAllNotification():
 	return db.viewAllNotification(request.get_json())
