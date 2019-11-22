@@ -943,10 +943,10 @@ class Database():
         #quantity
         #click to :
         #accept or reject
-        userId = content['userID']
+        userId = (content['userID'],)
         
         sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemId = Items.id WHERE SharedItem.userId =%s"
-        crows = self.cursor.execute(sql, userId)
+        crows = self.cursor.execute(sql,userId)
         result = self.cursor.fetchall()
         if(len(result) > 0 ):         
             objects_list = []
