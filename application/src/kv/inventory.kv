@@ -8,8 +8,10 @@
 		text: " "
 		size_hint: (0.2, 0.07)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current =  'homescreen'
-		on_press: root.ids.search.text = ""
+		on_press:
+		    root.manager.current =  'homescreen'
+            root.ids.search.text = ""
+            root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -68,8 +70,10 @@
 		color: 1,0,0,1
 		size_hint: (0.2, 0.05)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current = 'inventory'
-		on_press: root.clearFieldsAdd()
+		on_press:
+		    root.manager.current = 'inventory'
+		    root.clearFieldsAdd()
+		    root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -175,8 +179,10 @@
 		color: 1,0,0,1
 		size_hint: (0.2, 0.05)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current =  'inventory'
-		on_press: root.clearFieldsDel()
+		on_press:
+		    root.manager.current =  'inventory'
+		    root.clearFieldsDel()
+		    root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -280,4 +286,6 @@
 			on_press: root.searchForItem()
 		Button:
 			text:"Back"
-			on_press: root.manager.current = 'inventory'
+			on_press:
+			    root.manager.current = 'inventory'
+			    root.manager.transition.direction = 'right'

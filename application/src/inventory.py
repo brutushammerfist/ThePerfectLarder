@@ -28,6 +28,7 @@ class Inventory(Screen):
     items = []
     itemToDel = -1
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         self.ids.inventoryID.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getInventory', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
         
@@ -68,6 +69,7 @@ class Inventory(Screen):
 class AddItem(Screen):            #part of inventory
 
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         if App.get_running_app().userMeasurement == 0:
             self.ids.measurement.values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit')
         else:
@@ -122,6 +124,7 @@ class DeleteItem(Screen):        #part of inventory
     index = NumericProperty(None)
     
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         invScreen = self.manager.get_screen('inventory')
         item = invScreen.items[invScreen.itemToDel.itemToDel]
         self.ids.name.text = item['itemname']

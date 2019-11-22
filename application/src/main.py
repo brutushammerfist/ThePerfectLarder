@@ -120,6 +120,7 @@ class testApp(App):
     userNotif = 0
     storageLocations = 0
     recipeIngredientsForShoppingList = []
+    prevScreen = None
     
     def update(self, dt):
         pass

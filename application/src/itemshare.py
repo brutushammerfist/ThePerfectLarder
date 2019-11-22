@@ -73,10 +73,12 @@ class ItemShare(Screen):
 	shareWith = ObjectProperty(None)
 	foodItems = []
 	itemToShare = -1
+	prevScreen = None
 
 	
 
 	def on_pre_enter(self):
+		self.prevScreen = self.manager.children[1].name
 		todaysDate = datetime.datetime.now()
 		year = todaysDate.year
 		day = todaysDate.strftime("%d")
@@ -117,6 +119,7 @@ class ItemShare(Screen):
 				self.ids.shareFoodItems.add_widget(Button(text='No items near expiration.'))
 		else:
 			self.ids.shareFoodItems.add_widget(Button(text='No items near expiration.'))
+		return
 
 	#Sets the global variable and calls the function to open the popup
 	def setItemToShare(self, item):
@@ -163,7 +166,7 @@ class ItemShare(Screen):
 				elif fquantity < intMaxQaun:
 					max = "no"
 					
-					
+				response = None
 				if fquantity > intMaxQaun:
 					print("You can not enter a number greater than item quantity")
 					maxPopup.open()
@@ -177,10 +180,11 @@ class ItemShare(Screen):
 						'max': max
 					}
 					response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/shareFoodItemToUser', headers=headers, data=json.dumps(payload)).json()
-					print(response)
+
 					if(response['data'] =='2'):
 						notiFailPopup.open()
 					elif(response['data'] =='1'):
+						btn.parent.parent.parent.parent.dismiss()
 						notiPopup.open()
 			else: 
 				print('must be an interger or float')
@@ -190,3 +194,7 @@ class ItemShare(Screen):
 			shareEmptyPopup.open()
 		
 		return
+
+	def backButton(self):
+		self.manager.current = self.prevScreen
+		self.ids.shareFoodItems.clear_widgets()

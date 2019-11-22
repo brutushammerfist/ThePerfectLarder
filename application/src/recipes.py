@@ -26,6 +26,7 @@ class GetRecipe(Screen):
     recipes = []
     viewrecipe = -1
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         self.ids.recipes.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getReccRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
         
@@ -126,12 +127,15 @@ class AddRecipe(Screen):
         self.ids.ingredients.clear_widgets()
     
 class Recipe(Screen):
-    pass
+    def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
+
     
 class ViewRecipe(Screen):
     index = NumericProperty(None)
     
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         self.ids.name.text = ""
         self.ids.ingredients.clear_widgets()
         self.ids.instructions.text = ""
@@ -152,6 +156,7 @@ class PersonalRecipe(Screen):
     recipes = []
     view = -1
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         self.ids.personalrecipe.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getPersonalRecipes', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
         
@@ -176,6 +181,7 @@ class ViewPersonalRecipe(Screen):
     ingred = []
     
     def on_pre_enter(self):
+        self.manager.transition.direction = 'left'
         self.ids.name.text = ""
         self.ids.ingredients.clear_widgets()
         self.ids.instructions.text = ""

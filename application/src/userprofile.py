@@ -35,7 +35,7 @@ nameEmptyButton.bind(on_press=nameEmptyPopup.dismiss)
 class Profile(Screen):
 
     def on_enter(self):
-        pass
+        self.manager.transition.direction = 'left'
 
     # region Properties
 

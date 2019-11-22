@@ -99,6 +99,7 @@ class Login(Screen):
                         App.get_running_app().storageLocations = json.loads(response['locations'])['locations']
                         self.ids.userName.text = ""
                         self.ids.userPassword.text = ""
+                        self.manager.transition.direction = 'left'
                         self.manager.current = 'homescreen'
 
                         #sio = socketio.Client()

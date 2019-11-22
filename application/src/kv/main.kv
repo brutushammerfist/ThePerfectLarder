@@ -14,44 +14,59 @@
         Button:
             text: 'My Profile'
             font_size: 65
-            on_press: root.manager.current = 'profile'
+            on_press:
+                root.manager.current = 'profile'
+                root.manager.transition.direction = 'left'
 		
 		Button:
             text: 'My Recipes'
             font_size: 65
-            on_press: root.manager.current = 'recipes'
+            on_press:
+                root.manager.current = 'recipes'
+                root.manager.transition.direction = 'left'
 			
 		Button:
             text: 'My Inventory'
             font_size: 65
-            on_press: root.manager.current = 'inventory'
+            on_press:
+                root.manager.current = 'inventory'
+                root.manager.transition.direction = 'left'
 			
 		Button:
             text: 'My Trends'
             font_size: 65
-            on_press: root.manager.current = 'trends'
+            on_press:
+                root.manager.current = 'trends'
+                root.manager.transition.direction = 'left'
 			
 		Button:
             text: 'My Shopping List'
             font_size: 65
-            on_press: root.manager.current = 'shoppinglist'
+            on_press:
+                root.manager.current = 'shoppinglist'
+                root.manager.transition.direction = 'left'
 			
 		Button:
             text: 'Share My Items'
             font_size: 65
-            on_press: root.manager.current = 'shareitems'
+            on_press:
+                root.manager.current = 'shareitems'
+                root.manager.transition.direction = 'left'
         
         
         Button:
             text: 'Notifications'
             font_size: 65
-            on_press: root.manager.current = 'notification'
-        
+            on_press:
+                root.manager.current = 'notification'
+                root.manager.transition.direction = 'left'
                         
         Button:
         	text: 'Provide Feedback'
         	font_size: 65
-        	on_press: root.manager.current = 'feedback'
+        	on_press:
+        	    root.manager.current = 'feedback'
+        	    root.manager.transition.direction = 'left'
 			
 		Button:
             text: 'Logout'
