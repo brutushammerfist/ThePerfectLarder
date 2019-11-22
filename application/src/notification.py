@@ -8,7 +8,7 @@
 #setup GUI(kivy)
 
 import kivy
-
+from kivy.app import App
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
 import json
