@@ -48,12 +48,22 @@ class GetRecipe(Screen):
         pass
 
 class Ingredient(GridLayout):
+
+    name = ""
+    quantity = ""
+    measurement = ""
+
+    def updateIngredient(self, name, quantity, measurement):
+        self.name = name
+        self.quantity = quantity
+        self.measurement = measurement
+
     def populate(self):
         self.cols = 3
-        self.add_widget(TextInput())
-        self.add_widget(TextInput())
-        self.add_widget(Spinner(text = 'Choose', values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit')))
-        
+        self.add_widget(TextInput(text=self.name))
+        self.add_widget(TextInput(text=self.quantity))
+        self.add_widget(Spinner(text =self.measurement, values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit')))
+
     def deleteSelf(self):
         self.parent.remove_widget(self)
         
@@ -181,7 +191,12 @@ class ViewPersonalRecipe(Screen):
         label = WrapButton(text = recipe['description'])
         self.ids.instructions.add_widget(label)
         self.ids.servings.text = str(recipe['servings'])
-        
+
+    def updateRecipe(self):
+        pass
+
+
+
     def deleteRecipe(self):
     
         delContent = GridLayout(cols=1)
