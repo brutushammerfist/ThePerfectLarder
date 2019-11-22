@@ -285,7 +285,9 @@
         Button:
             text: "Back To Home Screen"
             font_size: 65
-            on_press: root.manager.current = 'homescreen'
+            on_press:
+                root.manager.current = 'homescreen'
+                root.manager.transition.direction = 'right'
             
 <PersonalRecipe>:
     FloatLayout:
