@@ -19,6 +19,7 @@ class Notification(Screen):
 	def on_pre_enter(self):
 		headers = {'Content-Type' : 'application/json'}
 		#API_ENDPOINT = 'http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire'
+		print( App.get_running_app().userID)
 		payload = {
 			'userID' : App.get_running_app().userID,
 		}
