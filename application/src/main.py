@@ -34,7 +34,7 @@ from itemshare import ItemShare
 from login import Login
 from signup import SignUp
 from notification import Notification
-from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe, PersonalRecipe, ViewPersonalRecipe
+from recipes import AddRecipe, GetRecipe, ViewRecipe, Recipe, PersonalRecipe, ViewPersonalRecipe, UpdatePersonalRecipe
 from shoppinglist import ShoppingList
 from trends import Trends
 from userprofile import Profile, ManagePL, EditCreateProfile, SetupEditNotification, Settings, SharedUser#, AddUserToShareList, DeleteSharedUser
@@ -82,6 +82,8 @@ screenManager.add_widget(EditCreateProfile(name="editcreateprofile"))
 
 screenManager.add_widget(SetupEditNotification(name="setupeditnotification"))
 
+screenManager.add_widget(UpdatePersonalRecipe(name="updatepersonalrecipe"))
+
 screenManager.add_widget(Recipe(name="recipes"))
 
 screenManager.add_widget(AddRecipe(name="addrecipe"))
@@ -110,6 +112,7 @@ screenManager.add_widget(Feedback(name="feedback"))
 
 screenManager.add_widget(Notification(name="notification"))
 
+#screenManager.add_widget(NewNotification(name="newnotification"))
 #screenManager.add_widget(ThePerfectLarder(name="theperfectlarder"))
 
 #must have on start and build
