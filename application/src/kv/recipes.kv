@@ -542,10 +542,21 @@
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
 			center_y: self.parent.center_y
-    
-    Button:
-        text: 'Delete'
-        font_size: 65
-        size_hint: (.98, 0.09)
-        pos_hint:{'x': .01, 'top': .105}
-        on_press: root.deleteRecipe()
+
+    GridLayout:
+        cols:2
+        size_hint:(0.98,0.09)
+        pos_hint:{'x': 0.01, 'top': 0.105}
+
+        Button:
+            text: 'Update Recipe'
+            font_size: 65
+            size_hint: (.48, 0.09)
+            on_press: root.updateRecipe()
+
+        Button:
+            text: 'Delete'
+            font_size: 65
+            size_hint: (.48, 0.09)
+            pos_hint:{'x': .01, 'top': .105}
+            on_press: root.deleteRecipe()
