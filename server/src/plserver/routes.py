@@ -55,7 +55,11 @@ def delRecipe():
 @app.route('/getPersonalRecipes', methods = ['POST'])
 def getPersonalRecipes():
     return db.getPersonalRecipes(request.get_json())
-    
+
+@app.route('/updatePersonalRecipe', methods=['POST'])
+def updatePersonalRecipe():
+    return db.updatePersonalRecipe(request.get_json())
+
 @app.route('/getItemsAboutToExpire', methods = ['POST'])
 def getItemsAboutToExpire():
 	return db.getItemsAboutToExpire(request.get_json())
