@@ -199,7 +199,7 @@ class ViewPersonalRecipe(Screen):
         self.ids.servings.text = str(recipe['servings'])
 
     def updateRecipe(self):
-        pass
+        self.manager.current = 'updatepersonalrecipe'
 
 
 
@@ -250,10 +250,86 @@ class ViewPersonalRecipe(Screen):
             App.get_running_app().recipeIngredientsForShoppingList.append(temp)
         self.addIngredientPopup.open()
 
-
-
-
     def delPopupDismiss(self, index):
         self.delRecipePopup.dismiss()
         self.manager.current = 'personalrecipe'
-            
+
+
+class UpdatePersonalRecipe(Screen):
+    recipeID = ""
+
+    recipeButtonContent = GridLayout(cols=1)
+    recipeButtonContent.add_widget(Label(text='Recipe successfully updated!'))
+    recipeButton = Button(text='OK')
+    recipeButtonContent.add_widget(recipeButton)
+    recipePopup = Popup(title='Recipe Updated!', content=recipeButtonContent, auto_dismiss=False, size_hint=(.8, .2))
+    recipeButton.bind(on_press=recipePopup.dismiss)
+
+    def on_pre_enter(self):
+        reScreen = self.manager.get_screen('personalrecipe')
+        recipeContent = reScreen.recipes[reScreen.view.recipe]
+        self.ids.name.text = recipeContent['name']
+        self.ids.servings.text = str(recipeContent['servings'])
+        self.ids.description.text = recipeContent['description']
+        self.recipeID = recipeContent['recipeID']
+
+        recipeIngredients = json.loads(recipeContent['ingredients'])
+
+        for ingredient in recipeIngredients['ingredients']:
+            name = ingredient['name']
+            quantity = ingredient['quantity']
+            measurement = ingredient['measurement']
+
+            ingredient = Ingredient()
+            ingredient.updateIngredient(name, quantity, measurement)
+            self.addIngredient(ingredient)
+
+    def addIngredient(self, ingredient=Ingredient()):
+        self.ids.ingredients.add_widget(ingredient)
+        self.ids.ingredients.children[0].populate()
+
+    def delIngredient(self):
+        self.ids.ingredients.children[0].deleteSelf()
+
+    def updateRecipe(self):
+        payload = {
+            'recipeID': self.recipeID,
+            'name': self.ids.name.text,
+            'servings': self.ids.servings.text,
+            'description': self.ids.description.text,
+            'ingredients': self.extractIngredients()
+        }
+
+        jsonPayload = json.dumps(payload)
+        headers ={'Content-Type':'application/json'}
+        result = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updatePersonalRecipe', headers=headers, data=jsonPayload).json()
+
+        if result['data'] == 'Recipe Updated.':
+            self.clearFieldsAdd()
+            self.recipePopup.open()
+            self.manager.current = 'personalrecipe'
+        else:
+            print(result)
+
+    def extractIngredients(self):
+        ingredients = []
+
+        for i in self.ids.ingredients.children:
+            ingredient = i.children
+
+            temp = {
+                'name' : ingredient[2].text,
+                'quantity' : ingredient[1].text,
+                'measurement' : ingredient[0].text
+            }
+
+            ingredients.append(temp)
+
+        return ingredients
+
+    def clearFieldsAdd(self):
+        self.ids.name.text = ""
+        self.ids.servings.text = ""
+        self.ids.description.text = ""
+        self.ids.ingredients.clear_widgets()
+
