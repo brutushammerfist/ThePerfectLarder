@@ -251,6 +251,139 @@
             font_size: 55
             size_hint:(0.50,0.1)
 
+<UpdatePersonalRecipe>:
+    FloatLayout:
+        Image:
+            source: "graphics/generalbackground.png"
+	Button:
+		text: ""
+		font_size: 15
+		color: 1,0,0,1
+		size_hint: (0.2, 0.05)
+		pos_hint:{'x': 0.01, 'top': .99}
+		on_press: root.manager.current =  'personalrecipe'
+		on_press: root.clearFieldsAdd()
+		Image:
+			source:"graphics/back.png"
+			center_x: self.parent.center_x
+			center_y: self.parent.center_y
+
+    Label:
+		text: "Update Personal Recipe"
+		font_size: 65
+		size_hint: (0.58, 0.05)
+		pos_hint:{'x': 0.27, 'top': .99}
+
+	ScrollView:
+		do_scroll_x: False
+		do_scroll_y: True
+		size_hint: (.98, 0.8)
+        pos_hint: {'top': 0.9}
+
+		GridLayout:
+			cols:1
+			size_hint_y: None
+			height: self.minimum_height
+
+			GridLayout:
+				cols:2
+				size_hint_y: None
+				height: self.minimum_height
+				row_default_height: 125
+
+				Label:
+					text: "Recipe Name:"
+                    font_size: 60
+		            size_hint: (0.58, 0.05)
+		            pos_hint:{'x': 0.01, 'top': .80}
+
+				TextInput:
+					id: name
+					multiline: False
+					pos_hint:{'x': 0.4}
+
+				Label:
+					text: "Servings:"
+                    font_size: 60
+		            size_hint: (0.58, 0.05)
+		            pos_hint:{'x': 0.01, 'top': .55}
+
+				TextInput:
+					id: servings
+					multiline: False
+					pos_hint:{'x': 0.4}
+
+				Label:
+					text: "Description/\nInstructions:"
+                    font_size: 60
+		            size_hint: (0.58, 0.05)
+		            pos_hint:{'x': 0.01, 'top': .80}
+
+				TextInput:
+					id: description
+					size_hint_y: None
+					height: 200
+					multiline: True
+					pos_hint:{'x': 0.4}
+
+			GridLayout:
+				cols:1
+                size_hint_y: None
+				height: self.minimum_height
+				row_default_height: 35
+
+                GridLayout:
+                    cols:3
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 100
+
+                    Label:
+                        text: 'Ingredient'
+                        font_size: 60
+
+                    Label:
+                        text: 'Quantity'
+                        font_size: 60
+
+                    Label:
+                        text: 'Measurement'
+                        font_size: 60
+
+                GridLayout:
+                    cols:1
+                    id: ingredients
+                    font_size:60
+                    size_hint_y: None
+                    height: self.minimum_height
+                    row_default_height: 100
+
+	GridLayout:
+		cols:3
+		size_hint: (.98, 0.1)
+		pos_hint:{'x': .01, 'top': .105}
+
+		Button:
+			text: "Add\nAnother\nIngredient"
+            halign:'center'
+            valign:'middle'
+            font_size: 50
+			on_press: root.addIngredient()
+
+		Button:
+			text: "Remove\nLast\nIngredient"
+            halign:'center'
+            valign:'middle'
+            font_size: 50
+			on_press: root.delIngredient()
+
+        Button:
+            text: "Submit"
+            halign:'center'
+            valign:'middle'
+            font_size: 50
+            on_press: root.updateRecipe()
+
 ##
 #   Taken from https://stackoverflow.com/questions/50416284/kivy-sizing-buttons-to-fit-wrapped-text-within-dropdown
 ##
@@ -422,4 +555,3 @@
         size_hint: (.98, 0.09)
         pos_hint:{'x': .01, 'top': .105}
         on_press: root.deleteRecipe()
-
