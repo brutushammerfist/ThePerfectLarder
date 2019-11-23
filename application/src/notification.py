@@ -8,17 +8,21 @@
 #setup GUI(kivy)
 
 import kivy
+from kivy.app import App
 kivy.require('1.11.1')
 from kivy.uix.screenmanager import Screen
+import json
+import requests
 
 class Notification(Screen):
-	pass
-
-	#def sharingItems(self):
-		#send notification to group/individual with item
 	
-	
-	#def expiringItems(self):
-		#display notification to user of the item that is about to expire
-class NewNotification(Screen):
-	pass
+	def on_pre_enter(self):
+		headers = {'Content-Type' : 'application/json'}
+		#API_ENDPOINT = 'http://411orangef19-mgmt.cs.odu.edu:8000/getItemsAboutToExpire'
+		print( App.get_running_app().userID)
+		payload = {
+			'userID' : App.get_running_app().userID,
+		}
+		
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/viewAllNotification', headers=headers, data=json.dumps(payload)).json()
+		print(response['data'])

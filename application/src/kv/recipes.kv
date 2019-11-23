@@ -8,8 +8,10 @@
 		color: 1,0,0,1
 		size_hint: (0.2, 0.05)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current =  'personalrecipe'
-		on_press: root.clearFieldsAdd()
+		on_press:
+		    root.manager.current =  'personalrecipe'
+		    root.clearFieldsAdd()
+		    root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -140,7 +142,9 @@
 		font_size: 15
 		size_hint: (0.2, 0.07)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current =  'recipes'
+		on_press:
+		    root.manager.current =  'recipes'
+		    root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -174,7 +178,9 @@
 		font_size: 15
 		size_hint: (0.2, 0.07)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current =  'recipes'
+		on_press:
+		    root.manager.current =  'recipes'
+		    root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -279,7 +285,9 @@
         Button:
             text: "Back To Home Screen"
             font_size: 65
-            on_press: root.manager.current = 'homescreen'
+            on_press:
+                root.manager.current = 'homescreen'
+                root.manager.transition.direction = 'right'
             
 <PersonalRecipe>:
     FloatLayout:
@@ -292,7 +300,9 @@
 		color: 1,0,0,1
 		size_hint: (0.2, 0.05)
 		pos_hint:{'x': 0.01, 'top': .99}
-        on_press: root.manager.current = 'recipes'
+        on_press:
+            root.manager.current = 'recipes'
+            root.manager.transition.direction = 'right'
         Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x
@@ -398,7 +408,9 @@
 		font_size: 65
 		size_hint: (0.2, 0.07)
 		pos_hint:{'x': 0.01, 'top': .99}
-		on_press: root.manager.current =  'personalrecipe'
+		on_press:
+		    root.manager.current =  'personalrecipe'
+		    root.manager.transition.direction = 'right'
 		Image:
 			source:"graphics/back.png"
 			center_x: self.parent.center_x

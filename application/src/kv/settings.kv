@@ -4,4 +4,6 @@
 
 		Button:
             text: 'Back'
-            on_press: root.manager.current = 'profile'                
+            on_press:
+                root.manager.current = 'profile'
+                root.manager.transition.direction = 'right'

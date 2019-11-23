@@ -7,8 +7,10 @@
         text: " "
         size_hint: (0.2, 0.07)
         pos_hint:{'x': 0.01, 'top': .99}
-        on_press: root.manager.current =  'homescreen'
-        #on_press: root.ids.shareFoodItems.clear_widgets()
+        on_press:
+            root.manager.current =  'homescreen'
+            root.manager.transition.direction = 'right'
+            #root.ids.shareFoodItems.clear_widgets()
         Image:
             source:"graphics/back.png"
             center_x: self.parent.center_x

@@ -25,7 +25,9 @@
 		Button:
             text: 'Back To Home'
             font_size: 65
-            on_press: root.manager.current = 'homescreen'
+            on_press:
+                root.manager.current = 'homescreen'
+                root.manager.transition.direction = 'right'
             
         
        
@@ -39,8 +41,10 @@
 	    color: 1,0,0,1
 	    size_hint: (0.2, 0.05)
 	    pos_hint:{'x': 0.01, 'top': .99}
-	    on_press: root.manager.current = 'profile'
-	    on_press: root.ids.newLoc.text = ''
+	    on_press:
+	        root.manager.current = 'profile'
+	        root.ids.newLoc.text = ''
+	        root.manager.transition.direction = 'right'
 	    Image:
 		    source:"graphics/back.png"
 		    center_x: self.parent.center_x
@@ -128,8 +132,10 @@
         text: " "
         size_hint: (0.2, 0.07)
         pos_hint:{'x': 0.01, 'top': .99}
-        on_press: root.manager.current =  'profile'
-        on_press: root.ids.shareList.clear_widgets()
+        on_press:
+            root.manager.current =  'profile'
+            root.ids.shareList.clear_widgets()
+            root.manager.transition.direction = 'right'
         Image:
             source:"graphics/back.png"
             center_x: self.parent.center_x
