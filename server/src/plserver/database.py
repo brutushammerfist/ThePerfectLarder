@@ -486,6 +486,16 @@ class Database():
         else:
             return (json.dumps(dict(data='Personal Recipes Empty.')), 401)
 
+    def updatePersonalRecipe(self, content):
+        self.ensureConnected()
+        sql = "UPDATE Recipes SET name=%s, description=%s, servings=%s, ingredients=%s WHERE id=%s"
+        val = (content['name'], content['description'], content['servings'], str(content['ingredients']), content['recipeID'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+
+        return (json.dumps(dict(data='Recipe Updated.')), 200)
+
+
     def addRecipe(self, content):
         self.ensureConnected()
         sql = "INSERT INTO Recipes (name, description, servings, ingredients) VALUES (%s, %s, %s, %s)"
