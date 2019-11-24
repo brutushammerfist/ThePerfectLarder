@@ -115,13 +115,13 @@ class AddRecipe(Screen):
         
         for i in self.ids.ingredients.children:
             ingredient = i.children
-            
+
             temp = {
                 'name' : ingredient[2].text,
-                'quantity' : ingredient[1].text,
-                'measurement' : ingredient[0].text
+                'quantity' : ingredient[3].text,
+                'measurement' : ingredient[1].text
             }
-            
+
             ingredients.append(temp)
             
         return ingredients
@@ -325,8 +325,8 @@ class UpdatePersonalRecipe(Screen):
 
             temp = {
                 'name' : ingredient[2].text,
-                'quantity' : ingredient[1].text,
-                'measurement' : ingredient[0].text
+                'quantity' : ingredient[3].text,
+                'measurement' : ingredient[1].text
             }
 
             ingredients.append(temp)
