@@ -2,7 +2,7 @@
 # Team Orange
 # CS411W ODU Fall 2019
 # By: Adeniyi Adeniran, Chris Whitney, Collin DeWaters, Derek Tiller, Jonathan Schneider
-#     Matthew Perry, Melanie Devoe, and Zachery Miller  
+#     Matthew Perry, Melanie Devoe, and Zachery Miller
 
 import kivy
 kivy.require('1.11.1')
@@ -18,6 +18,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.spinner import Spinner
 from kivy.uix.popup import Popup
 from kivy.core.window import WindowBase
+from kivy.uix.image import Image
 
 class WrapButton(Button):
     pass
@@ -60,10 +61,15 @@ class Ingredient(GridLayout):
         self.measurement = measurement
 
     def populate(self):
-        self.cols = 3
+        self.cols = 4
         self.add_widget(TextInput(text=self.name))
         self.add_widget(TextInput(text=self.quantity))
         self.add_widget(Spinner(text =self.measurement, values = ('teaspoon', 'tablespoon', 'fluid ounce(fl oz)', 'cup', 'pint', 'quart', 'gallon', 'ounce(oz)', 'pounds(lbs)', 'mL', 'liter(L)', 'gram(g)', 'unit')))
+
+        deleteButton = Button(text="Delete", size_hint=(None, None))
+        deleteButton.bind(on_press= lambda x:self.deleteSelf())
+
+        self.add_widget(deleteButton)
 
     def deleteSelf(self):
         self.parent.remove_widget(self)
