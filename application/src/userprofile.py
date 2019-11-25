@@ -90,6 +90,7 @@ class Profile(Screen):
 class Settings(Screen):
     
     def on_pre_enter(self):
+        self.ids.locations.clear_widgets()
         measureType = App.get_running_app().userMeasurement
         if measureType == 0:
             self.ids.imperial.state = 'down'
