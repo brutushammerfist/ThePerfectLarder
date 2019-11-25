@@ -86,7 +86,7 @@ class Profile(Screen):
 #class StorageLocation(GridLayout):
 #    def deleteSelf(self):
 #        self.parent.remove_widget(self)
-    
+
 class Settings(Screen):
     
     def on_pre_enter(self):
@@ -113,11 +113,53 @@ class Settings(Screen):
         #self.ids.locations.children.pop(0)
         num = 0
         for i in self.ids.locations.children:
-            if i.text == location:
+            if i.text == location.text:
                 self.ids.locations.children.pop(num)
                 break
             else:
                 num += 1
+
+    def updateProfilePreferences(self):
+
+        updateMeasurementResult = self.updateMeasurement()
+        updateStorageLocationsResult = self.updateStorageLocations()
+
+        if(updateMeasurementResult == False or updateStorageLocationsResult == False):
+            text = "Unable to update user preferences"
+            title = "Error"
+
+        else:
+            text = "User preferences have been updated!"
+            title = "Success!"
+
+
+        updateProfile = GridLayout(cols=1)
+        updateProfile.add_widget(Label(text=text))
+        updateProfileButton = Button(text='OK')
+        updateProfile.add_widget(updateProfileButton)
+        updateProfilePopup = Popup(title=title, content=updateProfile, auto_dismiss=False, size_hint=(.8, .2))
+        updateProfileButton.bind(on_press=updateProfilePopup.dismiss)
+
+        updateProfilePopup.open()
+
+    def updateStorageLocations(self):
+        payload = {
+            'userID' : App.get_running_app().userID,
+            'locations' : []
+        }
+
+        for i in self.ids.locations.children:
+            payload['locations'].append(i.text)
+
+        headers = {'Content-Type': 'application/json'}
+
+        response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateStorageLocations', headers=headers, data=json.dumps(payload)).json()
+        if response['data'] == 'Successfully Updated.':
+            App.get_running_app().storageLocations = payload['locations']
+            return True
+        else:
+            return False
+
     
     def updateMeasurement(self):
         #button = 0
@@ -134,10 +176,12 @@ class Settings(Screen):
             payload['measureType'] = 1
             
         r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateMeasurementSetting', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
-        
+
         if r['data'] == 'Successfully Updated.':
-            self.manager.current = 'profile'
             App.get_running_app().userMeasurement = payload['measureType']
+            return True
+        else:
+            return False
 
 
 class ManagePL(Screen):  # part of the user profile

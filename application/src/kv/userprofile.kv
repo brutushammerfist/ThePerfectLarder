@@ -103,13 +103,6 @@
                 text: 'Storage Locations'
                 font_size: 57
 
-    Button:
-        text: 'Submit'
-        font_size: 65
-		size_hint: (.98, 0.1)
-		pos_hint:{'x': .01, 'top': .11}
-        on_press: root.updateMeasurement()
-
 	ScrollView:
 		do_scroll_x: False
 		do_scroll_y: True
@@ -122,6 +115,13 @@
 			size_hint_y: None
             height: self.minimum_height
             row_default_height: 150
+
+    Button:
+        text: 'Submit'
+        font_size: 65
+        size_hint: (.98, 0.1)
+        pos_hint: {'x': .01, 'top': .11}
+        on_press: root.updateProfilePreferences()
 
 <SharedUser>:
     FloatLayout:
