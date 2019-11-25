@@ -26,6 +26,19 @@
 		    source:"graphics/back.png"
 		    center_x: self.parent.center_x
 		    center_y: self.parent.center_y
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: (.98,.815)
+		pos_hint: {'x': 0.01, 'top': 0.8}
+
+        GridLayout:
+            id: notifications
+            cols: 1
+            row_default_height: 100
+            row_force_default: True
+
 	GridLayout:
 		cols: 2
 		size_hint: (1, .12)
