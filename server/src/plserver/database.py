@@ -799,7 +799,7 @@ class Database():
     def updateStorageLocations(self, content):
         self.ensureConnected()
         sql = "UPDATE Users SET storageLocations = %s WHERE id = %s"
-        val = (json.dumps(content['locations']), content['userID'], )
+        val = (content['locations'], content['userID'], )
         self.cursor.execute(sql, val)
         result = self.connector.commit()
         
