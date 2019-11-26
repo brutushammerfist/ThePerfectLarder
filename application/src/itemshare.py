@@ -154,7 +154,6 @@ class ItemShare(Screen):
 	#Shares the specified item to users/groups; needs global variables foodItems and itemToShare
 	def shareItem(self, btn):
 		quantity = btn.quanTxt.text
-		
 		intMaxQaun = float(str(btn.maxFoodQuantity))
 		
 		if(quantity != ""):
