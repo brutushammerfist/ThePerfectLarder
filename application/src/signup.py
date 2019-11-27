@@ -152,13 +152,13 @@ class SignUp(Screen):
                                 headers = {'Content-Type' : 'application/json'}
             
                                 hasher = hashlib.md5()
-                                hasher.update(userPassword)
+                                hasher.update(userPassword.encode("ASCII"))
                                 payload = {
                                     'name' : name,
                                     'useremail' : userEmail,
                                     'phone' : phone,
                                     'username' : userName,
-                                    'password' : hasher.digest()
+                                    'password' : str(hasher.digest())
                                  }
                                 response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/signUp', headers=headers, data=json.dumps(payload)).json()
                                 self.remove_widget(self.LE)

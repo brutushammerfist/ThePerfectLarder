@@ -80,9 +80,11 @@ class Login(Screen):
                 
                 hasher = hashlib.md5()
                 hasher.update(passWord.encode("ASCII"))
+                passwd = str(hasher.digest())
+                print(passwd)
                 payload = {
                     'username': usersName,
-                    'password': str(hasher.digest())
+                    'password': passwd
                 }
                 response = None
                 try:
@@ -119,3 +121,4 @@ class Login(Screen):
                 self.passWordEmptyPopup.open()
         else:
             self.nameEmptyPopup.open()
+
