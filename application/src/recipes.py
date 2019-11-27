@@ -117,8 +117,8 @@ class AddRecipe(Screen):
             ingredient = i.children
 
             temp = {
-                'name' : ingredient[2].text,
-                'quantity' : ingredient[3].text,
+                'name' : ingredient[3].text,
+                'quantity' : ingredient[2].text,
                 'measurement' : ingredient[1].text
             }
 
@@ -190,7 +190,7 @@ class ViewPersonalRecipe(Screen):
         self.manager.transition.direction = 'left'
         self.ids.name.text = ""
         self.ids.ingredients.clear_widgets()
-        self.ids.instructions.text = ""
+        self.ids.instructions.clear_widgets()
         self.ids.servings.text = ""
         reScreen = self.manager.get_screen('personalrecipe')
         recipe = reScreen.recipes[reScreen.view.recipe]
@@ -324,8 +324,8 @@ class UpdatePersonalRecipe(Screen):
             ingredient = i.children
 
             temp = {
-                'name' : ingredient[2].text,
-                'quantity' : ingredient[3].text,
+                'name' : ingredient[3].text,
+                'quantity' : ingredient[2].text,
                 'measurement' : ingredient[1].text
             }
 
