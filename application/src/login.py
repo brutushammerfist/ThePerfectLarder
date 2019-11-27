@@ -22,6 +22,7 @@ from kivy.app import App
 # Must have to do requests/work with json data
 import json
 import requests
+import hashlib
 #import socketio
 
 
@@ -76,10 +77,12 @@ class Login(Screen):
             if(passWord != ""):
                 # Will most likely not change for most POST requests
                 headers = {'Content-Type': 'application/json'}
-        
+                
+                hasher = hashlib.md5()
+                hasher.update(passWord.encode("ASCII"))
                 payload = {
                     'username': usersName,
-                    'password': passWord
+                    'password': str(hasher.digest())
                 }
                 response = None
                 try:
