@@ -226,7 +226,7 @@ class ShoppingList(Screen):
 
                 item = {
                     'itemname': ingredList[i]['name'],
-                    'need': str(ingredList[i]['need']),
+                    'need': str(ingredList[i]['quantity']),
                     'measurement': ingredList[i]['measurement']
                 }
 
