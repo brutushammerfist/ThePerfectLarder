@@ -248,7 +248,7 @@ class ShoppingList(Screen):
             self.refreshShoppingList()
         else:
             for n in range(0, len(self.items)):
-                if(searchVal in self.items[n]['itemname']):
+                if(searchVal.lower() in self.items[n]['itemname'].lower()):
                     button = Button(text = self.items[n]['itemname'] + " - " + self.items[n]['need'] + " " + self.items[n]['measurement'])
                     callback = lambda n:self.EditOrRemoveItem(n)
                     button.itemToDel = n
