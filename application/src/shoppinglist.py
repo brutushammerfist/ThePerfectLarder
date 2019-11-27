@@ -149,7 +149,16 @@ class ShoppingList(Screen):
     button5.bind(on_press = AddItem)
     
     def on_pre_enter(self):
+
+        if(len(self.items) > 0):
+            self.ids.inventoryID.clear_widgets()
+            self.refreshShoppingList()
+
+        else:
+            self.setUpShoppingList()
         
+
+    def setUpShoppingList(self):
         self.ids.inventoryID.clear_widgets()
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getShoppingList', headers={'Content-Type': 'application/json'}, data=json.dumps(dict(userID=App.get_running_app().userID))).json()
 
@@ -164,8 +173,14 @@ class ShoppingList(Screen):
                 button.bind(on_press = callback)
                 self.ids.inventoryID.add_widget(button)
 
+                item = {
+                    'itemname': ingredList[i]['name'],
+                    'need': str(ingredList[i]['quantity']),
+                    'measurement': ingredList[i]['measurement']
+                }
 
-            self.items = response['data']
+                self.items.append(item)
+
             for n in range(0, len(response['data'])):
                 if response['data'][n]['need'] > 0:
                     button = Button(text = response['data'][n]['itemname'] + " - " + str(response['data'][n]['need']) + " " + response['data'][n]['measurement'])
@@ -173,10 +188,81 @@ class ShoppingList(Screen):
                     button.itemToDel = n
                     button.bind(on_press = callback)
                     self.ids.inventoryID.add_widget(button)
+
+                    item = {
+                        'itemname': response['data'][n]['itemname'],
+                        'need': str(response['data'][n]['need']),
+                        'measurement': response['data'][n]['measurement']
+                    }
+
+                    self.items.append(item)
         else:
             self.ids.inventoryID.add_widget(Button(text = 'Shopping List currently empty.'))
+
+
+    def refreshShoppingList(self):
+        for n in range(0, len(self.items)):
+            button = Button(text = self.items[n]['itemname'] + " - " + self.items[n]['need'] + " " + self.items[n]['measurement'])
+            callback = lambda n:self.EditOrRemoveItem(n)
+            button.itemToDel = n
+            button.bind(on_press = callback)
+            self.ids.inventoryID.add_widget(button)
+
+        ingredList = App.get_running_app().recipeIngredientsForShoppingList
+
+        for i in range(0, len(ingredList)):
+            alreadyInItems = False
+
+            for n in range(0, len(self.items)):
+                if (ingredList[i]['name'] == self.items[n]['itemname']):
+                    alreadyInItems = True
+
+            if not alreadyInItems:
+                button = Button(text = ingredList[i]['name'] + " - " + ingredList[i]['quantity'] + " " + ingredList[i]['measurement'])
+                callback = lambda n:self.EditOrRemoveItem(n)
+                button.itemToDel = n
+                button.bind(on_press = callback)
+                self.ids.inventoryID.add_widget(button)
+
+                item = {
+                    'itemname': ingredList[i]['name'],
+                    'need': str(ingredList[i]['need']),
+                    'measurement': ingredList[i]['measurement']
+                }
+
+                self.items.append(item)
             
     def EditOrRemoveItem(self, index):
         
         self.selectedItem = index
         self.popup.open()
+
+    def searchShoppingListForItem(self):
+        self.ids.inventoryID.clear_widgets()
+
+        itemFound = False
+
+        searchVal = str(self.ids.search.text)
+
+        if(searchVal == ""):
+            self.refreshShoppingList()
+        else:
+            for n in range(0, len(self.items)):
+                if(searchVal in self.items[n]['itemname']):
+                    button = Button(text = self.items[n]['itemname'] + " - " + self.items[n]['need'] + " " + self.items[n]['measurement'])
+                    callback = lambda n:self.EditOrRemoveItem(n)
+                    button.itemToDel = n
+                    button.bind(on_press = callback)
+                    self.ids.inventoryID.add_widget(button)
+                    itemFound = True
+
+            if(itemFound == False):
+                searchButtonContent = GridLayout(cols=1)
+                searchButtonContent.add_widget(Label(text='No Item Found'))
+                popupButton = Button(text='OK')
+                searchButtonContent.add_widget(popupButton)
+                searchPopup = Popup(title='Search Unsuccessful', content=searchButtonContent, auto_dismiss=False, size_hint=(.8, .2))
+                popupButton.bind(on_press=searchPopup.dismiss)
+
+                searchPopup.open()
+
