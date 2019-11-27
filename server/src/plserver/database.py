@@ -436,10 +436,12 @@ class Database():
                 if len(recipe_list) != 0:
                     recipe = {
                         'name' : recipe_list[0]['name'],
-                        'cookTime' : recipe_list[0]['cookTime'],
+                        #'cookTime' : recipe_list[0]['cookTime'],
                         'recipeIngredient' : recipe_list[0]['recipeIngredient'],
                         'recipeInstructions' : recipe_list[0]['recipeInstructions']
                     }
+                    if 'cookTime' in recipe_list[0].keys():
+                        recipe['cookTime'] = recipe_list[0]['cookTime']
 
                     temp.append(recipe)
 
@@ -774,12 +776,13 @@ class Database():
                 if x['itemname'] == i[1] and x['measurement'] == i[3]:
                     x['need'] -= i[2]
                     if x['need'] < 0.5:
-                        needsToDel.append(index)
+                        if index not in needsToDel:
+                            needsToDel.append(index)
                     else:
                         x['need'] = math.ceil(x['need'])
             index += 1
         
-        needsToDel.reverse()
+        needsToDel.sort(reverse=True)
 
         for x in needsToDel:
             useData.pop(x)

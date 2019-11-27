@@ -145,17 +145,17 @@ class Settings(Screen):
     def updateStorageLocations(self):
         payload = {
             'userID' : App.get_running_app().userID,
-            'locations' : []
+            'locations' : {'locations' : []}
         }
 
         for i in self.ids.locations.children:
-            payload['locations'].append(i.text)
+            payload['locations']['locations'].append(i.text)
 
         headers = {'Content-Type': 'application/json'}
 
         response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateStorageLocations', headers=headers, data=json.dumps(payload)).json()
         if response['data'] == 'Successfully Updated.':
-            App.get_running_app().storageLocations = payload['locations']
+            App.get_running_app().storageLocations = payload['locations']['locations']
             return True
         else:
             return False
