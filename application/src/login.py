@@ -80,11 +80,9 @@ class Login(Screen):
                 
                 hasher = hashlib.md5()
                 hasher.update(passWord.encode("ASCII"))
-                passwd = str(hasher.digest())
-                print(passwd)
                 payload = {
                     'username': usersName,
-                    'password': passwd
+                    'password': str(hasher.digest())
                 }
                 response = None
                 try:

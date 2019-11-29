@@ -21,6 +21,7 @@ from kivy.uix.gridlayout import GridLayout
 
 import requests
 import json
+import math
 
 
 nameEmptyContent = GridLayout(cols=1)
@@ -185,8 +186,19 @@ class Settings(Screen):
 
 
 class ManagePL(Screen):  # part of the user profile
-    pass
-
+    def on_pre_enter(self):
+            headers = {'Content-Type' : 'application/json'}
+            
+            payload = {
+                'userID' : App.get_running_app().userID
+            }
+            
+            response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/getPerfectLarder', headers=headers, data=json.dumps(payload)).json()
+            
+            for x in response['data']:
+                if x['need'] > 0:
+                    button = Button(text = str(x['itemname']) + " - " + str(math.ceil(x['need'])) + " " + str(x['measurement']))
+                    self.ids.perfectlarder.add_widget(button)
 
 class EditCreateProfile(Screen):  # part of the user profile
     pass

@@ -154,39 +154,3 @@ class DeleteItem(Screen):        #part of inventory
     def clearFieldsDel(self):
         self.ids.used.text = ""
         self.ids.useType.text = ""
-
-"""  
-class PerfectLarder(Screen):
-
-        def thePerfectLarder(self):
-        
-            
-            #users perfect larder popup to show items to keep on hand (needs to be scrollable)
-            nameContent = GridLayout(cols=1)
-            nameContent.add_widget(Label(text= 'Display the user perfect larder inventory'))
-            nameButton = Button(text='OK')
-            nameContent.add_widget(nameButton)
-            plPopup = Popup(title='Inventory', content=nameContent, auto_dismiss=False)
-            nameButton.bind(on_press=plPopup.dismiss)
-            
-            #user inventory popup to show inventory (needs to be scrollable)
-            nameContent = GridLayout(cols=1)
-            nameContent.add_widget(Label(text= 'Not Enough Data'))
-            nameButton = Button(text='OK')
-            nameContent.add_widget(nameButton)
-            errorPopup = Popup(title='Inventory Empty', content=nameContent, auto_dismiss=False)
-            nameButton.bind(on_press=errorPopup.dismiss)
-            
-            headers = {'Content-Type' : 'application/json'}
-            
-            payload = {
-                'userid' : userID
-            }
-            
-            response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/perfectLarder', headers=headers, data=json.dumps(payload)).json()
-            
-            if response['data'] == 'PL Found.':
-                self.plPopup.open()
-            elif response['data'] == 'PL Empty.':
-                self.error.popup.open()  #if inventory is empty
- """           
