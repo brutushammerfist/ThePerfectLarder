@@ -87,6 +87,11 @@ class Notification(Screen):
 	def acceptItem(self, btn):
 		#btn.notify is identical to the dict i in on_pre_enter; i.e. btn.notify['itemname'] is the name of the item
 		#backend stuff here
+		def on_pre_enter(self):
+			payload1 = {
+			'userID' : App.get_running_app().userID,
+			}
+			pass
 		if True:
 			acceptPopup.open()
 			btn.parent.parent.parent.parent.parent.dismiss()	#Dismiss previous popup
@@ -99,6 +104,11 @@ class Notification(Screen):
 	def rejectItem(self, btn):
 		# btn.notify is identical to the dict i in on_pre_enter; i.e. btn.notify['itemname'] is the name of the item
 		# backend stuff here
+		def on_pre_enter(self):
+			payload2 = {
+			'userID' : App.get_running_app().userID,
+			}
+			pass
 		if True:
 			rejectPopup.open()
 			btn.parent.parent.parent.parent.parent.dismiss()	#Dismiss previous popup

@@ -103,4 +103,9 @@ def shareFoodItemToUser():
 @app.route("/viewAllNotification", methods=["POST"])
 def viewAllNotification():
 	return db.viewAllNotification(request.get_json())
-
+@app.route("/rejectItem", methods=["POST"])
+def rejectItem():
+	return db.rejectItem(request.get_json())
+@app.route("/acceptItem",methods=["POST"])
+def acceptItem():
+	return db.acceptItem(request.get_json())
