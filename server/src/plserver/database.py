@@ -999,6 +999,13 @@ class Database():
         return (json.dumps(dict(data='1')), 200)
     def acceptItem(self,content):
         self.ensureConnected()
+        response = 'yes'
+        seen = 'yes'
+        sql1 = "UPDATE SharedItem SET response = %s, seen= %s WHERE SharedItem.shareditemId = %s AND SharedItem.userId = %s"
+        val1 = (response,seen,content['itemId'],content['userID'], )
+        self.cursor.execute(sql1, val1)
+        result1 = self.connector.commit()
+        
         sql = "UPDATE Items SET quantity = %s WHERE Items.inventoryID = %s AND Items.id = %s"
         val = (content['requantityOU'],content['ownerId'],content['itemId'], )
         self.cursor.execute(sql, val)
