@@ -119,13 +119,12 @@ class Notification(Screen):
 	def rejectItem(self, btn):
 		# btn.notify is identical to the dict i in on_pre_enter; i.e. btn.notify['itemname'] is the name of the item
 		# backend stuff here
-		def on_pre_enter(self):
-			payload2 = {
-			'userID' : App.get_running_app().userID,
-			'itemId': btn.notify['itemId']
-			}
-			response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/rejectItem', headers=headers, data=json.dumps(payload2)).json()
-			print(reponse['data'])
+		headers = {'Content-Type' : 'application/json'}
+		payload2 = {
+		'userID' : App.get_running_app().userID,
+		'itemId': btn.notify['itemId']
+		}
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/rejectItem', headers=headers, data=json.dumps(payload2)).json()
 		if True:
 			rejectPopup.open()
 			btn.parent.parent.parent.parent.parent.dismiss()	#Dismiss previous popup
