@@ -102,6 +102,7 @@ class Notification(Screen):
 	def acceptItem(self, btn):
 		#btn.notify is identical to the dict i in on_pre_enter; i.e. btn.notify['itemname'] is the name of the item
 		#backend stuff here
+		headers = {'Content-Type' : 'application/json'}
 		remainquantity = btn.notify['maxquantity'] - btn.notify['quantity']
 		payload1 = {
 		'userID' : App.get_running_app().userID,
