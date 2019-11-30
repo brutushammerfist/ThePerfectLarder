@@ -296,7 +296,6 @@ class Database():
             newQuantity = result[0][2] - float(content['quantity'])
         
             if newQuantity <= 0:
-                #sql = "DELETE FROM Items WHERE id = %s"
                 sql = "UPDATE Items SET quantity = %s WHERE id = %s"
                 val = (0, content['itemID'], )
             else:
@@ -313,15 +312,16 @@ class Database():
             self.cursor.execute(sql, val)
             result = self.cursor.fetchall()
             
+            with open("/home/mperry/debug.log", "w") as debug:
+                debug.write(result[0][0])
             useData = json.loads(result[0][0])
             
-            if content['useType'] == 'used':
+            if content['useType'] == 'Used':
                 used = {
                     "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
-                    "quantity" : content["quantity"]
+                    "quantity" : float(content["quantity"])
                 }
                 useData['used'].append(used)
-                useData['usedTotal'] = float(useData['usedTotal']) + float(content['quantity'])
                 
                 sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
                 val = (json.dumps(useData), useID, )
@@ -330,10 +330,9 @@ class Database():
             else:
                 exp = {
                     "date" : datetime.datetime.now().strftime("%Y-%m-%d"),
-                    "quantity" : content["quantity"]
+                    "quantity" : float(content["quantity"])
                 }
                 useData['wasted'].append(exp)
-                useData['wastedTotal'] = float(useData['wastedTotal']) + float(content['quantity'])
                 
                 sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
                 val = (json.dumps(useData), useID, )
@@ -699,6 +698,8 @@ class Database():
             val = (x[3], )
             self.cursor.execute(sql, val)
             result = self.cursor.fetchone()
+            with open("/home/mperry/debug.log", "w") as debug:
+                debug.write(result[1] + "\n" + str(result[3]))
             data = {
                 "id" : result[0],
                 "itemname" : result[1],
@@ -726,9 +727,11 @@ class Database():
             for x in useData:
                 usedSegmentTotal = 0
                 
+                with open("/home/mperry/debug.log", "w") as debug:
+                    debug.write(x['itemname'])
                 for i in x['usage']['used']:
                     if datetime.date.fromisoformat(i['date']) > segmentBeginDate and datetime.date.fromisoformat(i['date']) <= segmentStopDate:
-                        usedSegmentTotal += i['quantity']
+                        usedSegmentTotal += float(i['quantity'])
                 
                 x['useValues'].append(usedSegmentTotal)
                 x['useTotal'] += usedSegmentTotal
