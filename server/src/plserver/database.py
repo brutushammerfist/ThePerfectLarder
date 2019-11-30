@@ -980,6 +980,15 @@ class Database():
             return (json.dumps(dict(data = "empty")), 200)
         
     def rejectItem(self,content):
-        pass
+        userId = content['userID']
+        sharedItemId = content['itemId']
+        response = "no"
+        
+        sql = "UPDATE SharedItem response = %s WHERE shareditemId = %s AND userId = %s"
+        val = (response,sharedItemId,userId, )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+
+        return (json.dumps(dict(data='1')), 200)
     def acceptItem(self,content):
         pass
