@@ -984,7 +984,7 @@ class Database():
         sharedItemId = content['itemId']
         response = "no"
         
-        sql = "UPDATE SharedItem SET response = %s WHERE shareditemId = %s AND userId = %s"
+        sql = "UPDATE SharedItem SET response = %s WHERE SharedItem.shareditemId = %s AND SharedItem.userId = %s"
         val = (response,sharedItemId,userId, )
         self.cursor.execute(sql, val)
         result = self.connector.commit()
