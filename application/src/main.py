@@ -54,8 +54,11 @@ Builder.load_file('kv/userprofile.kv')
 
 
 class HomeScreen(Screen):    # Main screen after login
-    pass
-
+    
+    def logout(self):
+        self.manager.get_screen('shoppinglist').items.clear()
+        self.manager.current = 'userlogin'
+        
 screenManager = ScreenManager()
 #Adding singUp screen
 

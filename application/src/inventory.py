@@ -138,7 +138,7 @@ class DeleteItem(Screen):        #part of inventory
         item = invScreen.items[invScreen.itemToDel.itemToDel]
     
         headers = {'Content-Type' : 'application/json'}
-            
+
         payload = {
             'itemID' : item['itemID'],
             'quantity' : self.ids.used.text,
