@@ -102,11 +102,12 @@ class Notification(Screen):
 	def acceptItem(self, btn):
 		#btn.notify is identical to the dict i in on_pre_enter; i.e. btn.notify['itemname'] is the name of the item
 		#backend stuff here
-		def on_pre_enter(self):
-			payload1 = {
-			'userID' : App.get_running_app().userID,
-			}
-			pass
+		payload1 = {
+		'userID' : App.get_running_app().userID,
+		'max': btn.notify['maxItem'],
+		'itemId': btn.notify['itemId']
+		}
+		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/acceptItem', headers=headers, data=json.dumps(payload1)).json()
 		if True:
 			acceptPopup.open()
 			btn.parent.parent.parent.parent.parent.dismiss()	#Dismiss previous popup

@@ -958,7 +958,7 @@ class Database():
         #accept or reject
         userId = (content['userID'],)
         
-        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen, SharedItem.shareditemId FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemId = Items.id WHERE SharedItem.userId =%s"
+        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen, SharedItem.shareditemId, Items.measurement,Items.location,Items.expiration,Items.quantity FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemId = Items.id WHERE SharedItem.userId =%s"
         crows = self.cursor.execute(sql,userId)
         result = self.cursor.fetchall()
         if(len(result) > 0 ):         
@@ -971,7 +971,11 @@ class Database():
                     'maxItem': row[3],
                     'response': row[4],
                     'seen': row[5],
-                    'itemId': row[6]
+                    'itemId': row[6],
+                    "Unit": row[7],
+                    "Location": row[8],
+                    "expire": row[9],
+                    "maxquantity": row[10]
                 }
                 
                 objects_list.append(p)            
@@ -991,4 +995,8 @@ class Database():
 
         return (json.dumps(dict(data='1')), 200)
     def acceptItem(self,content):
+        if(content['max'] == 'yes'):
+            pass
+        elif(content['max'] == 'no'):
+            pass
         pass
