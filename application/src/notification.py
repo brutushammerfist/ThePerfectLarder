@@ -57,18 +57,31 @@ class Notification(Screen):
 					button.notify = i
 					button.bind(on_press=callback)
 					self.ids.notifications.add_widget(button)
-				elif i['response'] == 'yes':
-					return
-				elif i['response'] == 'no':
-					return
+				else:
+					if i['response'] == 'yes':
+						button = Button(text='Someone has accepted your item!\nPress here to dismiss')
+					elif i['response'] == 'no':
+						button = Button(text='Someone has rejected your item!\nPress here to dismiss')
+					button.response = i
+					button.bind(on_press=self.removeNotification)
+					self.ids.notifications.add_widget(button)
+		elif response['data'] == 'empty':
+			button = Button(text='No current notifications')
+			self.ids.notifications.add_widget(button)
 
 		print(response['data'])
+
+	def removeNotification(self, btn):
+		#Remove the notification from the database
+		#btn.response is identical to i in the on_pre_enter function
+		self.on_pre_enter()	#Refresh the list
 
 	def notificationPopup(self, btn):
 		acceptButton = Button(text='Accept Item')
 		rejectButton = Button(text='Reject Item')
+		cancelButton = Button(text='Cancel')
 		itemContent = GridLayout(cols=1)
-		buttonContent = GridLayout(cols=2)
+		buttonContent = GridLayout(cols=3)
 
 		itemContent.add_widget(Label(text='Would you like to accept ' + str(btn.notify['quantity']) + ' of '
 									 + btn.notify['itemname'] + ' from ' + btn.notify['username'] + '?'))
@@ -77,10 +90,12 @@ class Notification(Screen):
 		rejectButton.bind(on_press=self.rejectItem)
 		acceptButton.notify = btn.notify
 		acceptButton.bind(on_press=self.acceptItem)
+		buttonContent.add_widget(cancelButton)
 		buttonContent.add_widget(rejectButton)
 		buttonContent.add_widget(acceptButton)
 		itemContent.add_widget(buttonContent)
 		notificationPopup = Popup(title='Notification', content=itemContent, auto_dismiss=False, size_hint=(.6, .4))
+		cancelButton.bind(on_press=notificationPopup.dismiss)
 		notificationPopup.open()
 		return
 
