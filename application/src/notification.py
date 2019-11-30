@@ -112,7 +112,9 @@ class Notification(Screen):
 		'itemname': btn.notify['itemname'],
 		'expire': btn.notify['expire'],
 		'unit': btn.notify['Unit'],
-		'location': btn.notify['Location']
+		'location': btn.notify['Location'],
+		'useId': btn.notify['useID'],
+		'ownerId':btn.notify['ownerId']
 		}
 		response = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/acceptItem', headers=headers, data=json.dumps(payload1)).json()
 		if True:

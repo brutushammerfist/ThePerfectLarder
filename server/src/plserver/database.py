@@ -958,7 +958,7 @@ class Database():
         #accept or reject
         userId = (content['userID'],)
         
-        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen, SharedItem.shareditemId, Items.measurement,Items.location,Items.expiration,Items.quantity FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemId = Items.id WHERE SharedItem.userId =%s"
+        sql = "SELECT Users.username, Items.itemname, SharedItem.quantity, SharedItem.maxItem, SharedItem.response, SharedItem.seen, SharedItem.shareditemId, Items.measurement,Items.location,Items.expiration,Items.quantity, Items.useID, SharedItem.ownerId FROM SharedItem INNER JOIN Users ON SharedItem.ownerId = Users.id INNER JOIN Items ON SharedItem.shareditemId = Items.id WHERE SharedItem.userId =%s"
         crows = self.cursor.execute(sql,userId)
         result = self.cursor.fetchall()
         if(len(result) > 0 ):         
@@ -975,7 +975,9 @@ class Database():
                     "Unit": row[7],
                     "Location": row[8],
                     "expire": row[9],
-                    "maxquantity": row[10]
+                    "maxquantity": row[10],
+                    "useID": row[11],
+                    "ownerId": row[12]
                 }
                 
                 objects_list.append(p)            
@@ -984,6 +986,7 @@ class Database():
             return (json.dumps(dict(data = "empty")), 200)
         
     def rejectItem(self,content):
+        self.ensureConnected()
         userId = content['userID']
         sharedItemId = content['itemId']
         response = "no"
@@ -995,8 +998,18 @@ class Database():
 
         return (json.dumps(dict(data='1')), 200)
     def acceptItem(self,content):
-        if(content['max'] == 'yes'):
-            pass
-        elif(content['max'] == 'no'):
-            pass
-        pass
+        self.ensureConnected()
+        sql = "UPDATE Items SET quantity = %s WHERE Items.inventoryID = %s AND Items.id = %s"
+        val = (content['requantityOU'],content['ownerId'],content['itemId'], )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+        
+        self.copynewItem(content['userID'],content['useId'], content['itemname'],content['expire'],content['newquantityNU'],content['unit'], content['location'])
+        return (json.dumps(dict(data='1')), 200)
+    def copynewItem(self,inventoryId,tempuseID,tempName,tempexpire,tempquantity,tempmeasure,templocation):
+        self.ensureConnected()
+        sql = "INSERT INTO Items (inventoryID, itemname, expiration, quantity, measurement, location, useID) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        val = (inventoryId, tempName, tempexpire, tempquantity, tempmeasure, templocation, tempuseID, )
+        self.cursor.execute(sql, val)
+        result = self.connector.commit()
+        
