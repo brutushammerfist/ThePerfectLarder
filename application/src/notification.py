@@ -120,7 +120,7 @@ class Notification(Screen):
 		# btn.notify is identical to the dict i in on_pre_enter; i.e. btn.notify['itemname'] is the name of the item
 		# backend stuff here
 		def on_pre_enter(self):
-		payload2 = {
+			payload2 = {
 			'userID' : App.get_running_app().userID,
 			'itemId': btn.notify['itemId']
 			}
