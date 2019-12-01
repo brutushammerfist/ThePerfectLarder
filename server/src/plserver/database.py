@@ -195,8 +195,8 @@ class Database():
                             content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 30))
                         elif metric.lower() == 'years':
                             content['expDate'] = datetime.date.today() + datetime.timedelta(days=(min * 365))
-            else:
-                content['expDate'] = datetime.date.today() + datetime.timedelta(days=3)
+                else:
+                    content['expDate'] = datetime.date.today() + datetime.timedelta(days=3)
 
         if len(result) == 0:
             useData = {
@@ -206,11 +206,8 @@ class Database():
                         "quantity" : content["quantity"]
                     }
                 ],
-                "purchasedTotal" : content["quantity"],
                 "used" : [],
-                "usedTotal" : 0,
-                "wasted" : [],
-                "wastedTotal" : 0
+                "wasted" : []
             }
 
             sql = "INSERT INTO FoodUse (itemname, measurement, `usage`) VALUES (%s, %s, %s)"
@@ -253,7 +250,6 @@ class Database():
 
             useData = json.loads(result[0][0])
             useData['purchased'].append(purchased)
-            useData['purchasedTotal'] = float(useData['purchasedTotal']) + float(content['quantity'])
 
             sql = "UPDATE FoodUse SET `usage` = %s WHERE id = %s"
             val = (json.dumps(useData), useID, )
