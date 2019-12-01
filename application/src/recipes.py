@@ -135,7 +135,6 @@ class AddRecipe(Screen):
 class Recipe(Screen):
     def on_pre_enter(self):
         self.manager.transition.direction = 'left'
-
     
 class ViewRecipe(Screen):
     index = NumericProperty(None)
@@ -156,7 +155,10 @@ class ViewRecipe(Screen):
             steptext = i['text']
             label = WrapButton(text = steptext, text_size=(700, None))
             self.ids.instructions.add_widget(label)
-        self.ids.cooktime.text = recipe['cookTime']
+        if 'cookTime' in recipe.keys():
+            self.ids.cooktime.text = recipe['cookTime']
+        else:
+            self.ids.cooktime.text = "N/A"
         
 class PersonalRecipe(Screen):
     recipes = []

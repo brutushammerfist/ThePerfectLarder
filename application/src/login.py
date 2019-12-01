@@ -99,7 +99,7 @@ class Login(Screen):
                         App.get_running_app().userID = response['userID']
                         App.get_running_app().userMeasurement = response['measureType']
                         App.get_running_app().userNotif = response['notifPref']
-                        App.get_running_app().storageLocations = json.loads(response['locations'])
+                        App.get_running_app().storageLocations = json.loads(response['locations'])['locations']
                         self.ids.userName.text = ""
                         self.ids.userPassword.text = ""
                         self.manager.transition.direction = 'left'

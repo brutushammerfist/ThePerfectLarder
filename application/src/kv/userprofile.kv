@@ -60,31 +60,31 @@
 		cols:1
 		size_hint: (.98, 0.2)
         pos_hint:{'x': 0.01, 'top': .92}
-		halign: 'left'
+        halign: 'left'
         spacing: [10,10]
 			
-		GridLayout:
-			cols:1
-            size_hint: (.98, 0.3)            
-            Label:
-                text: 'Measurement Values'
-                font_size: 57
-                    
-            GridLayout:
-                cols:2
-                ToggleButton:
-                    font_size: 50
-                    id: imperial
-                    text: 'Imperial'
-                    group: 'measurements'
-                    allow_no_selection: False
-                        
-                ToggleButton:
-                    font_size: 50
-                    id: metric
-                    text: 'Metric'
-                    group: 'measurements'
-                    allow_no_selection: False
+	#	GridLayout:
+	#		cols:1
+    #        size_hint: (.98, 0.3)            
+    #        Label:
+    #            text: 'Measurement Values'
+    #            font_size: 57
+    #                
+    #        GridLayout:
+    #            cols:2
+    #            ToggleButton:
+    #                font_size: 50
+    #                id: imperial
+    #                text: 'Imperial'
+    #                group: 'measurements'
+    #                allow_no_selection: False
+    #                    
+    #            ToggleButton:
+    #                font_size: 50
+    #                id: metric
+    #                text: 'Metric'
+    #                group: 'measurements'
+    #                allow_no_selection: False
                 
         GridLayout:
             cols: 2

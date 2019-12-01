@@ -25,7 +25,7 @@ import math
 
 
 nameEmptyContent = GridLayout(cols=1)
-nameEmptyContent.add_widget(Label(text='The username field  cannot be empty.'))
+nameEmptyContent.add_widget(Label(text='The username field cannot be empty.'))
 nameEmptyButton = Button(text='OK')
 nameEmptyContent.add_widget(nameEmptyButton)
 nameEmptyPopup = Popup(title='Empty input in Username', content=nameEmptyContent, auto_dismiss=False, size_hint=(.8, .2))
@@ -92,11 +92,6 @@ class Settings(Screen):
     
     def on_pre_enter(self):
         self.ids.locations.clear_widgets()
-        measureType = App.get_running_app().userMeasurement
-        if measureType == 0:
-            self.ids.imperial.state = 'down'
-        else:
-            self.ids.metric.state = 'down'
             
         for i in App.get_running_app().storageLocations:
             button = Button(text=i)
@@ -121,14 +116,11 @@ class Settings(Screen):
                 num += 1
 
     def updateProfilePreferences(self):
-
-        updateMeasurementResult = self.updateMeasurement()
         updateStorageLocationsResult = self.updateStorageLocations()
 
-        if(updateMeasurementResult == False or updateStorageLocationsResult == False):
+        if updateStorageLocationsResult == False:
             text = "Unable to update user preferences"
             title = "Error"
-
         else:
             text = "User preferences have been updated!"
             title = "Success!"
@@ -162,27 +154,27 @@ class Settings(Screen):
             return False
 
     
-    def updateMeasurement(self):
+    #def updateMeasurement(self):
         #button = 0
         #for i in ToggleButtonBehavior.get_widgets('measurements'):
         #    if i.state == 'down':
         #        button = i
         #        break
-        payload = {
-            'userID' : App.get_running_app().userID
-        }
-        if self.ids.imperial.state == 'down':
-            payload['measureType'] = 0
-        else:
-            payload['measureType'] = 1
-            
-        r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateMeasurementSetting', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
-
-        if r['data'] == 'Successfully Updated.':
-            App.get_running_app().userMeasurement = payload['measureType']
-            return True
-        else:
-            return False
+    #    payload = {
+    #        'userID' : App.get_running_app().userID
+    #    }
+    #    if self.ids.imperial.state == 'down':
+    #        payload['measureType'] = 0
+    #    else:
+    #        payload['measureType'] = 1
+    #        
+    #    r = requests.post('http://411orangef19-mgmt.cs.odu.edu:8000/updateMeasurementSetting', headers={'Content-Type':'application/json'}, data=json.dumps(payload)).json()
+    #
+    #    if r['data'] == 'Successfully Updated.':
+    #        App.get_running_app().userMeasurement = payload['measureType']
+    #        return True
+    #    else:
+    #        return False
 
 
 class ManagePL(Screen):  # part of the user profile

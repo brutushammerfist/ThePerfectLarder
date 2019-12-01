@@ -96,17 +96,17 @@ class Feedback(Screen):
 			print ('invalid message and rating')
 			#self.errorMsg = self.errorWidget( 'Please leave a rating and a comment :-)' )
 			#self.add_widget( self.errorMsg )
-			self.popUpMessage("Error", "Please leave a rating and a comment :-)")
+			self.popUpMessage("Error", "Please leave a rating and a comment.")
 		elif ( not messageValid ):
 			print ('invalid message')
 			#self.errorMsg = self.errorWidget( 'Please leave a comment :-)' )
 			#self.add_widget( self.errorMsg )
-			self.popUpMessage("Error", "Please leave us a comment :-)")
+			self.popUpMessage("Error", "Please leave us a comment.")
 		elif ( not ratingValid ):
 			print ('invalid rating')
 			#self.errorMsg = self.errorWidget( 'Please leave a rating :-)' )
 			#self.add_widget( self.errorMsg )
-			self.popUpMessage("Error", "Please leave a rating :-)")
+			self.popUpMessage("Error", "Please leave a rating.")
 		else:
 			print ('feedback valid')
 			#self.successMsg = self.successWidget( 'Thank you for submitting feedback :-)' )
