@@ -27,26 +27,25 @@
 		    center_x: self.parent.center_x
 		    center_y: self.parent.center_y
 
+    Button:
+        text: "Items About to expire"
+        font_size: 65
+        color: 0, 0, 255, 1
+        size_hint: (.98, 0.09)
+		pos_hint:{'x': .01, 'top': .105}
+        on_press:
+            root.manager.transition.direction = 'left'
+            root.manager.current = 'shareitems'
+
     ScrollView:
         do_scroll_x: False
         do_scroll_y: True
-        size_hint: (.98,.815)
-		pos_hint: {'x': 0.01, 'top': 0.8}
+        size_hint: (.98, .7)
+		pos_hint: {'x': 0.01, 'top': 0.805}
 
         GridLayout:
             id: notifications
             cols: 1
+            size_hint_y: None
+            height: self.minimum_height
             row_default_height: 100
-            row_force_default: True
-
-	GridLayout:
-		cols: 2
-		size_hint: (1, .12)
-	    
-		Button:
-			text: "Items About to expire"
-			font_size: 65
-			color: 0, 0, 255, 1
-			on_press: 
-				root.manager.transition.direction = 'left' 
-				root.manager.current = 'shareitems'	

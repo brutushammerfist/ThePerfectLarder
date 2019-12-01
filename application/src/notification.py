@@ -33,7 +33,7 @@ rejectPopup = Popup(title='Notification alert', content=rejectContent, auto_dism
 rejectButton.bind(on_press=rejectPopup.dismiss)
 
 class Notification(Screen):
-	
+
 	def on_pre_enter(self):
 		self.ids.notifications.clear_widgets()
 		headers = {'Content-Type' : 'application/json'}
@@ -51,19 +51,19 @@ class Notification(Screen):
 		if response is not None and response['data'] != 'empty':
 			for i in response['data']:
 				if i['response'] is None:
-					button = Button(text=i['username'] + ' would like to share ' + str(i['quantity']) + ' of ' +
-									i['itemname'] + ' with you!\nPress to reply', halign='center')
+					button = Button(text=i['username'] + ' would like to share ' + str(i['quantity']) + ' ' + i['Unit']
+										 + ' of ' + i['itemname'] + ' with you!\nPress to reply', halign='center')
 					callback = lambda n: self.notificationPopup(n)
 					button.notify = i
 					button.bind(on_press=callback)
 					self.ids.notifications.add_widget(button)
 				else:
 					if i['response'] == 'yes':
-						button = Button(text='Someone has accepted your item!\nPress here to dismiss')
+						button = Button(text='You accepted ' + str(i['quantity']) + ' ' + i['Unit'] + ' of '
+											 + i['itemname'] + ' from ' + i['username'])
 					elif i['response'] == 'no':
-						button = Button(text='Someone has rejected your item!\nPress here to dismiss')
-					button.response = i
-					button.bind(on_press=self.removeNotification)
+						button = Button(text='You rejected ' + str(i['quantity']) + ' ' + i['Unit'] + ' of '
+											 + i['itemname'] + ' from ' + i['username'])
 					self.ids.notifications.add_widget(button)
 		elif response['data'] == 'empty':
 			button = Button(text='No current notifications')

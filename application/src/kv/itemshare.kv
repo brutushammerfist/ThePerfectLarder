@@ -29,14 +29,15 @@
     ScrollView:
         do_scroll_x: False
         do_scroll_y: True
-        size_hint: (.98,.815)
-		pos_hint: {'x': 0.01, 'top': 0.92}
+        size_hint: .98, .92
+		pos_hint: {'x': 0.01, 'top': 0.925}
 
         GridLayout:
             id: shareFoodItems
             cols: 1
+            size_hint_y: None
+            height: self.minimum_height
             row_default_height: 100
-            row_force_default: True
 
 #	GridLayout:
 #		cols:1
